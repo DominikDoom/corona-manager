@@ -1,0 +1,32 @@
+Titlebar:
+bar-container
+	navbutton
+	sort-container
+		sort-dropdown
+	view-container
+		view-dropdown
+		
+Navigation:
+nav-main-container
+	nav-item
+nav-user-container
+	nav-item
+bg-overlay
+	
+Inspector:
+editor-container
+	editor-category
+		editor-label
+		editor-form
+		editor-button
+	
+Detail View:
+detail-container
+	detail-title
+	detail-image
+	detail-description
+	detail-checklist
+	detail-people
+	detail-files
+	detail-comments
+bg-overlay		

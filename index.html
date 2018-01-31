@@ -7,22 +7,35 @@
     <link rel="stylesheet" href="styles/icono.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
-    <script src="jquery.inlineIpsum.min.js"></script>
     <script src="functions.js"></script>
-		<script id="card-template" type="text/template">
-			<div class="card">
-				<img src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
-				<div class="cardcontainer">
-		  	  <h4><b>{{id}}</b></h4> 
-          <p>The quick brown fox jumps over the lazy dog</p> 
-				</div>
+	<!-- Kategorie-Template -->
+	<script id="cat-template" type="text/template">
+		<div class="cat" id="cat">
+			<div class="catdetails">
+				<h4>{{id}}</h4>
+				<button id="addcard">Karte hinzufügen</button>
+				<button id="removecat">Kategorie löschen</button>				
 			</div>
-		</script>	
+			<div class="cardcontainer" id="cardcontainer">
+				
+			</div>
+		</div>
+	</script>
+	<!-- Karten-Template -->
+	<script id="card-template" type="text/template">
+		<div class="card" id="card">
+			<img src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
+			<div class="carddetails">
+		 	  	<h4><b>{{id}}</b></h4> 
+         		<p>The quick brown fox jumps over the lazy dog</p> 
+			</div>
+			<button id="removecard">Karte löschen</button>
+		</div>
+	</script>
   </head>
   <body class="main-grid">
-    <div class="container-grid header">
+  	<div class="container-grid header">
       <div class="logo"></div>
-      <button id="addbutton" style="float:right; margin-top: -20px;">Karte hinzufügen</button>
     </div>
     <div class="container-grid nav">
       <label class="navicon">
@@ -41,9 +54,11 @@
         <i class="icono-signOut"></i>
       </label>
     </div>
-    <div class="container-grid editor"></div>
+    <div class="container-grid editor">
+		<div id="noselection"></div> 
+	</div>
     <div id="categorycontainer" class="container-grid main">
-      <!-- Placeholder -->
+		<button id="addcat">Kategorie hinzufügen</button>
     </div>
   </body>
 </html>

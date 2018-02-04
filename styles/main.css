@@ -21,6 +21,16 @@
 html, body {
     margin: 0;
     height: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: whitesmoke;
+}
+
+button {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+label { 
+    display: block 
 }
 
 body.main-grid {
@@ -99,11 +109,17 @@ body.main-grid {
 .container-grid.editor {
     background-color: #333333;
     grid-area: editor;
+    position: relative;
 }
 
 #noselection {
+    display: none;
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #333333;
     background-image: url("../img/nothingtosee.svg");
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -113,6 +129,52 @@ body.main-grid {
     background-clip: border-box;
     -webkit-background-size: contain;
     background-size: contain;
+}
+
+#selection {
+    width: 100%;
+    height: 100%;
+}
+.editorcontrolgroup {
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+.container-grid.editor.input {
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 95%;
+    padding: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #5b5b5b;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #c4c4c4;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: #1e1e1e;
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.container-grid.editor textarea {
+    resize: none;
+}
+
+#charNum {
+    position: absolute;
+    right: 11px;
+    z-index: 9999;
+    margin-top: -38px;
+    font-weight: 700;
+    color: #5b5b5b;
+    font-size: 12px;
 }
 
 .container-grid.main {
@@ -133,7 +195,6 @@ body.main-grid {
 	width: 90%;
 	height: 500px;
 	margin: 10px;
-	color: whitesmoke;
 	overflow-y: scroll;
     /* Add shadows to create the "card" effect */
     -webkit-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
@@ -162,7 +223,6 @@ body.main-grid {
 	height: 300px;
 	width: 200px;
 	margin: 20px;
-	color: whitesmoke;
     /* Add shadows to create the "card" effect */
     -webkit-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
 	-moz-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
@@ -185,7 +245,8 @@ body.main-grid {
 /* Buttons */
 #addcat {
 	margin-top: 5px;
-	margin-left: 9px;
+    margin-left: 9px;
+    margin-right: 50%;
 	height: 25px;
 }
 

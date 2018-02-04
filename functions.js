@@ -17,7 +17,6 @@ $(document).ready(function(){
 		}
 	});
 
-
   	$(document).on('click', "#addcard", function() {
 		var data = {
 			id: uuidv4()
@@ -35,6 +34,21 @@ $(document).ready(function(){
 			console.log("removed");
 		}
 	});
+
+	$('textarea').on("input", function(){
+		var maxlength = $(this).attr("maxlength");
+		var currentLength = $(this).val().length;
+		$('#charNum').text(currentLength+ "/" + maxlength );
+	});
+
+	$('textarea').keydown(function(e){
+		// Enter was pressed without shift key
+		if (e.keyCode == 13)
+		{
+			// prevent default behavior
+			e.preventDefault();
+		}
+		});
 });
 
 function uuidv4() {

@@ -27,6 +27,7 @@ html, body {
 
 button {
     font-family: 'Roboto Condensed', sans-serif;
+    height: 25px;
 }
 
 label { 
@@ -136,8 +137,7 @@ body.main-grid {
     height: 100%;
 }
 .editorcontrolgroup {
-    margin-top: -30px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .container-grid.editor.input {
@@ -168,6 +168,7 @@ body.main-grid {
 }
 
 #charNum {
+    pointer-events: none;
     position: absolute;
     right: 11px;
     z-index: 9999;
@@ -247,18 +248,13 @@ body.main-grid {
 	margin-top: 5px;
     margin-left: 9px;
     margin-right: 50%;
-	height: 25px;
-}
-
-#removecat {
-	height: 25px;
-}
-
-#addcard {
-	height: 25px;
+    height: 35px;
 }
 
 #removecard {
 	margin-left: 10px;
-	height: 25px;
+}
+
+#EditorImageSelect {
+    margin-bottom: 10px;
 }

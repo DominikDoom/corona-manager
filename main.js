@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, dialog, remote} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -10,6 +10,8 @@ let win
 function createWindow () {
   // Erstellen des Browser-Fensters.
   win = new BrowserWindow({width: 800, height: 600})
+  win.setMenu(null);
+  win.maximize();
 
   // und Laden der index.html der App.
   win.loadURL(url.format({
@@ -55,3 +57,4 @@ app.on('activate', () => {
 // In dieser Datei können Sie den Rest des App-spezifischen 
 // Hauptprozess-Codes einbinden. Sie können den Code auch 
 // auf mehrere Dateien aufteilen und diese hier einbinden.
+

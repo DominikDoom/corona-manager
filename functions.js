@@ -1,3 +1,5 @@
+const {dialog} = require('electron').remote
+
 $(document).ready(function(){
 	$("#addcat").click(function(){
 		var data = {
@@ -11,10 +13,10 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', "#removecat", function() {
-		if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
+		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().parent().remove();
 			console.log("removed");
-		}
+		// }
 	});
 
   	$(document).on('click', "#addcard", function() {
@@ -29,10 +31,10 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', "#removecard", function() {
-		if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
+		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().remove();
 			console.log("removed");
-		}
+		// }
 	});
 
 	$('textarea').on("input", function(){
@@ -42,7 +44,7 @@ $(document).ready(function(){
 	});
 
 	$('textarea').keydown(function(e){
-		// Enter was pressed without shift key
+		// Enter was pressed
 		if (e.keyCode == 13)
 		{
 			// prevent default behavior
@@ -56,4 +58,10 @@ function uuidv4() {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
+}
+
+function openImageDialog() {
+	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileNames) {
+		$("#EditorImagePreview").attr("src",FileNames[0]);
+	});
 }

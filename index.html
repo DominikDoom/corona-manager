@@ -14,12 +14,12 @@
     <!-- Kategorie-Template -->
     <script id="cat-template" type="text/template">
       <div class="cat" id="cat">
-        <div class="catdetails">
+        <div class="catDetails">
           <h4>{{id}}</h4>
-          <button id="addcard">Karte hinzufügen</button>
-          <button id="removecat">Kategorie löschen</button>				
+          <button id="addCard">Karte hinzufügen</button>
+          <button id="removeCat">Kategorie löschen</button>				
         </div>
-        <div class="cardcontainer" id="cardcontainer">
+        <div class="cardContainer" id="cardContainer">
           
         </div>
       </div>
@@ -28,11 +28,11 @@
     <script id="card-template" type="text/template">
       <div class="card" id="card">
         <img src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
-        <div class="carddetails">
+        <div class="cardDetails">
             <h4><b>{{id}}</b></h4> 
               <p>The quick brown fox jumps over the lazy dog</p> 
         </div>
-        <button id="removecard">Karte löschen</button>
+        <button id="removeCard">Karte löschen</button>
       </div>
     </script>
   </head>
@@ -59,23 +59,27 @@
     </div>
     <div class="container-grid editor">
       <div id="selection">
-        <div class="editorcontrolgroup">
-          <button class="editorcontrolgroup save">Speichern</button>
-          <button class="editorcontrolgroup cancel">Abbrechen</button> 
+        <div class="editorControlGroup">
+          <button class="editorControlGroup save">Speichern</button>
+          <button class="editorControlGroup cancel">Abbrechen</button> 
         </div>
         <label for="editor input name">Name</label>
         <input class="container-grid editor input" id="editor input name"/>
         <label for="editor input description">Beschreibung</label>
         <textarea class="container-grid editor input" id="editor input description" rows="6" maxlength="135"></textarea>
         <p id="charNum">0/135</p>
-        <label for="EditorImageSelect">Vorschaubild auswählen</label>
-        <button id="EditorImageSelect" onclick="openImageDialog();">Bild auswählen</button>
-        <img id="EditorImagePreview" src="http://via.placeholder.com/200x150" />
+        <label for="editorImageSelect">Vorschaubild auswählen</label>
+        <button id="editorImageSelect" onclick="openImageDialog();">Bild auswählen</button>
+        <button id="editorImageReset" onclick="resetImage()">Zurücksetzen</button>
+        <div class="container-grid editor imageContainer">
+          <img id="editorImagePreview" src="http://via.placeholder.com/200x150" />
+        </div>
+        
       </div>
-      <div id="noselection"></div> 
+      <div id="noSelection"></div> 
 	  </div>
-    <div class="container-grid main"id="categorycontainer" >
-		  <button id="addcat">Kategorie hinzufügen</button>
+    <div class="container-grid main"id="categoryContainer" >
+		  <button id="addCat">Kategorie hinzufügen</button>
     </div>
   </body>
 </html>

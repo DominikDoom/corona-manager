@@ -1,39 +1,37 @@
 const {dialog} = require('electron').remote
 
 $(document).ready(function(){
-	$("#addcat").click(function(){
+	$("#addCat").click(function(){
 		var data = {
 			id: uuidv4()
 		}
-		var template = $("#cat-template").html();
-		console.log(template);		
+		var template = $("#cat-template").html();	
 		var html = Mustache.render(template, data);
-		$("#categorycontainer").append(html);
-		console.log("added");
+		$("#categoryContainer").append(html);
+		console.log("Category "+ data.id + " added");
 	});
 
-	$(document).on('click', "#removecat", function() {
+	$(document).on('click', "#removeCat", function() {
 		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().parent().remove();
-			console.log("removed");
+			console.log("Category removed");
 		// }
 	});
 
-  	$(document).on('click', "#addcard", function() {
+  	$(document).on('click', "#addCard", function() {
 		var data = {
 			id: uuidv4()
 		}
 		var template = $("#card-template").html();
-		console.log(template);		
 		var html = Mustache.render(template, data);
-		$(this).parent().parent().find("div[id='cardcontainer']").append(html);
-		console.log("added");
+		$(this).parent().parent().find("div[id='cardContainer']").append(html);
+		console.log("Card "+ data.id + " added");
 	});
 
-	$(document).on('click', "#removecard", function() {
+	$(document).on('click', "#removeCard", function() {
 		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().remove();
-			console.log("removed");
+			console.log("Card removed");
 		// }
 	});
 
@@ -62,6 +60,10 @@ function uuidv4() {
 
 function openImageDialog() {
 	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileNames) {
-		$("#EditorImagePreview").attr("src",FileNames[0]);
+		$("#editorImagePreview").attr("src",FileNames[0]);
 	});
+}
+
+function resetImage() {
+	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
 }

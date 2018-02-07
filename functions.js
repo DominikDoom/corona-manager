@@ -35,6 +35,22 @@ $(document).ready(function(){
 		// }
 	});
 
+	$(document).on('click', "#editCard", function() {
+		var id = $("#uuid").text();
+		$("#debugIdDisplay").text($("#debugIdDisplay").text() + id);
+		$("#noSelection").slideUp();
+	});
+
+	$(document).on('click', "#editorSave", function() {
+		$("#noSelection").slideDown();
+		$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+	});
+
+	$(document).on('click', "#editorCancel", function() {
+		$("#noSelection").slideDown();
+		$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+	});
+
 	$('textarea').on("input", function(){
 		var maxlength = $(this).attr("maxlength");
 		var currentLength = $(this).val().length;
@@ -59,8 +75,8 @@ function uuidv4() {
 }
 
 function openImageDialog() {
-	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileNames) {
-		$("#editorImagePreview").attr("src",FileNames[0]);
+	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileName) {
+		$("#editorImagePreview").attr("src",FileName);
 	});
 }
 

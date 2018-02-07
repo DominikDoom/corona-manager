@@ -114,7 +114,8 @@ body.main-grid {
 }
 
 #noSelection {
-    display: none;
+    visibility: visible;
+    opacity:1;
     z-index: 9999;
     width: 100%;
     height: 100%;
@@ -131,6 +132,7 @@ body.main-grid {
     background-clip: border-box;
     -webkit-background-size: contain;
     background-size: contain;
+    transition:opacity 0.5s linear;
 }
 
 #selection {
@@ -214,7 +216,6 @@ body.main-grid {
     -webkit-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
 	-moz-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
 	box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
-    transition: 0.3s;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -234,6 +235,7 @@ body.main-grid {
 }
 
 .card {
+    position: relative;
 	height: 300px;
 	width: 200px;
 	margin: 20px;
@@ -241,14 +243,44 @@ body.main-grid {
     -webkit-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
 	-moz-box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
 	box-shadow: 0px 0px 3px 1px rgba(153,153,153,0.75);
-    transition: 0.3s;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     -webkit-box-shadow: 0px 0px 5px 2px rgba(153,153,153,0.75);
 	-moz-box-shadow: 0px 0px 5px 2px rgba(153,153,153,0.75);
-	box-shadow: 0px 0px 5px 2px rgba(153,153,153,0.75);
+    box-shadow: 0px 0px 5px 2px rgba(153,153,153,0.75); 
+}
+
+.card:hover .cardOverlay {
+    display: initial;
+}
+
+.cardOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.cardButtonsContainer {
+    height: 100%;
+    zoom: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardButtonsContainer label {
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.cardButtonsContainer label:hover {
+    background: rgba(0,0,0,0.7);
 }
 
 /* Add some padding inside the card container */

@@ -1,4 +1,6 @@
 const {dialog} = require('electron').remote
+let editorState = "closed"
+
 
 $(document).ready(function(){
 	$("#addCat").click(function(){
@@ -37,18 +39,27 @@ $(document).ready(function(){
 
 	$(document).on('click', "#editCard", function() {
 		var id = $("#uuid").text();
-		$("#debugIdDisplay").text($("#debugIdDisplay").text() + id);
-		$("#noSelection").slideUp();
+		if (editorState == "closed") {
+			editorState = "open";
+			$("#debugIdDisplay").text($("#debugIdDisplay").text() + id);
+			$("#noSelection").slideUp();
+		} else {
+			editorState = "closed";
+			$("#noSelection").slideDown();
+			setTimeout(resetDebugIdDisplay, 300);
+		}
 	});
 
 	$(document).on('click', "#editorSave", function() {
+		editorState = "closed";
 		$("#noSelection").slideDown();
-		$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+		setTimeout(resetDebugIdDisplay, 300);
 	});
 
 	$(document).on('click', "#editorCancel", function() {
+		editorState = "closed";
 		$("#noSelection").slideDown();
-		$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+		setTimeout(resetDebugIdDisplay, 300);
 	});
 
 	$('textarea').on("input", function(){
@@ -82,4 +93,8 @@ function openImageDialog() {
 
 function resetImage() {
 	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
+}
+
+function resetDebugIdDisplay() {
+	$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
 }

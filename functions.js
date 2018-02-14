@@ -30,36 +30,41 @@ $(document).ready(function(){
 		console.log("Card "+ data.id + " added");
 	});
 
-	$(document).on('click', "#removeCard", function() {
-		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
-			$(this).parent().remove();
-			console.log("Card removed");
-		// }
-	});
-
+	let cardId;
+	let cardOldId;
 	$(document).on('click', "#editCard", function() {
-		var id = $("#uuid").text();
+		cardId = $(this).parent().parent().parent().find("#uuid").text();
 		if (editorState == "closed") {
 			editorState = "open";
-			$("#debugIdDisplay").text($("#debugIdDisplay").text() + id);
+			$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
 			$("#noSelection").slideUp();
+			cardOldId = cardId;
 		} else {
-			editorState = "closed";
-			$("#noSelection").slideDown();
-			setTimeout(resetDebugIdDisplay, 300);
+			if (cardOldId !== cardId) {
+				resetEditor();
+				$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
+				cardOldId = cardId;
+			} else {		
+				editorState = "closed";
+				$("#noSelection").slideDown();
+				setTimeout(resetEditor, 300);
+			}
 		}
 	});
 
 	$(document).on('click', "#editorSave", function() {
+		var editorDesc = $("#editorInputDescription").text();
+		var editorName = $("#editorInputName").text();
+		saveCard(cardId,editorDesc,editorName);
 		editorState = "closed";
 		$("#noSelection").slideDown();
-		setTimeout(resetDebugIdDisplay, 300);
+		setTimeout(resetEditor, 300);
 	});
 
 	$(document).on('click', "#editorCancel", function() {
 		editorState = "closed";
 		$("#noSelection").slideDown();
-		setTimeout(resetDebugIdDisplay, 300);
+		setTimeout(resetEditor, 300);
 	});
 
 	$('textarea').on("input", function(){
@@ -76,6 +81,16 @@ $(document).ready(function(){
 			e.preventDefault();
 		}
 		});
+
+	$(document).on('click', "#removeCard", function() {
+		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
+			$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
+			editorState = "closed";
+			$("#noSelection").slideDown();
+			setTimeout(resetEditor, 300);
+			console.log("Card"+ cardId + "removed");
+		// }
+	});
 });
 
 function uuidv4() {
@@ -95,6 +110,16 @@ function resetImage() {
 	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
 }
 
-function resetDebugIdDisplay() {
+function resetEditor() {
 	$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
+	$("#editorInputDescription").text("");
+	$("#editorInputName").text("");
+}
+
+function saveCard(id,desc,name) {
+	var savedCard = $( "p:contains(" +  id + ")").parent().parent();
+	savedCard.find("img").attr("src",$("#editorImagePreview").attr("src"));
+	savedCard.find(".cardName").text(name);
+	savedCard.find(".cardDesc").text(desc);
 }

@@ -33,13 +33,12 @@
             <label id="editCard"><i class="icono-rename"></i></label>
           </div>
         </div>
-        <img src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
+        <img class="cardImage" src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
         <div class="cardDetails">
             <p id="uuid" style="display: none;">{{id}}</p>
-            <h4>Name</h4>
-              <p>The quick brown fox jumps over the lazy dog</p> 
+            <h4 class="cardName">Name</h4>
+            <p class="cardDesc">The quick brown fox jumps over the lazy dog</p> 
         </div>
-        <button id="removeCard">Karte löschen</button>
       </div>
     </script>
   </head>
@@ -71,18 +70,19 @@
           <button id="editorCancel">Abbrechen</button> 
         </div>
         <p id="debugIdDisplay">Id des ausgewählten Elements: </p>
-        <label for="editor input name">Name</label>
-        <input class="container-grid editor input" id="editor input name"/>
-        <label for="editor input description">Beschreibung</label>
-        <textarea class="container-grid editor input" id="editor input description" rows="6" maxlength="135"></textarea>
+        <label for="editorInputName">Name</label>
+        <input class="editorInput" id="editorInputName"/>
+        <label for="editorInputDescription">Beschreibung</label>
+        <textarea class="editorInput" id="editorInputDescription" rows="6" maxlength="135"></textarea>
         <p id="charNum">0/135</p>
         <label for="editorImageSelect">Vorschaubild auswählen</label>
         <button id="editorImageSelect" onclick="openImageDialog();">Bild auswählen</button>
         <button id="editorImageReset" onclick="resetImage()">Zurücksetzen</button>
-        <div class="container-grid editor imageContainer">
+        <div class="editorImageContainer">
           <img id="editorImagePreview" src="http://via.placeholder.com/200x150" />
         </div>
-        
+        <label for="removeCard">Erweitert</label>
+        <button id="removeCard">Karte löschen</button>
       </div>
       <div id="noSelection"></div> 
 	  </div>

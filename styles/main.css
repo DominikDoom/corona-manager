@@ -111,6 +111,7 @@ body.main-grid {
     background-color: #333333;
     grid-area: editor;
     position: relative;
+    overflow-y: scroll;
 }
 
 #noSelection {
@@ -143,7 +144,7 @@ body.main-grid {
     margin-bottom: 20px;
 }
 
-.container-grid.editor.input {
+.editorInput {
     display: inline-block;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -166,7 +167,7 @@ body.main-grid {
     transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 }
 
-.container-grid.editor textarea {
+#editorInputDescription {
     resize: none;
 }
 
@@ -181,11 +182,12 @@ body.main-grid {
     font-size: 12px;
 }
 
-.container-grid.editor.imageContainer {
+.editorImageContainer {
     width: 200px;
     height: 150px;
     margin: 0px;
     padding: 0px;
+    margin-bottom: 20px;
 }
 
 #editorImagePreview {
@@ -256,6 +258,11 @@ body.main-grid {
     display: initial;
 }
 
+.cardImage {
+    width: 200px;
+    height: 150px;
+}
+
 .cardOverlay {
     position: absolute;
     top: 0;
@@ -294,10 +301,6 @@ body.main-grid {
     margin-left: 9px;
     margin-right: 50%;
     height: 35px;
-}
-
-#removeCard {
-	margin-left: 10px;
 }
 
 #editorImageSelect, #editorImageReset {

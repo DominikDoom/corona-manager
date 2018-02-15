@@ -306,3 +306,15 @@ body.main-grid {
 #editorImageSelect, #editorImageReset {
     margin-bottom: 10px;
 }
+
+/* Disable Selection in non-input areas */
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+input, button, textarea, :focus {
+    outline: none;
+}

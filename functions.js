@@ -1,5 +1,6 @@
 const {dialog} = require('electron').remote
 let editorState = "closed"
+let saveArray = '{"cards":[]}';
 
 
 $(document).ready(function(){
@@ -10,13 +11,13 @@ $(document).ready(function(){
 		var template = $("#cat-template").html();	
 		var html = Mustache.render(template, data);
 		$("#categoryContainer").append(html);
-		console.log("Category "+ data.id + " added");
+		debug("Category "+ data.id + " added");
 	});
 
 	$(document).on('click', "#removeCat", function() {
 		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().parent().remove();
-			console.log("Category removed");
+			debug("Category removed");
 		// }
 	});
 
@@ -27,13 +28,14 @@ $(document).ready(function(){
 		var template = $("#card-template").html();
 		var html = Mustache.render(template, data);
 		$(this).parent().parent().find("div[id='cardContainer']").append(html);
-		console.log("Card "+ data.id + " added");
+		debug("Card "+ data.id + " added");
 	});
 
 	let cardId;
 	let cardOldId;
 	$(document).on('click', "#editCard", function() {
 		cardId = $(this).parent().parent().parent().find("#uuid").text();
+		loadEditor(cardId);
 		if (editorState == "closed") {
 			editorState = "open";
 			$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
@@ -42,6 +44,7 @@ $(document).ready(function(){
 		} else {
 			if (cardOldId !== cardId) {
 				resetEditor();
+				loadEditor(cardId);
 				$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
 				cardOldId = cardId;
 			} else {		
@@ -53,9 +56,9 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', "#editorSave", function() {
-		var editorDesc = $("#editorInputDescription").text();
-		var editorName = $("#editorInputName").text();
-		saveCard(cardId,editorDesc,editorName);
+		var editorDesc = $("#editorInputDescription").val();
+		var editorName = $("#editorInputName").val();
+		saveCard(cardId,editorName,editorDesc);
 		editorState = "closed";
 		$("#noSelection").slideDown();
 		setTimeout(resetEditor, 300);
@@ -88,10 +91,14 @@ $(document).ready(function(){
 			editorState = "closed";
 			$("#noSelection").slideDown();
 			setTimeout(resetEditor, 300);
-			console.log("Card"+ cardId + "removed");
+			debug("Card"+ cardId + "removed");
 		// }
 	});
 });
+
+function debug(msg) {
+	console.log("%c[DEBUG] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:orangered;", "color:steelblue;", "color:black;");
+}
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -113,13 +120,41 @@ function resetImage() {
 function resetEditor() {
 	$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
 	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
-	$("#editorInputDescription").text("");
-	$("#editorInputName").text("");
+	$("#editorInputName").val("");
+	$("#editorInputDescription").val("");
 }
 
-function saveCard(id,desc,name) {
+function loadEditor(id) {
+	var loadedCard = $( "p:contains(" +  id + ")").parent().parent();
+
+	var img = loadedCard.find(".cardImage").attr("src");
+	var name = loadedCard.find(".cardName").text();
+	var desc = loadedCard.find(".cardDesc").text();
+
+	$("#editorImagePreview").attr("src",img);
+	$("#editorInputName").val(name);
+	$("#editorInputDescription").val(desc);
+}
+
+function saveCard(id,name,desc) {
 	var savedCard = $( "p:contains(" +  id + ")").parent().parent();
 	savedCard.find("img").attr("src",$("#editorImagePreview").attr("src"));
+	var img = savedCard.find("img").attr("src");
 	savedCard.find(".cardName").text(name);
 	savedCard.find(".cardDesc").text(desc);
+
+	// Preparation of JSON save
+	var obj = JSON.parse(saveArray);
+	if (obj['cards'].id !== id) {
+		obj['cards'].push({"id":id,"img":img,"name":name,"desc":desc});
+		saveArray = JSON.stringify(obj,null,4);
+		debug(saveArray);
+		saveToFile("cards",saveArray);
+	} else {
+		debug("ID duplicate");
+	}
+}
+
+function saveToFile(mode,jsonString) {
+	//TODO
 }

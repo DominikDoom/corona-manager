@@ -11,13 +11,13 @@ $(document).ready(function(){
 		var template = $("#cat-template").html();	
 		var html = Mustache.render(template, data);
 		$("#categoryContainer").append(html);
-		debug("Category "+ data.id + " added");
+		log("Category "+ data.id + " added","d");
 	});
 
 	$(document).on('click', "#removeCat", function() {
 		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().parent().remove();
-			debug("Category removed");
+			log("Category removed","d");
 		// }
 	});
 
@@ -28,7 +28,7 @@ $(document).ready(function(){
 		var template = $("#card-template").html();
 		var html = Mustache.render(template, data);
 		$(this).parent().parent().find("div[id='cardContainer']").append(html);
-		debug("Card "+ data.id + " added");
+		log("Card "+ data.id + " added","d");
 	});
 
 	let cardId;
@@ -91,13 +91,26 @@ $(document).ready(function(){
 			editorState = "closed";
 			$("#noSelection").slideDown();
 			setTimeout(resetEditor, 300);
-			debug("Card"+ cardId + "removed");
+			log("Card"+ cardId + "removed","d");
 		// }
 	});
 });
 
-function debug(msg) {
-	console.log("%c[DEBUG] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:orangered;", "color:steelblue;", "color:black;");
+function log(msg,mode) {
+	switch (mode) {
+		case "d":
+			console.log("%c[DEBUG] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:orangered;", "color:steelblue;", "color:black;");
+			break;
+		case "e":
+			console.log("%c[ERROR] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:red;", "color:steelblue;", "color:black;");
+			break;
+		case "s":
+			console.log("%c[SUCCESS] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:green;", "color:steelblue;", "color:black;");
+			break;
+		default:
+			console.log("%c[DEBUG] %c" + new Date($.now()) + ":\n" + "%c" + msg, "color:orangered;", "color:steelblue;", "color:black;");
+			break;
+	}
 }
 
 function uuidv4() {
@@ -145,14 +158,24 @@ function saveCard(id,name,desc) {
 
 	// Preparation of JSON save
 	var obj = JSON.parse(saveArray);
-	if (obj['cards'].id !== id) {
+	if ( jQuery.isEmptyObject(obj['cards']) ) {
 		obj['cards'].push({"id":id,"img":img,"name":name,"desc":desc});
-		saveArray = JSON.stringify(obj,null,4);
-		debug(saveArray);
-		saveToFile("cards",saveArray);
-	} else {
-		debug("ID duplicate");
 	}
+	var counter = 0;
+	$.each(obj['cards'], function(index, element) {
+		if (element.id == id) {
+			counter++;
+			element.img = img;
+			element.name = name;
+			element.desc = desc;
+		}
+	});
+	if (counter == 0) {
+		obj['cards'].push({"id":id,"img":img,"name":name,"desc":desc});
+	}
+	saveArray = JSON.stringify(obj,null,4);
+	log(saveArray,"s");
+	saveToFile("cards",saveArray); 
 }
 
 function saveToFile(mode,jsonString) {

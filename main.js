@@ -1,4 +1,4 @@
-const {app, BrowserWindow, dialog, remote} = require('electron')
+const {app, BrowserWindow, dialog, fs, remote} = require('electron')
 const path = require('path')
 const url = require('url')
 

@@ -1,5 +1,10 @@
-const {dialog} = require('electron').remote
-let editorState = "closed"
+const {dialog} = require('electron').remote;
+const {app} = require('electron').remote;
+const fs = require('fs');
+const path = require('path');
+
+
+let editorState = "closed";
 let saveArray = '{"cards":[]}';
 
 
@@ -58,7 +63,8 @@ $(document).ready(function(){
 	$(document).on('click', "#editorSave", function() {
 		var editorDesc = $("#editorInputDescription").val();
 		var editorName = $("#editorInputName").val();
-		saveCard(cardId,editorName,editorDesc);
+		var categoryId = $( "p:contains(" +  cardId + ")").parent().parent().parent().parent().find("#uuidcat").text();
+		saveCard(cardId,categoryId,editorName,editorDesc);
 		editorState = "closed";
 		$("#noSelection").slideDown();
 		setTimeout(resetEditor, 300);
@@ -86,13 +92,23 @@ $(document).ready(function(){
 		});
 
 	$(document).on('click', "#removeCard", function() {
-		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
-			$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
-			editorState = "closed";
-			$("#noSelection").slideDown();
-			setTimeout(resetEditor, 300);
-			log("Card"+ cardId + "removed","d");
-		// }
+		// Preparation of JSON save
+		var obj = JSON.parse(saveArray);
+		$.each(obj['cards'], function(index, element) {
+			if (element.id == cardId) {
+				var deletedItem = obj['cards'].splice(index,1);
+				return false;
+			}
+		});
+		saveArray = JSON.stringify(obj,null,4);
+		log(saveArray,"d");
+		saveToFile("cards", saveArray); 
+
+		$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
+		editorState = "closed";
+		$("#noSelection").slideDown();
+		setTimeout(resetEditor, 300);
+		log("Card "+ cardId + " removed","d");
 	});
 });
 
@@ -149,7 +165,7 @@ function loadEditor(id) {
 	$("#editorInputDescription").val(desc);
 }
 
-function saveCard(id,name,desc) {
+function saveCard(id,cat,name,desc) {
 	var savedCard = $( "p:contains(" +  id + ")").parent().parent();
 	savedCard.find("img").attr("src",$("#editorImagePreview").attr("src"));
 	var img = savedCard.find("img").attr("src");
@@ -158,26 +174,43 @@ function saveCard(id,name,desc) {
 
 	// Preparation of JSON save
 	var obj = JSON.parse(saveArray);
+	var time = $.now();
 	if ( jQuery.isEmptyObject(obj['cards']) ) {
-		obj['cards'].push({"id":id,"img":img,"name":name,"desc":desc});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
 	}
 	var counter = 0;
 	$.each(obj['cards'], function(index, element) {
 		if (element.id == id) {
 			counter++;
+			element.cat = cat;
 			element.img = img;
 			element.name = name;
 			element.desc = desc;
+			element.fav = "todo";
 		}
 	});
 	if (counter == 0) {
-		obj['cards'].push({"id":id,"img":img,"name":name,"desc":desc});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
 	}
 	saveArray = JSON.stringify(obj,null,4);
-	log(saveArray,"s");
-	saveToFile("cards",saveArray); 
+	log(saveArray,"d");
+	saveToFile("cards", saveArray); 
 }
 
-function saveToFile(mode,jsonString) {
-	//TODO
+function saveToFile(mode,data) {
+	switch (mode) {
+		case "cards":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'cards.json');
+			if (!fs.existsSync(dirPath)){
+				fs.mkdirSync(dirPath);
+			}
+			try {
+				fs.writeFileSync(filePath, data);
+				log("File saved","s");
+			} catch (error) {
+				log("File save failed","e");
+			}
+			break;
+	}
 }

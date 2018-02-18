@@ -63,7 +63,8 @@ $(document).ready(function(){
 	$(document).on('click', "#editorSave", function() {
 		var editorDesc = $("#editorInputDescription").val();
 		var editorName = $("#editorInputName").val();
-		var categoryId = $( "p:contains(" +  cardId + ")").parent().parent().parent().parent().find("#uuidcat").text();
+		var categoryId = $( "p:contains(" +  cardId + ")").closest(".cat").find("#uuidcat").text();
+		log("CatId:" + categoryId,"d");
 		saveCard(cardId,categoryId,editorName,editorDesc);
 		editorState = "closed";
 		$("#noSelection").slideDown();

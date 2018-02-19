@@ -18,7 +18,7 @@ $(document).ready(function(){
 		var html = Mustache.render(template, data);
 		$("#categoryContainer").append(html);
 		log("Category "+ data.id + " added","d");
-		saveCat(data.id,"Name (Click to Edit)")
+		saveCat(data.id,"Name")
 	});
 
 	$(document).on('click', "#catName", function() {

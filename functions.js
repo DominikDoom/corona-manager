@@ -4,8 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 
-let editorState = "closed";
-let saveArray = '{"cards":[]}';
+let editorState = "closecardS";
+let cardSaveArray = '{"cards":[]}';
+let catSaveArray = '{"cats":[]}';
 
 
 $(document).ready(function(){
@@ -17,8 +18,28 @@ $(document).ready(function(){
 		var html = Mustache.render(template, data);
 		$("#categoryContainer").append(html);
 		log("Category "+ data.id + " added","d");
+		saveCat(data.id,"Name (Click to Edit)")
 	});
 
+	$(document).on('click', "#catName", function() {
+        var dad = $(this).closest(".cat");
+		var catName = dad.find('.catName');
+		catName.hide();
+		var editInput = dad.find('.editCatName');
+		editInput.val(catName.text());
+		editInput.show();
+		editInput.focus();
+    });
+    
+    $(document).on('focusout',".editCatName", function(event) {
+        var dad = $(this).closest(".cat");
+		var catName = dad.find('.catName');
+		catName.text($(this).val());
+        $(this).hide();
+		catName.show();
+		saveCat(dad.find("#uuidcat").text(), catName.text());
+	});
+	
 	$(document).on('click', "#removeCat", function() {
 		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
 			$(this).parent().parent().remove();
@@ -34,6 +55,10 @@ $(document).ready(function(){
 		var html = Mustache.render(template, data);
 		$(this).parent().parent().find("div[id='cardContainer']").append(html);
 		log("Card "+ data.id + " added","d");
+		var editorName = "Name";
+		var editorDesc = "The quick brown fox jumps over the lazy dog";
+		var categoryId = $( "p:contains(" +  data.id + ")").closest(".cat").find("#uuidcat").text();
+		saveCard(data.id,categoryId,editorName,editorDesc);
 	});
 
 	let cardId;
@@ -64,7 +89,6 @@ $(document).ready(function(){
 		var editorDesc = $("#editorInputDescription").val();
 		var editorName = $("#editorInputName").val();
 		var categoryId = $( "p:contains(" +  cardId + ")").closest(".cat").find("#uuidcat").text();
-		log("CatId:" + categoryId,"d");
 		saveCard(cardId,categoryId,editorName,editorDesc);
 		editorState = "closed";
 		$("#noSelection").slideDown();
@@ -77,13 +101,13 @@ $(document).ready(function(){
 		setTimeout(resetEditor, 300);
 	});
 
-	$('textarea').on("input", function(){
+	$('#editorInputDescription').on("input", function(){
 		var maxlength = $(this).attr("maxlength");
 		var currentLength = $(this).val().length;
 		$('#charNum').text(currentLength+ "/" + maxlength );
 	});
 
-	$('textarea').keydown(function(e){
+	$('#editorInputDescription').keydown(function(e){
 		// Enter was pressed
 		if (e.keyCode == 13)
 		{
@@ -94,16 +118,16 @@ $(document).ready(function(){
 
 	$(document).on('click', "#removeCard", function() {
 		// Preparation of JSON save
-		var obj = JSON.parse(saveArray);
+		var obj = JSON.parse(cardSaveArray);
 		$.each(obj['cards'], function(index, element) {
 			if (element.id == cardId) {
 				var deletedItem = obj['cards'].splice(index,1);
 				return false;
 			}
 		});
-		saveArray = JSON.stringify(obj,null,4);
-		log(saveArray,"d");
-		saveToFile("cards", saveArray); 
+		cardSaveArray = JSON.stringify(obj,null,4);
+		log(cardSaveArray,"d");
+		saveToFile("card", cardSaveArray); 
 
 		$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
 		editorState = "closed";
@@ -152,6 +176,10 @@ function resetEditor() {
 	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
 	$("#editorInputName").val("");
 	$("#editorInputDescription").val("");
+
+	var maxlength = $("#editorInputDescription").attr("maxlength");
+	var currentLength = $("#editorInputDescription").val().length;
+	$('#charNum').text(currentLength+ "/" + maxlength );
 }
 
 function loadEditor(id) {
@@ -164,6 +192,33 @@ function loadEditor(id) {
 	$("#editorImagePreview").attr("src",img);
 	$("#editorInputName").val(name);
 	$("#editorInputDescription").val(desc);
+
+	var maxlength = $("#editorInputDescription").attr("maxlength");
+	var currentLength = $("#editorInputDescription").val().length;
+	$('#charNum').text(currentLength+ "/" + maxlength );
+}
+
+function saveCat(id,name) {
+	// Preparation of JSON save
+	var obj = JSON.parse(catSaveArray);
+	var time = $.now();
+	if ( jQuery.isEmptyObject(obj['cats']) ) {
+		obj['cats'].push({"id":id,"name":name, "fav":"todo", "creationDate":time});
+	}
+	var counter = 0;
+	$.each(obj['cats'], function(index, element) {
+		if (element.id == id) {
+			counter++;
+			element.name = name;
+			element.fav = "todo";
+		}
+	});
+	if (counter == 0) {
+		obj['cats'].push({"id":id,"name":name, "fav":"todo", "creationDate":time});
+	}
+	cardSaveArray = JSON.stringify(obj,null,4);
+	log(cardSaveArray,"d");
+	saveToFile("cat", cardSaveArray); 
 }
 
 function saveCard(id,cat,name,desc) {
@@ -174,7 +229,7 @@ function saveCard(id,cat,name,desc) {
 	savedCard.find(".cardDesc").text(desc);
 
 	// Preparation of JSON save
-	var obj = JSON.parse(saveArray);
+	var obj = JSON.parse(cardSaveArray);
 	var time = $.now();
 	if ( jQuery.isEmptyObject(obj['cards']) ) {
 		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
@@ -193,16 +248,29 @@ function saveCard(id,cat,name,desc) {
 	if (counter == 0) {
 		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
 	}
-	saveArray = JSON.stringify(obj,null,4);
-	log(saveArray,"d");
-	saveToFile("cards", saveArray); 
+	cardSaveArray = JSON.stringify(obj,null,4);
+	log(cardSaveArray,"d");
+	saveToFile("card", cardSaveArray); 
 }
 
 function saveToFile(mode,data) {
 	switch (mode) {
-		case "cards":
+		case "card":
 			var dirPath = path.join(app.getPath('documents'),'Corona');
 			var filePath = path.join(dirPath, 'cards.json');
+			if (!fs.existsSync(dirPath)){
+				fs.mkdirSync(dirPath);
+			}
+			try {
+				fs.writeFileSync(filePath, data);
+				log("File saved","s");
+			} catch (error) {
+				log("File save failed","e");
+			}
+			break;
+		case "cat":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'categories.json');
 			if (!fs.existsSync(dirPath)){
 				fs.mkdirSync(dirPath);
 			}

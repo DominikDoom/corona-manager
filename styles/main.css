@@ -20,6 +20,7 @@
 
 html, body {
     margin: 0;
+    min-width: 600px;
     height: 100%;
     font-family: 'Roboto Condensed', sans-serif;
     color: whitesmoke;
@@ -169,6 +170,7 @@ body.main-grid {
 
 #editorInputDescription {
     resize: none;
+    font: 13.3333px Arial;
 }
 
 #charNum {
@@ -229,6 +231,19 @@ body.main-grid {
 
 .catDetails {
     margin-left: 20px;
+}
+
+h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.editCatName {
+    display:none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 13px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
 }
 
 .cardContainer {

@@ -61,7 +61,7 @@ $(document).ready(function(){
 		});
 		catSaveArray = JSON.stringify(obj,null,4);
 		log(catSaveArray,"d");
-		saveToFile("card", catSaveArray);
+		saveToFile("cat", catSaveArray);
 		deleteContainedCards(catId);
 
 		$(this).parent().parent().remove();
@@ -306,9 +306,9 @@ function saveToFile(mode,data) {
 			}
 			try {
 				fs.writeFileSync(filePath, data);
-				log("File saved","s");
+				log("File saved: cards.json","s");
 			} catch (error) {
-				log("File save failed","e");
+				log("File save failed: cards.json","e");
 			}
 			break;
 		case "cat":
@@ -319,9 +319,9 @@ function saveToFile(mode,data) {
 			}
 			try {
 				fs.writeFileSync(filePath, data);
-				log("File saved","s");
+				log("File saved: categories.json","s");
 			} catch (error) {
-				log("File save failed","e");
+				log("File save failed: categories.json","e");
 			}
 			break;
 	}
@@ -334,10 +334,10 @@ function loadFromFile(mode) {
 			var filePath = path.join(dirPath, 'cards.json');
 			try {
 				var loadString = fs.readFileSync(filePath, 'utf8');
-				log("File opened","s");
+				log("File opened: cards.json","s");
 				return loadString;
 			} catch (error) {
-				log("File open failed","e");
+				log("File open failed: cards.json","e");
 			}
 			break;
 		case "cat":
@@ -345,10 +345,10 @@ function loadFromFile(mode) {
 			var filePath = path.join(dirPath, 'categories.json');
 			try {
 				var loadString = fs.readFileSync(filePath, 'utf8');
-				log("File opened","s");
+				log("File opened: categories.json","s");
 				return loadString;
 			} catch (error) {
-				log("File open failed","e");
+				log("File open failed: categories.json","e");
 			}
 			break;
 	}
@@ -356,44 +356,48 @@ function loadFromFile(mode) {
 
 function loadConstructor() {
 	var startTime = Date.now();
-	var catString = loadFromFile("cat");
-	var cardString = loadFromFile("card");
-	var catObj = JSON.parse(catString);
-	var cardObj = JSON.parse(cardString);
+	try {
+		var catString = loadFromFile("cat");
+		var cardString = loadFromFile("card");
+		var catObj = JSON.parse(catString);
+		var cardObj = JSON.parse(cardString);
 
-	$.each(catObj['cats'], function(index, element) {
-		var data = {
-			id: element.id
-		}
-		var template = $("#cat-template").html();	
-		var html = Mustache.render(template, data);
-		$("#categoryContainer").append(html);
+		$.each(catObj['cats'], function(index, element) {
+			var data = {
+				id: element.id
+			}
+			var template = $("#cat-template").html();	
+			var html = Mustache.render(template, data);
+			$("#categoryContainer").append(html);
+			
+			var dad = $("#categoryContainer").find("p:contains(" +  data.id + ")").parent().parent();
+			var catName = dad.find('.catName');
+			catName.text(element.name);
+		});
+		catSaveArray = catString;
+		log("catSaveArray: " + catSaveArray,"d");
+
+		$.each(cardObj['cards'], function(index, element) {
+			var data = {
+				id: element.id
+			}
+			var cat = element.cat;
+			var template = $("#card-template").html();
+			var html = Mustache.render(template, data);
+			var dad = $("#categoryContainer").find("p:contains(" +  cat + ")").parent().parent();
+			dad.find("#cardContainer").append(html);
+
+			var savedCard = $( "p:contains(" +  element.id + ")").parent().parent();
+			savedCard.find("img").attr("src",element.img);
+			savedCard.find(".cardName").text(element.name);
+			savedCard.find(".cardDesc").text(element.desc);
+		});
+		cardSaveArray = cardString;
+
+		var elapsedTime = Date.now() - startTime;
+		elapsedTime = (elapsedTime / 1000).toFixed(3);
+		log("Loading Done after " + elapsedTime + "s","s");
+	} catch (error) {
 		
-		var dad = $("#categoryContainer").find("p:contains(" +  data.id + ")").parent().parent();
-		var catName = dad.find('.catName');
-		catName.text(element.name);
-	});
-	catSaveArray = catString;
-	log("catSaveArray: " + catSaveArray,"d");
-
-	$.each(cardObj['cards'], function(index, element) {
-		var data = {
-			id: element.id
-		}
-		var cat = element.cat;
-		var template = $("#card-template").html();
-		var html = Mustache.render(template, data);
-		var dad = $("#categoryContainer").find("p:contains(" +  cat + ")").parent().parent();
-		dad.find("#cardContainer").append(html);
-
-		var savedCard = $( "p:contains(" +  element.id + ")").parent().parent();
-		savedCard.find("img").attr("src",element.img);
-		savedCard.find(".cardName").text(element.name);
-		savedCard.find(".cardDesc").text(element.desc);
-	});
-	cardSaveArray = cardString;
-
-	var elapsedTime = Date.now() - startTime;
-	elapsedTime = (elapsedTime / 1000).toFixed(3);
-	log("Loading Done after " + elapsedTime + "s","s");
+	}
 }

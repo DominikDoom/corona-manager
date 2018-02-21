@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-let editorState = "closecardS";
+let editorState = "closed";
 let cardSaveArray = '{"cards":[]}';
 let catSaveArray = '{"cats":[]}';
 
@@ -39,12 +39,33 @@ $(document).ready(function(){
 		catName.show();
 		saveCat(dad.find("#uuidcat").text(), catName.text());
 	});
+
+	$(document).on('keydown', ".editCatName", function(e) {
+		// Enter was pressed
+		if (e.keyCode == 13)
+		{
+			$(".editCatName").blur();
+		}
+	});
 	
 	$(document).on('click', "#removeCat", function() {
-		// if (confirm('Wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!')) {
-			$(this).parent().parent().remove();
-			log("Category removed","d");
-		// }
+		var dad = $(this).closest(".cat");
+		var catId = dad.find("#uuidcat").text();
+		// Preparation of JSON save
+		var obj = JSON.parse(catSaveArray);
+		$.each(obj['cats'], function(index, element) {
+			if (element.id == catId) {
+				var deletedItem = obj['cats'].splice(index,1);
+				return false;
+			}
+		});
+		catSaveArray = JSON.stringify(obj,null,4);
+		log(catSaveArray,"d");
+		saveToFile("card", catSaveArray);
+		deleteContainedCards(catId);
+
+		$(this).parent().parent().remove();
+		log("Category " + catId + " removed","d");
 	});
 
   	$(document).on('click', "#addCard", function() {
@@ -216,9 +237,9 @@ function saveCat(id,name) {
 	if (counter == 0) {
 		obj['cats'].push({"id":id,"name":name, "fav":"todo", "creationDate":time});
 	}
-	cardSaveArray = JSON.stringify(obj,null,4);
-	log(cardSaveArray,"d");
-	saveToFile("cat", cardSaveArray); 
+	catSaveArray = JSON.stringify(obj,null,4);
+	log(catSaveArray,"d");
+	saveToFile("cat", catSaveArray); 
 }
 
 function saveCard(id,cat,name,desc) {
@@ -253,6 +274,28 @@ function saveCard(id,cat,name,desc) {
 	saveToFile("card", cardSaveArray); 
 }
 
+function deleteContainedCards(catid) {
+	// Preparation of JSON save
+	var obj = JSON.parse(cardSaveArray);
+	$.each(obj['cards'], function(index, element) {
+		if (element !== undefined) {
+			if (element.cat == catid) {
+				var deletedItem = obj['cards'].splice(index,1);
+			}
+		}
+	});
+	$.each(obj['cards'], function(index, element) {
+		if (element !== undefined) {
+			if (element.cat == catid) {
+				var deletedItem = obj['cards'].splice(index,1);
+			}
+		}
+	});
+	cardSaveArray = JSON.stringify(obj,null,4);
+	log(cardSaveArray,"d");
+	saveToFile("card", cardSaveArray);
+}
+
 function saveToFile(mode,data) {
 	switch (mode) {
 		case "card":
@@ -282,4 +325,75 @@ function saveToFile(mode,data) {
 			}
 			break;
 	}
+}
+
+function loadFromFile(mode) {
+	switch (mode) {
+		case "card":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'cards.json');
+			try {
+				var loadString = fs.readFileSync(filePath, 'utf8');
+				log("File opened","s");
+				return loadString;
+			} catch (error) {
+				log("File open failed","e");
+			}
+			break;
+		case "cat":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'categories.json');
+			try {
+				var loadString = fs.readFileSync(filePath, 'utf8');
+				log("File opened","s");
+				return loadString;
+			} catch (error) {
+				log("File open failed","e");
+			}
+			break;
+	}
+}
+
+function loadConstructor() {
+	var startTime = Date.now();
+	var catString = loadFromFile("cat");
+	var cardString = loadFromFile("card");
+	var catObj = JSON.parse(catString);
+	var cardObj = JSON.parse(cardString);
+
+	$.each(catObj['cats'], function(index, element) {
+		var data = {
+			id: element.id
+		}
+		var template = $("#cat-template").html();	
+		var html = Mustache.render(template, data);
+		$("#categoryContainer").append(html);
+		
+		var dad = $("#categoryContainer").find("p:contains(" +  data.id + ")").parent().parent();
+		var catName = dad.find('.catName');
+		catName.text(element.name);
+	});
+	catSaveArray = catString;
+	log("catSaveArray: " + catSaveArray,"d");
+
+	$.each(cardObj['cards'], function(index, element) {
+		var data = {
+			id: element.id
+		}
+		var cat = element.cat;
+		var template = $("#card-template").html();
+		var html = Mustache.render(template, data);
+		var dad = $("#categoryContainer").find("p:contains(" +  cat + ")").parent().parent();
+		dad.find("#cardContainer").append(html);
+
+		var savedCard = $( "p:contains(" +  element.id + ")").parent().parent();
+		savedCard.find("img").attr("src",element.img);
+		savedCard.find(".cardName").text(element.name);
+		savedCard.find(".cardDesc").text(element.desc);
+	});
+	cardSaveArray = cardString;
+
+	var elapsedTime = Date.now() - startTime;
+	elapsedTime = (elapsedTime / 1000).toFixed(3);
+	log("Loading Done after " + elapsedTime + "s","s");
 }

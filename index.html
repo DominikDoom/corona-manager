@@ -36,7 +36,7 @@
             <label id="editCard"><i class="icono-rename"></i></label>
           </div>
         </div>
-        <img class="cardImage" src="http://via.placeholder.com/200x150" alt="Avatar" style="width:100%">
+        <img class="cardImage" src="http://via.placeholder.com/200x150" onerror="if (this.src != 'img/fallback.png') this.src = 'img/fallback.png';" alt="Image" style="width:100%">
         <div class="cardDetails">
             <p id="uuid" style="display: none;">{{id}}</p>
             <h4 class="cardName">Name</h4>

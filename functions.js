@@ -393,7 +393,7 @@ function loadConstructor() {
 			savedCard.find(".cardDesc").text(element.desc);
 		});
 		cardSaveArray = cardString;
-
+		
 		var elapsedTime = Date.now() - startTime;
 		elapsedTime = (elapsedTime / 1000).toFixed(3);
 		log("Loading Done after " + elapsedTime + "s","s");

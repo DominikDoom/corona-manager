@@ -36,7 +36,7 @@
             <label id="editCard"><i class="icono-rename"></i></label>
           </div>
         </div>
-        <img class="cardImage" src="http://via.placeholder.com/200x150" onerror="if (this.src != 'img/fallback.png') this.src = 'img/fallback.png';" alt="Image" style="width:100%">
+        <img class="cardImage" src="img/default.png" onerror="if (this.src != 'img/fallback.png') this.src = 'img/fallback.png';" alt="Image" style="width:100%">
         <div class="cardDetails">
             <p id="uuid" style="display: none;">{{id}}</p>
             <h4 class="cardName">Name</h4>
@@ -73,6 +73,7 @@
           <button id="editorCancel">Abbrechen</button> 
         </div>
         <p id="debugIdDisplay">Id des ausgewählten Elements: </p>
+        <p id="idStorage" style="display:hidden"></p>
         <label for="editorInputName">Name</label>
         <input class="editorInput" id="editorInputName"/>
         <label for="editorInputDescription">Beschreibung</label>
@@ -82,7 +83,7 @@
         <button id="editorImageSelect" onclick="openImageDialog();">Bild auswählen</button>
         <button id="editorImageReset" onclick="resetImage()">Zurücksetzen</button>
         <div class="editorImageContainer">
-          <img id="editorImagePreview" src="http://via.placeholder.com/200x150" />
+          <img id="editorImagePreview" src="img/default.png" />
         </div>
         <label for="removeCard">Erweitert</label>
         <button id="removeCard">Karte löschen</button>

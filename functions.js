@@ -2,6 +2,7 @@ const {dialog} = require('electron').remote;
 const {app} = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
+const nativeImage = require('electron').nativeImage;
 
 
 let editorState = "closed";
@@ -90,6 +91,7 @@ $(document).ready(function(){
 		if (editorState == "closed") {
 			editorState = "open";
 			$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
+			$("#idStorage").text(cardId);
 			$("#noSelection").slideUp();
 			cardOldId = cardId;
 		} else {
@@ -97,6 +99,7 @@ $(document).ready(function(){
 				resetEditor();
 				loadEditor(cardId);
 				$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
+				$("#idStorage").text(cardId);
 				cardOldId = cardId;
 			} else {		
 				editorState = "closed";
@@ -184,17 +187,20 @@ function uuidv4() {
 
 function openImageDialog() {
 	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileName) {
-		$("#editorImagePreview").attr("src",FileName);
+		var id = $("#idStorage").text();
+		var img = createThumbnail(FileName[0],id);
+		$("#editorImagePreview").attr("src",img);
 	});
 }
 
 function resetImage() {
-	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
+	$("#editorImagePreview").attr("src","img/default.png");
 }
 
 function resetEditor() {
 	$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
-	$("#editorImagePreview").attr("src","http://via.placeholder.com/200x150");
+	$("#idStorage").text("");
+	$("#editorImagePreview").attr("src","img/default.png");
 	$("#editorInputName").val("");
 	$("#editorInputDescription").val("");
 
@@ -399,5 +405,26 @@ function loadConstructor() {
 		log("Loading Done after " + elapsedTime + "s","s");
 	} catch (error) {
 		
+	}
+}
+
+function createThumbnail(inputPath,id) {
+	log(inputPath);
+	var image = nativeImage.createFromPath(inputPath);
+	log(image.isEmpty(),"d");
+	image = image.resize({width: 200, height: 150});
+	var buffer = image.toPNG();
+
+	var dirPath = path.join(app.getPath('documents'),'Corona','thumbs');
+	var filePath = path.join(dirPath, id + '.png');
+	if (!fs.existsSync(dirPath)){
+		fs.mkdirSync(dirPath);
+	}
+	try {
+		fs.writeFileSync(filePath, buffer);
+		return filePath;
+		log("File saved: " + id + ".png","s");
+	} catch (error) {
+		log("File save failed: " + id + ".png","e");
 	}
 }

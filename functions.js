@@ -8,6 +8,8 @@ const nativeImage = require('electron').nativeImage;
 var editorState = "closed";
 var cardSaveArray = '{"cards":[]}';
 var catSaveArray = '{"cats":[]}';
+var deleteMode;
+var catToDelete;
 
 
 $(document).ready(function(){
@@ -51,22 +53,10 @@ $(document).ready(function(){
 	
 	$(document).on('click', "#removeCat", function() {
 		var dad = $(this).closest(".cat");
-		var catId = dad.find("#uuidcat").text();
-		// Preparation of JSON save
-		var obj = JSON.parse(catSaveArray);
-		$.each(obj['cats'], function(index, element) {
-			if (element.id == catId) {
-				var deletedItem = obj['cats'].splice(index,1);
-				return false;
-			}
-		});
-		catSaveArray = JSON.stringify(obj,null,4);
-		log(catSaveArray,"d");
-		saveToFile("cat", catSaveArray);
-		deleteContainedCards(catId);
+		catToDelete = dad.find("#uuidcat").text();
 
-		$(this).parent().parent().remove();
-		log("Category " + catId + " removed","d");
+		deleteMode = "cat";
+		$(".alertOverlay").css("display","block");
 	});
 
   	$(document).on('click', "#addCard", function() {
@@ -138,30 +128,61 @@ $(document).ready(function(){
 			// prevent default behavior
 			e.preventDefault();
 		}
-		});
+	});
 
 	$(document).on('click', "#removeCard", function() {
-		if (confirmDeletion()) {
-			// Preparation of JSON save
-			var obj = JSON.parse(cardSaveArray);
-			$.each(obj['cards'], function(index, element) {
-				if (element.id == cardId) {
-					var deletedItem = obj['cards'].splice(index,1);
-					return false;
-				}
-			});
-			cardSaveArray = JSON.stringify(obj,null,4);
-			log(cardSaveArray,"d");
-			saveToFile("card", cardSaveArray); 
+		deleteMode = "card";
+		$(".alertOverlay").css("display","block");
+	});
 
-			deleteThumb(cardId);
+	$(document).on('click', "#dialogConfirm", function() {
+		switch (deleteMode) {
+			case "card":
+				// Preparation of JSON save
+				var obj = JSON.parse(cardSaveArray);
+				$.each(obj['cards'], function(index, element) {
+					if (element.id == cardId) {
+						var deletedItem = obj['cards'].splice(index,1);
+						return false;
+					}
+				});
+				cardSaveArray = JSON.stringify(obj,null,4);
+				log(cardSaveArray,"d");
+				saveToFile("card", cardSaveArray); 
 
-			$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
-			editorState = "closed";
-			$("#noSelection").slideDown();
-			setTimeout(resetEditor, 300);
-			log("Card "+ cardId + " removed","d");	
+				deleteThumb(cardId);
+
+				$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
+				editorState = "closed";
+				$("#noSelection").slideDown();
+				setTimeout(resetEditor, 300);
+				log("Card "+ cardId + " removed","d");
+				$(".alertOverlay").css("display","none");
+				break;
+			case "cat":
+				var catId = catToDelete;
+				// Preparation of JSON save
+				var obj = JSON.parse(catSaveArray);
+				$.each(obj['cats'], function(index, element) {
+					if (element.id == catId) {
+						var deletedItem = obj['cats'].splice(index,1);
+						return false;
+					}
+				});
+				catSaveArray = JSON.stringify(obj,null,4);
+				log(catSaveArray,"d");
+				saveToFile("cat", catSaveArray);
+				deleteContainedCards(catId);
+		
+				$(document).find("p:contains(" + catId + ")").parent().parent().remove();
+				log("Category " + catId + " removed","d");
+				$(".alertOverlay").css("display","none");
+				break;
 		}
+	});
+
+	$(document).on('click', "#dialogDeny", function() {
+		$(".alertOverlay").css("display","none");
 	});
 });
 
@@ -193,7 +214,7 @@ function openImageDialog() {
 	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileName) {
 		var id = $("#idStorage").text();
 		var img = createThumbnail(FileName[0],id);
-		$("#editorImagePreview").attr("src",img);
+		$("#editorImagePreview").attr("src", img +"#" + new Date().getTime());
 	});
 }
 
@@ -447,10 +468,6 @@ function deleteThumb(id) {
 			log("Thumbnail " + id + ".png deleted","s");
 		});
 	} else {
-		alert("The humbnail file" + id + ".png doesn't exist, cannot delete");
+		alert("The thumbnail file" + id + ".png doesn't exist, cannot delete");
 	}
-}
-
-function confirmDeletion() {
-	$(".alertOverlay").css("display","block");
 }

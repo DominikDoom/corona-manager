@@ -24,6 +24,7 @@ html, body {
     height: 100%;
     font-family: 'Roboto Condensed', sans-serif;
     color: whitesmoke;
+    position: relative;
 }
 
 button {
@@ -33,6 +34,60 @@ button {
 
 label { 
     display: block 
+}
+
+.alertOverlay {
+    display: none;
+    z-index: 10000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.dialogBox {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    padding: 15px;
+    width: 250px;
+    height: 130px;
+    background-color: #333333;
+    border: solid;
+    border-color: #5b5b5b;
+    text-align: center;
+}
+
+.dialogBox h2 {
+    margin-top: -3px;
+}
+
+.dialogBox.yesButton {
+    position: absolute;
+    left: 100px;
+    width: 50px;
+    height: 20px;
+    background-color: #2d5a2b;
+}
+
+.dialogBox.yesButton:hover {
+    cursor: pointer;
+    background-color: #1e551b;
+}
+
+.dialogBox.noButton {
+    position: absolute;
+    right: 100px;
+    width: 50px;
+    height: 20px;
+    background-color: #5a2b2b;
+}
+
+.dialogBox.noButton:hover {
+    cursor: pointer;
+    background-color: #552020;
 }
 
 body.main-grid {

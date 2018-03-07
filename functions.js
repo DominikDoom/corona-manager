@@ -5,9 +5,9 @@ const path = require('path');
 const nativeImage = require('electron').nativeImage;
 
 
-let editorState = "closed";
-let cardSaveArray = '{"cards":[]}';
-let catSaveArray = '{"cats":[]}';
+var editorState = "closed";
+var cardSaveArray = '{"cards":[]}';
+var catSaveArray = '{"cats":[]}';
 
 
 $(document).ready(function(){
@@ -83,8 +83,8 @@ $(document).ready(function(){
 		saveCard(data.id,categoryId,editorName,editorDesc);
 	});
 
-	let cardId;
-	let cardOldId;
+	var cardId;
+	var cardOldId;
 	$(document).on('click', "#editCard", function() {
 		cardId = $(this).parent().parent().parent().find("#uuid").text();
 		loadEditor(cardId);
@@ -141,23 +141,27 @@ $(document).ready(function(){
 		});
 
 	$(document).on('click', "#removeCard", function() {
-		// Preparation of JSON save
-		var obj = JSON.parse(cardSaveArray);
-		$.each(obj['cards'], function(index, element) {
-			if (element.id == cardId) {
-				var deletedItem = obj['cards'].splice(index,1);
-				return false;
-			}
-		});
-		cardSaveArray = JSON.stringify(obj,null,4);
-		log(cardSaveArray,"d");
-		saveToFile("card", cardSaveArray); 
+		if (confirmDeletion()) {
+			// Preparation of JSON save
+			var obj = JSON.parse(cardSaveArray);
+			$.each(obj['cards'], function(index, element) {
+				if (element.id == cardId) {
+					var deletedItem = obj['cards'].splice(index,1);
+					return false;
+				}
+			});
+			cardSaveArray = JSON.stringify(obj,null,4);
+			log(cardSaveArray,"d");
+			saveToFile("card", cardSaveArray); 
 
-		$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
-		editorState = "closed";
-		$("#noSelection").slideDown();
-		setTimeout(resetEditor, 300);
-		log("Card "+ cardId + " removed","d");
+			deleteThumb(cardId);
+
+			$(".card").find("p:contains(" + cardId + ")").parent().parent().remove();
+			editorState = "closed";
+			$("#noSelection").slideDown();
+			setTimeout(resetEditor, 300);
+			log("Card "+ cardId + " removed","d");	
+		}
 	});
 });
 
@@ -286,6 +290,7 @@ function deleteContainedCards(catid) {
 	$.each(obj['cards'], function(index, element) {
 		if (element !== undefined) {
 			if (element.cat == catid) {
+				deleteThumb(element.id);
 				var deletedItem = obj['cards'].splice(index,1);
 			}
 		}
@@ -293,6 +298,7 @@ function deleteContainedCards(catid) {
 	$.each(obj['cards'], function(index, element) {
 		if (element !== undefined) {
 			if (element.cat == catid) {
+				deleteThumb(element.id);
 				var deletedItem = obj['cards'].splice(index,1);
 			}
 		}
@@ -381,7 +387,6 @@ function loadConstructor() {
 			catName.text(element.name);
 		});
 		catSaveArray = catString;
-		log("catSaveArray: " + catSaveArray,"d");
 
 		$.each(cardObj['cards'], function(index, element) {
 			var data = {
@@ -404,14 +409,14 @@ function loadConstructor() {
 		elapsedTime = (elapsedTime / 1000).toFixed(3);
 		log("Loading Done after " + elapsedTime + "s","s");
 	} catch (error) {
-		
+
 	}
 }
 
 function createThumbnail(inputPath,id) {
 	log(inputPath);
 	var image = nativeImage.createFromPath(inputPath);
-	log(image.isEmpty(),"d");
+	log("Image empty: " + image.isEmpty(),"d");
 	image = image.resize({width: 200, height: 150});
 	var buffer = image.toPNG();
 
@@ -427,4 +432,25 @@ function createThumbnail(inputPath,id) {
 	} catch (error) {
 		log("File save failed: " + id + ".png","e");
 	}
+}
+
+function deleteThumb(id) {
+	var dirPath = path.join(app.getPath('documents'),'Corona','thumbs');
+	var filePath = path.join(dirPath, id + ".png");
+	if (fs.existsSync(filePath)) {
+		fs.unlink(filePath, (err) => {
+			if (err) {
+				alert("An error ocurred updating the file" + err.message);
+				console.log(err);
+				return;
+			}
+			log("Thumbnail " + id + ".png deleted","s");
+		});
+	} else {
+		alert("The humbnail file" + id + ".png doesn't exist, cannot delete");
+	}
+}
+
+function confirmDeletion() {
+	$(".alertOverlay").css("display","block");
 }

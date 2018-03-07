@@ -46,6 +46,13 @@
     </script>
   </head>
   <body class="main-grid">
+    <div class="alertOverlay">
+      <div class="dialogBox">
+        <h2>Wirklich löschen?</h2>
+        <div class="dialogBox noButton" id="dialogConfirm">Nein</div>
+        <div class="dialogBox yesButton" id="dialogDeny">Ja</div>
+      </div>
+    </div>
   	<div class="container-grid header">
       <div class="logo"></div>
     </div>
@@ -73,7 +80,7 @@
           <button id="editorCancel">Abbrechen</button> 
         </div>
         <p id="debugIdDisplay">Id des ausgewählten Elements: </p>
-        <p id="idStorage" style="display:hidden"></p>
+        <p id="idStorage" style="display: none"></p>
         <label for="editorInputName">Name</label>
         <input class="editorInput" id="editorInputName"/>
         <label for="editorInputDescription">Beschreibung</label>

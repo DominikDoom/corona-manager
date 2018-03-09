@@ -32,13 +32,19 @@
       <div class="card" id="card">
         <div class="cardOverlay">
           <div class="cardButtonsContainer">
-            <label><i class="icono-search"></i></label>
+            <label id="openCard"><i class="icono-search"></i></label>
             <label id="editCard"><i class="icono-rename"></i></label>
+            <div class="cardTopButtonsContainer">
+              <label id="upCard"><i class="icono-caretUp"></i></label>
+              <label id="downCard"><i class="icono-caretDown"></i></label>
+              <label id="favCard"><i class="icono-asterisk"></i></label>
+            </div>
           </div>
         </div>
         <img class="cardImage" src="img/default.png" onerror="if (this.src != 'img/fallback.png') this.src = 'img/fallback.png';" alt="Image" style="width:100%">
         <div class="cardDetails">
             <p id="uuid" style="display: none;">{{id}}</p>
+            <p id="pos" style="display: none;">{{pos}}</p>
             <h4 class="cardName">Name</h4>
             <p class="cardDesc">The quick brown fox jumps over the lazy dog</p> 
         </div>
@@ -97,7 +103,7 @@
       </div>
       <div id="noSelection"></div> 
 	  </div>
-    <div class="container-grid main"id="categoryContainer" >
+    <div class="container-grid main" id="categoryContainer" >
 		  <button id="addCat">Kategorie hinzufügen</button>
     </div>
   </body>

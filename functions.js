@@ -61,7 +61,8 @@ $(document).ready(function(){
 
   	$(document).on('click', "#addCard", function() {
 		var data = {
-			id: uuidv4()
+			id: uuidv4(),
+			pos: 0
 		}
 		var template = $("#card-template").html();
 		var html = Mustache.render(template, data);
@@ -71,6 +72,7 @@ $(document).ready(function(){
 		var editorDesc = "The quick brown fox jumps over the lazy dog";
 		var categoryId = $( "p:contains(" +  data.id + ")").closest(".cat").find("#uuidcat").text();
 		saveCard(data.id,categoryId,editorName,editorDesc);
+		updatePosition();
 	});
 
 	var cardId;
@@ -97,6 +99,17 @@ $(document).ready(function(){
 				setTimeout(resetEditor, 300);
 			}
 		}
+	});
+
+	$(document).on('click', "#upCard", function(e) {
+		var wrapper = $(this).closest('#card')
+		wrapper.insertBefore(wrapper.prev())
+		updatePosition();
+	});
+	$(document).on('click', "#downCard", function(e) {
+		var wrapper = $(this).closest('#card')
+		wrapper.insertAfter(wrapper.next())
+		updatePosition();
 	});
 
 	$(document).on('click', "#editorSave", function() {
@@ -279,12 +292,13 @@ function saveCard(id,cat,name,desc) {
 	var img = savedCard.find("img").attr("src");
 	savedCard.find(".cardName").text(name);
 	savedCard.find(".cardDesc").text(desc);
+	var pos = $( "p:contains(" +  id + ")").closest("#card").index();
 
 	// Preparation of JSON save
 	var obj = JSON.parse(cardSaveArray);
 	var time = $.now();
 	if ( jQuery.isEmptyObject(obj['cards']) ) {
-		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":"todo","creationDate":time});
 	}
 	var counter = 0;
 	$.each(obj['cards'], function(index, element) {
@@ -294,12 +308,27 @@ function saveCard(id,cat,name,desc) {
 			element.img = img;
 			element.name = name;
 			element.desc = desc;
+			element.pos = pos;
 			element.fav = "todo";
 		}
 	});
 	if (counter == 0) {
-		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc, "fav":"todo", "creationDate":time});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":"todo","creationDate":time});
 	}
+	cardSaveArray = JSON.stringify(obj,null,4);
+	log(cardSaveArray,"d");
+	saveToFile("card", cardSaveArray); 
+}
+
+function updatePosition() {
+	// Preparation of JSON save
+	var obj = JSON.parse(cardSaveArray);
+	$.each(obj['cards'], function(index, element) {
+			var pos = $( "p:contains(" +  element.id + ")").closest("#card").index();
+			element.pos = pos;
+		}
+	);
+
 	cardSaveArray = JSON.stringify(obj,null,4);
 	log(cardSaveArray,"d");
 	saveToFile("card", cardSaveArray); 
@@ -411,7 +440,8 @@ function loadConstructor() {
 
 		$.each(cardObj['cards'], function(index, element) {
 			var data = {
-				id: element.id
+				id: element.id,
+				pos: element.pos
 			}
 			var cat = element.cat;
 			var template = $("#card-template").html();
@@ -426,6 +456,8 @@ function loadConstructor() {
 		});
 		cardSaveArray = cardString;
 		
+		sortResults();
+
 		var elapsedTime = Date.now() - startTime;
 		elapsedTime = (elapsedTime / 1000).toFixed(3);
 		log("Loading Done after " + elapsedTime + "s","s");
@@ -470,4 +502,12 @@ function deleteThumb(id) {
 	} else {
 		alert("The thumbnail file" + id + ".png doesn't exist, cannot delete");
 	}
+}
+
+function sortResults() {
+	var $divs = $("div.card");
+	var numericallyOrderedDivs = $divs.sort(function (a, b) {
+        return $(a).find("#pos").text() > $(b).find("#pos").text();
+    });
+    $("#cardContainer").html(numericallyOrderedDivs);
 }

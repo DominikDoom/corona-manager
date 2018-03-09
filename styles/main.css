@@ -358,13 +358,34 @@ h4 {
     justify-content: center;
 }
 
-.cardButtonsContainer label {
+.cardTopButtonsContainer {
+    zoom: 0.46;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#openCard, #editCard {
     margin: 10px;
     border-radius: 50%;
 }
 
-.cardButtonsContainer label:hover {
+#openCard:hover, #editCard:hover {
     background: rgba(0,0,0,0.7);
+}
+
+#upCard, #downCard, #favCard {
+    border-radius: 50%;
+    margin-left: 10px;
+    float: left;
+}
+
+#upCard:hover, #downCard:hover, #favCard:hover {
+    background: rgba(0,0,0,0.7);
+}
+
+.cardContainer > .card:first-child .cardOverlay .cardButtonsContainer .cardTopButtonsContainer #upCard, .cardContainer > .card:last-child .cardOverlay .cardButtonsContainer .cardTopButtonsContainer #downCard {
+    display: none;
 }
 
 /* Add some padding inside the card container */

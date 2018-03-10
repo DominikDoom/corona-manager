@@ -610,7 +610,7 @@ function deleteThumb(id) {
 function sortResults() {
 	var $divs = $("div.card");
 	var numericallyOrderedDivs = $divs.sort(function (a, b) {
-        return $(a).find("#pos").text() > $(b).find("#pos").text();
+		return $(a).find("#pos").text() - $(b).find("#pos").text();
     });
     $("#cardContainer").html(numericallyOrderedDivs);			// Hierbei wird der gesamte Inhalt von #cardContainer überschrieben, daher darf diese Funktion nur beim Laden aufgerufen werden
 }

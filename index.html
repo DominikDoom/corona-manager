@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Corona Project Manager</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/icono.min.css">
+    <link rel="stylesheet" href="styles/hover.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -32,12 +33,12 @@
       <div class="card" id="card">
         <div class="cardOverlay">
           <div class="cardButtonsContainer">
-            <label id="openCard"><i class="icono-search"></i></label>
-            <label id="editCard"><i class="icono-rename"></i></label>
+            <label id="openCard"><i class="fas fa-expand-arrows-alt hvr-grow"></i></label>
+            <label id="editCard"><i class="fas fa-pencil-alt hvr-grow"></i></label>
             <div class="cardTopButtonsContainer">
-              <label id="upCard"><i class="icono-caretUp"></i></label>
-              <label id="downCard"><i class="icono-caretDown"></i></label>
-              <label id="favCard"><i class="icono-asterisk"></i></label>
+              <label id="upCard"><i class="fas fa-caret-up"></i></label>
+              <label id="downCard"><i class="fas fa-caret-down"></i></label>
+              <label id="favCard"><i class="far fa-star " data-fa-transform="shrink-5"></i></label>
             </div>
           </div>
         </div>
@@ -45,6 +46,7 @@
         <div class="cardDetails">
             <p id="uuid" style="display: none;">{{id}}</p>
             <p id="pos" style="display: none;">{{pos}}</p>
+            <p id="time" style="display: none;">{{time}}</p>
             <h4 class="cardName">Name</h4>
             <p class="cardDesc">The quick brown fox jumps over the lazy dog</p> 
         </div>
@@ -64,20 +66,25 @@
     </div>
     <div class="container-grid nav">
       <label class="navicon">
-        <i class="icono-home"></i>
+        <i class="fas fa-home fa-fw"></i>
       </label>
       <label class="navicon">
-        <i class="icono-paperClip"></i>
+          <span class="fa-layers fa-fw">
+            <i class="fas fa-at"></i>
+            <span class="fa-layers-counter" style="background:Tomato">99+</span>
+          </span>
       </label>
       <label class="navicon">
-        <i class="icono-barChart"></i>
+        <i class="far fa-chart-bar fa-fw"></i>
       </label>
-      <label class="navicon">
-       <i class="icono-sliders"></i>
-      </label>
-      <label class="navicon">
-        <i class="icono-signOut"></i>
-      </label>
+      <div class="naviconBottom">
+        <label class="navicon">
+          <i class="fas fa-cog fa-fw"></i>
+        </label>
+        <label class="navicon">
+          <i class="fas fa-sign-out-alt fa-fw"></i>
+        </label>
+      </div>
     </div>
     <div class="container-grid editor">
       <div id="selection">

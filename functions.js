@@ -87,18 +87,20 @@ $(document).ready(function(){
   	$(document).on('click', "#addCard", function() {
 		var data = {
 			id: uuidv4(),										// Wie bereits bei der Kategorie bekommt auch die Karte eine uuid zugeteilt
-			pos: 0												// pos gibt die Indexposition der Karte an, um manuelle Sortierung zu ermöglichen, wird hier nur temporär mit 0 initialisiert und später überschrieben
+			pos: 0,												// pos gibt die Indexposition der Karte an, wird hier nur temporär mit 0 initialisiert und später überschrieben
+			time: $.now()	
 		}
 		var template = $("#card-template").html();				// Das Template wird geladen
 		var html = Mustache.render(template, data);
 		$(this).parent().parent().find("div[id='cardContainer']").append(html);	// Der von Mustache vervollständigte HTML-Code wird in den Kartencontainer der Elternkategorie eingefügt
 		log("Card "+ data.id + " added","d");
 		// Der Inhalt von Name und Beschreibung der Neuen Karte wird mit einem Template-Text initialisiert
+		createThumbnail("img/default.png",data.id);
 		var name = "Name";
 		var desc = "The quick brown fox jumps over the lazy dog";
 		var categoryId = $( "p:contains(" +  data.id + ")").closest(".cat").find("#uuidcat").text();	// Die ID der Elternkategorie wird gelesen, um sie in der JSON-Datei einzufügen
-		saveCard(data.id,categoryId,name,desc);					// Speichert die neu erstellte Karte in einer JSON-Datei
-		updatePosition();										// Aktualisiert die bisher mit 0 initialisierte Indexposition, wirda uch direkt in der JSON-Datei aktualisiert 
+		saveCard(data.id,categoryId,name,desc,data.time);					// Speichert die neu erstellte Karte in einer JSON-Datei
+		updatePosition();										// Aktualisiert die bisher mit 0 initialisierte Indexposition, wird auch direkt in der JSON-Datei aktualisiert 
 	});
 
 	var cardId;													// cardId speichert die Id der Karte, die zuletzt im Editor geladen wurde
@@ -147,7 +149,8 @@ $(document).ready(function(){
 		var editorDesc = $("#editorInputDescription").val();
 		var editorName = $("#editorInputName").val();
 		var categoryId = $( "p:contains(" +  cardId + ")").closest(".cat").find("#uuidcat").text();
-		saveCard(cardId,categoryId,editorName,editorDesc);		// Die Änderungen werden zum Speichern in der JSON-Datei übergeben
+		var time = $.now();
+		saveCard(cardId,categoryId,editorName,editorDesc,time);		// Die Änderungen werden zum Speichern in der JSON-Datei übergeben
 		editorState = "closed";
 		$("#noSelection").slideDown();
 		setTimeout(resetEditor, 300);							// Der verzögerte Funktionsaufruf ist nötig, um den Editor erst zu clearen, wenn die "Tür" komplett heruntergefahren ist
@@ -352,7 +355,7 @@ function saveCat(id,name) {
 }
 
 // Speichern einer Karte
-function saveCard(id,cat,name,desc) {
+function saveCard(id,cat,name,desc,time) {
 	// Hier wird zuerst die tatsächliche HTML-Karte aktualisiert
 	var savedCard = $( "p:contains(" +  id + ")").parent().parent();
 	savedCard.find("img").attr("src",$("#editorImagePreview").attr("src"));
@@ -363,7 +366,6 @@ function saveCard(id,cat,name,desc) {
 
 	// Preparation of JSON save
 	var obj = JSON.parse(cardSaveArray);						// Der JSON String wird in ein Objekt umgewandelt
-	var time = $.now();											// Die aktuelle Zeit wird gespeichert
 	if ( jQuery.isEmptyObject(obj['cards']) ) {					// Falls noch keine Karte vorhanden ist, wird eine neue gepusht
 		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":"todo","creationDate":time});
 	}
@@ -532,7 +534,8 @@ function loadConstructor() {
 		$.each(cardObj['cards'], function(index, element) {		// Alle Karten werden durchlaufen
 			var data = {
 				id: element.id,
-				pos: element.pos								// pos wird hier direkt korrekt geladen, daher wird updatePosition() nicht benötigt
+				pos: element.pos,								// pos wird hier direkt korrekt geladen, daher wird updatePosition() nicht benötigt
+				time: element.creationDate				
 			}
 			var cat = element.cat;
 			var template = $("#card-template").html();			// Das Template wird geladen
@@ -549,8 +552,12 @@ function loadConstructor() {
 		cardSaveArray = cardString;								// Die Runtime-Variable wird auf den geladenen JSON-String gesetzt, um damit weiterzuarbeiten
 		
 		// Da es aufgrund der verwendeten JSON-Struktur sehr umständlich wäre, die geladenen JSON-Daten korrekt zu sortieren, wird stattdessen das Endprodukt umsortiert
-		sortResults();
-
+		// Um jeweils die richtigen Divs in die richtigen Kategorien zu sortieren, wird pro Kategorie sortiert
+		$.each(catObj['cats'], function(index, element) {		// Alle Kategorien werden durchlaufen
+			var id = element.id;								// Holt die Kategorie-ID
+			sortResults(id, "pos");								// Sortiert nach Indexposition
+		});
+		
 		// Gibt die zum Laden benötigte Zeit aus
 		var elapsedTime = Date.now() - startTime;
 		elapsedTime = (elapsedTime / 1000).toFixed(3);
@@ -602,15 +609,39 @@ function deleteThumb(id) {
 			log("Thumbnail " + id + ".png deleted","s");
 		});
 	} else {
-		alert("The thumbnail file" + id + ".png doesn't exist, cannot delete");
+		alert("The thumbnail file " + id + ".png doesn't exist, cannot delete");
 	}
 }
 
 // Sortiert die nach dem Laden fertig eingefügten Karten-divs nach dem Positionsparameter
-function sortResults() {
-	var $divs = $("div.card");
-	var numericallyOrderedDivs = $divs.sort(function (a, b) {
-		return $(a).find("#pos").text() - $(b).find("#pos").text();
-    });
-    $("#cardContainer").html(numericallyOrderedDivs);			// Hierbei wird der gesamte Inhalt von #cardContainer überschrieben, daher darf diese Funktion nur beim Laden aufgerufen werden
+function sortResults(catId,mode) {
+	var $divs = $("#categoryContainer").find("p:contains(" +  catId + ")").parent().parent().find("#cardContainer").find("div.card");
+	var numericallyOrderedDivs;
+	switch (mode) {												// Die Sortiermethode
+		case "pos":												// Indexposition (Manuelle Sortierung)
+			numericallyOrderedDivs = $divs.sort(function (a, b) {
+				return $(a).find("#pos").text() - $(b).find("#pos").text();
+			});
+			break;
+		case "nameUp":											// Alphabetisch A-Z
+			numericallyOrderedDivs = $divs.sort(function (a, b) {
+				if ($(a).find(".cardName").text() < $(b).find(".cardName").text()) return -1;
+      			else if ($(a).find(".cardName").text() > $(b).find(".cardName").text()) return 1;
+      			return 0;
+			});
+			break;
+		case "nameDown":										// Alphabetisch Z-A
+			numericallyOrderedDivs = $divs.sort(function (a, b) {
+				if ($(a).find(".cardName").text() > $(b).find(".cardName").text()) return -1;
+      			else if ($(a).find(".cardName").text() < $(b).find(".cardName").text()) return 1;
+      			return 0;
+			});
+			break;
+		case "time":											// Erstelldatum
+			numericallyOrderedDivs = $divs.sort(function (a, b) {
+				return $(a).find("#time").text() - $(b).find("#time").text();
+			});
+			break;
+	}	
+    $("#categoryContainer").find("p:contains(" +  catId + ")").parent().parent().find("#cardContainer").html(numericallyOrderedDivs);			// Hierbei wird der gesamte Inhalt von #cardContainer überschrieben, daher darf diese Funktion nur beim Laden aufgerufen werden
 }

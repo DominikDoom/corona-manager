@@ -20,7 +20,7 @@
 
 html, body {
     margin: 0;
-    min-width: 600px;
+    min-width: 700px;
     height: 100%;
     font-family: 'Roboto Condensed', sans-serif;
     color: whitesmoke;
@@ -95,9 +95,11 @@ body.main-grid {
     margin: 0;
     display: grid;
     grid-template-areas: 'header header header' 
+                         'nav toolbar editor'
                          'nav main editor';
     grid-template-columns: 50px 1fr 250px;
-    grid-template-rows: 70px 
+    grid-template-rows: 70px
+                        55px 
                         1fr;
     grid-row-gap: 0;
     grid-column-gap: 0;
@@ -106,10 +108,6 @@ body.main-grid {
 .container-grid {
     margin-right: 0;
     margin-left: 0;
-    padding-top: 15px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 15px;
     background-color: #fff;
 }
 
@@ -117,6 +115,8 @@ body.main-grid {
 .container-grid.header {
     background-color: #252526;
     grid-area: header;
+    padding-top: 15px;
+    padding-left: 10px;
 }
 
 .logo {
@@ -139,6 +139,7 @@ body.main-grid {
 .container-grid.nav {
     background-color: #333333;
     grid-area: nav;
+    padding-left: 10px;
 }
 
 .navicon {
@@ -207,9 +208,12 @@ body.main-grid {
 }
 
 #selection {
-    width: 100%;
-    height: 100%;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: hidden;
 }
+
 .editorControlGroup {
     margin-bottom: 20px;
 }
@@ -266,6 +270,81 @@ body.main-grid {
     height: 100%;
 }
 
+#editorImageSelect, #editorImageReset {
+    margin-bottom: 10px;
+}
+
+.container-grid.toolbar {
+    grid-area: toolbar;
+    background-color: #404040;
+}
+
+#addCat {
+    margin-top: 11px;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.toolbarIcon:hover {
+    color: rgb(185, 185, 185);
+}
+
+.disabledToolbarIcon {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.selectedToolbarIcon {
+    color: lightblue;
+}
+
+.sortIcons, .viewIcons, .enableSort {
+    position: relative;
+    display: flex;
+    float: right;
+    margin-top: 19px;
+}
+
+.sortIcons {
+    border-left: 2px solid whitesmoke;
+    padding-left: 5px;
+}
+
+.viewIcons {
+    border-left: 2px solid whitesmoke;
+    margin-left: 5px;
+    padding-left: 5px;
+    margin-right: 50px;
+}
+
+.enableSort {
+    padding-right: 30px;
+    border-right: 2px solid whitesmoke;
+    margin-right: -2px;
+}
+
+.sortIconsLabel {
+    position: absolute;
+    font-size: smaller;
+    top: -33px;
+    right: 0;
+}
+
+.viewIconsLabel {
+    position: absolute;
+    font-size: smaller;
+    top: -33px;
+    right: 20px;
+}
+
+.manualIconsLabel {
+    position: absolute;
+    font-size: smaller;
+    top: -33px;
+    right: 10px;
+    width: 83px;
+}
+
 .container-grid.main {
     background-color: #1e1e1e;
     display: flex;
@@ -315,6 +394,7 @@ h4 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .editCatName {
     display:none;
     margin-top: 10px;
@@ -416,18 +496,6 @@ h4 {
 
 .cardDesc {
     font-size: 13px;
-}
-
-/* Buttons */
-#addCat {
-	margin-top: 5px;
-    margin-left: 9px;
-    margin-right: 50%;
-    height: 35px;
-}
-
-#editorImageSelect, #editorImageReset {
-    margin-bottom: 10px;
 }
 
 /* Disable Selection in non-input areas */

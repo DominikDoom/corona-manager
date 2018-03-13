@@ -53,6 +53,7 @@
       </div>
     </script>
   </head>
+
   <body class="main-grid">
     <div class="alertOverlay">
       <div class="dialogBox">
@@ -110,8 +111,39 @@
       </div>
       <div id="noSelection"></div> 
 	  </div>
-    <div class="container-grid main" id="categoryContainer" >
-		  <button id="addCat">Kategorie hinzufügen</button>
+    <div class="container-grid toolbar">
+      <label id="addCat" class="toolbarIcon">
+        <i class="far fa-plus-square fa-fw fa-2x"></i>
+      </label>
+      <div class="viewIcons" id="viewIcons">
+        <p class="viewIconsLabel">Ansicht</p>
+        <label id="cardViewButton" class="toolbarIcon selectedToolbarIcon">
+          <i class="fas fa-table fa-fw fa-2x"></i>
+        </label>
+        <label id="listViewButton" class="toolbarIcon">
+          <i class="far fa-list-alt fa-fw fa-2x"></i>
+        </label>
+      </div>
+      <div class="sortIcons disabledToolbarIcon">
+        <p class="sortIconsLabel">Sortiermethode</p>
+        <label id="alphaSortButton" class="toolbarIcon">
+          <i class="fas fa-sort-alpha-down fa-fw fa-2x"></i>
+        </label>
+        <label class="toolbarIcon">
+          <i id="dateSortButton" class="far fa-calendar-alt fa-fw fa-2x"></i>
+        </label>
+      </div>
+      <div class="enableSort">
+        <p class="manualIconsLabel">Auto-Sortierung</p>
+        <label id="manualSortButton" class="toolbarIcon">
+          <i class="far fa-circle fa-fw fa-2x"></i>
+        </label>
+      </div>
+    </div>
+    <div class="container-grid main">
+      <div id="categoryContainer">
+    
+      </div>
     </div>
   </body>
 </html>

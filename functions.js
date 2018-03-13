@@ -17,6 +17,9 @@ const nativeImage = require('electron').nativeImage;
 var editorState = "closed";
 var deleteMode;
 var catToDelete;
+var sortEnabled = false;										// Manuelle Sortierung wird standardgemäß über Automatische gestellt
+var sortUp = true;
+var toolbarIconSelected = false;
 // Für Karten und Kategorien wird ein leeres JSON Objekt mit benanntem Array erstellt
 var cardSaveArray = '{"cards":[]}';
 var catSaveArray = '{"cats":[]}';
@@ -31,7 +34,7 @@ var catSaveArray = '{"cats":[]}';
 $(document).ready(function(){
 
 	// Hinzufügen einer Kategorie (verwendet Mustache)
-	$("#addCat").click(function(){
+	$(document).on('click', "#addCat", function(){
 		// Die data Variable wird initialisiert, da Mustache diese Daten dann in entsprechend formatierte Objekte direkt im HTML-Template einsetzt
 		var data = {
 			id: uuidv4()										// uuidv4() erstellt eine einzigartige ID, die direkt in Mustache integriert werden kann
@@ -242,6 +245,77 @@ $(document).ready(function(){
 	});
 });
 
+// Toolbar-Buttons
+// DOMContentLoaded ist notwendig, da FontAwesome 5 die Icons durch SVG ersetzt und so erst nach dem Tausch zugegriffen werden kann
+document.addEventListener('DOMContentLoaded', function () {
+	
+	// Manuell aktiviert?
+	$(document).on('click', ".enableSort", function() {
+		$(".enableSort").find('[data-fa-i2svg]').toggleClass('fa-circle').toggleClass('fa-check-circle');	// Ändert das FontAwesome Icon
+		$(".sortIcons").toggleClass("disabledToolbarIcon");		// (De)aktiviert die Sortierbuttons
+		if (sortEnabled) {
+			// Disable
+			sortEnabled = false;
+			toolbarIconSelected = false;
+			$("#alphaSortButton").removeClass('selectedToolbarIcon');
+			$("#dateSortButton").removeClass('selectedToolbarIcon');
+			$("#alphaSortButton").find('[data-fa-i2svg]').addClass('fa-sort-alpha-down').removeClass('fa-sort-alpha-up');
+			var catObj = JSON.parse(catSaveArray);
+			$.each(catObj['cats'], function(index, element) {	// Alle Kategorien werden durchlaufen
+				var id = element.id;							// Holt die Kategorie-ID
+				sortResults(id, "pos");							// Sortiert nach Namen A-Z
+			});
+		} else {
+			// Enable
+			sortEnabled = true;
+		}
+	});
+
+	// Alphabetisch
+	$(document).on('click', "#alphaSortButton", function() {
+		var catObj = JSON.parse(catSaveArray);
+		
+		// Die folgende Abfrage stellt sicher, dass beim ersten Aktivieren die Iconrichtung nicht geändert wird
+		if (toolbarIconSelected) {
+			$("#alphaSortButton").find('[data-fa-i2svg]').toggleClass('fa-sort-alpha-down').toggleClass('fa-sort-alpha-up');	// Ändert das FontAwesome Icon
+		} else {
+			$("#dateSortButton").removeClass('selectedToolbarIcon');
+			$("#alphaSortButton").addClass('selectedToolbarIcon');
+			toolbarIconSelected = true;
+		}
+
+		// Um jeweils die richtigen Divs in die richtigen Kategorien zu sortieren, wird pro Kategorie sortiert
+		if (sortUp) {
+			$.each(catObj['cats'], function(index, element) {	// Alle Kategorien werden durchlaufen
+				var id = element.id;							// Holt die Kategorie-ID
+				sortResults(id, "nameUp");						// Sortiert nach Namen A-Z
+			});
+			sortUp = false;										// Sortierrichtung wird gewechselt									
+		} else {
+			$.each(catObj['cats'], function(index, element) {	// Alle Kategorien werden durchlaufen
+				var id = element.id;							// Holt die Kategorie-ID
+				sortResults(id, "nameDown");					// Sortiert nach Namen Z-A
+			});
+			sortUp = true;										// Sortierrichtung wird gewechselt									
+		}
+	});
+
+	// Datum
+	$(document).on('click', "#dateSortButton", function() {
+		var catObj = JSON.parse(catSaveArray);
+		toolbarIconSelected = false;
+		sortUp = true;
+		$("#alphaSortButton").find('[data-fa-i2svg]').addClass('fa-sort-alpha-down').removeClass('fa-sort-alpha-up');
+		$("#alphaSortButton").removeClass('selectedToolbarIcon');
+		$("#dateSortButton").addClass('selectedToolbarIcon');
+
+		$.each(catObj['cats'], function(index, element) {		// Alle Kategorien werden durchlaufen
+			var id = element.id;								// Holt die Kategorie-ID
+			sortResults(id, "time");							// Sortiert nach Alter
+		});
+	});
+});
+
 /*  
 ##################################
 ##  Ab hier kommen Funktionen, 	##
@@ -400,7 +474,8 @@ function updatePosition() {
 	// Hier werden alle Karten ohne ID-Match durchlaufen, da bei Änderung eines Index alle anderen sich ebenfalls verschieben
 	$.each(obj['cards'], function(index, element) {
 			var pos = $( "p:contains(" +  element.id + ")").closest("#card").index();	// Index wird ausgelesen
-			element.pos = pos;									// Position wird aktualisiert
+			element.pos = pos;									// Position wird in der JSON-Datei aktualisiert
+			$( "p:contains(" +  element.id + ")").closest("#card").find("#pos").text(pos);	// Position wird im HTML-Code aktualisiert
 		}
 	);
 

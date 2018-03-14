@@ -359,6 +359,10 @@ body.main-grid {
 	overflow-y: scroll;
 }
 
+#categoryContainer {
+    width: 100%;
+}
+
 .cat {
 	width: 95%;
 	min-height: 400px;
@@ -415,6 +419,12 @@ h4 {
 	flex-wrap: wrap;
 }
 
+.cardContainer-list {
+    display:flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+
 .card {
     background-color: #252526;
     position: relative;
@@ -428,19 +438,39 @@ h4 {
     border-radius: 1px;
 }
 
+.card-list {
+    background-color: #252526;
+    position: relative;
+    height: 50px;
+    width: 90%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* Add border to create the "card" effect */
+    border: solid;
+    border-color: rgb(153,153,153);
+    border-width: 1px;
+    border-radius: 1px;
+}
+
 /* On mouse-over, add a deeper border + shadow */
-.card:hover {
+.card:hover, .card-list:hover {
     border-color: rgb(124, 124, 124);
 	box-shadow: 0px 0px 0px 1px rgb(124,124,124);
 }
 
-.card:hover .cardOverlay {
+.card:hover .cardOverlay, .card-list:hover .cardOverlay {
     display: initial;
 }
 
 .cardImage {
     width: 200px;
     height: 150px;
+}
+
+.cardImage-list {
+    display: none;
 }
 
 .cardOverlay {
@@ -456,6 +486,14 @@ h4 {
 .cardButtonsContainer {
     height: 100%;
     font-size: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardButtonsContainer-list {
+    height: 100%;
+    font-size: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -489,12 +527,39 @@ h4 {
     display: none;
 }
 
+.cardContainer-list > .card-list:first-child .cardOverlay .cardButtonsContainer-list .cardTopButtonsContainer #upCard, .cardContainer-list > .card-list:last-child .cardOverlay .cardButtonsContainer-list .cardTopButtonsContainer #downCard {
+    display: none;
+}
+
 /* Add some padding inside the card container */
 .cardDetails {
     padding: 2px 16px;
 }
 
+.cardDetails-list {
+    padding: 2px 16px;
+    display: flex;
+}
+
+.cardName-list {
+    border-right: 1px solid whitesmoke;
+    margin-right: 5px;
+    padding-right: 5px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .cardDesc {
+    font-size: 13px;
+}
+
+.cardDesc-list {
+    width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 13px;
 }
 

@@ -20,6 +20,7 @@ var catToDelete;
 var sortEnabled = false;										// Manuelle Sortierung wird standardgemäß über Automatische gestellt
 var sortUp = true;
 var toolbarIconSelected = false;
+var listView = false;
 // Für Karten und Kategorien wird ein leeres JSON Objekt mit benanntem Array erstellt
 var cardSaveArray = '{"cards":[]}';
 var catSaveArray = '{"cats":[]}';
@@ -257,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			// Disable
 			sortEnabled = false;
 			toolbarIconSelected = false;
+			sortUp = true;
 			$("#alphaSortButton").removeClass('selectedToolbarIcon');
 			$("#dateSortButton").removeClass('selectedToolbarIcon');
 			$("#alphaSortButton").find('[data-fa-i2svg]').addClass('fa-sort-alpha-down').removeClass('fa-sort-alpha-up');
@@ -314,6 +316,40 @@ document.addEventListener('DOMContentLoaded', function () {
 			sortResults(id, "time");							// Sortiert nach Alter
 		});
 	});
+
+	// Ansicht
+	// Liste
+	$(document).on('click', "#listViewButton", function() {
+		if (!listView) {
+			$("#cardViewButton").removeClass('selectedToolbarIcon');
+			$("#listViewButton").addClass('selectedToolbarIcon');
+
+			$(".cardContainer").toggleClass("cardContainer-list").toggleClass("cardContainer");
+			$(".card").toggleClass("card-list").toggleClass("card");
+			$(".cardImage").toggleClass("cardImage-list").toggleClass("cardimage");
+			$(".cardButtonsContainer").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
+			$(".cardDetails").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardName").toggleClass("cardName-list");
+			$(".cardDesc").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			listView = true;
+		}
+	});
+	// Karte
+	$(document).on('click', "#cardViewButton", function() {
+		if (listView) {
+			$("#cardViewButton").addClass('selectedToolbarIcon');
+			$("#listViewButton").removeClass('selectedToolbarIcon');
+
+			$(".cardContainer-list").toggleClass("cardContainer-list").toggleClass("cardContainer");
+			$(".card-list").toggleClass("card-list").toggleClass("card");
+			$(".cardImage-list").toggleClass("cardImage-list").toggleClass("cardimage");
+			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
+			$(".cardDetails-list").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardName-list").toggleClass("cardName-list");
+			$(".cardDesc-list").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			listView = false;
+		}
+	});
 });
 
 /*  
@@ -353,7 +389,7 @@ function uuidv4() {
 // Der native Node/Electron File Dialog zum Auswählen der Bilddatei
 function openImageDialog() {
 	// Öffnet den Dialog mit jpg, png und bmp als Filter
-	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png', 'bmp']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
+	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
 		var id = $("#idStorage").text();						// Liest #idStorage im Editor aus, um schnell an die ID der Karte zu gelangen
 		var img = createThumbnail(FileName[0],id);				// createThumbnail() erstellt ein Thumbnail aus dem gewählten Bild mit der ID der Karte als Name
 		$("#editorImagePreview").attr("src", img +"#" + new Date().getTime());	// Das Bild im Editor wird aktualisiert, DateTime wird angehängt, um den Browser zur Cacheverwerfung zu zwingen
@@ -632,6 +668,20 @@ function loadConstructor() {
 			var id = element.id;								// Holt die Kategorie-ID
 			sortResults(id, "pos");								// Sortiert nach Indexposition
 		});
+
+		if (listView) {
+			$("#cardViewButton").addClass('selectedToolbarIcon');
+			$("#listViewButton").removeClass('selectedToolbarIcon');
+
+			$(".cardContainer-list").toggleClass("cardContainer-list").toggleClass("cardContainer");
+			$(".card-list").toggleClass("card-list").toggleClass("card");
+			$(".cardImage-list").toggleClass("cardImage-list").toggleClass("cardimage");
+			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
+			$(".cardDetails-list").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardName-list").toggleClass("cardName-list");
+			$(".cardDesc-list").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			listView = false;
+		}
 		
 		// Gibt die zum Laden benötigte Zeit aus
 		var elapsedTime = Date.now() - startTime;

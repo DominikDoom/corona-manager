@@ -32,8 +32,7 @@ var catSaveArray = '{"cats":[]}';
 ##  mit der UI verknüpft sind.	##
 ##################################
 */
-$(document).ready(function(){
-
+$(document).ready(function() {
 	// Hinzufügen einer Kategorie (verwendet Mustache)
 	$(document).on('click', "#addCat", function(){
 		// Die data Variable wird initialisiert, da Mustache diese Daten dann in entsprechend formatierte Objekte direkt im HTML-Template einsetzt
@@ -92,7 +91,8 @@ $(document).ready(function(){
 		var data = {
 			id: uuidv4(),										// Wie bereits bei der Kategorie bekommt auch die Karte eine uuid zugeteilt
 			pos: 0,												// pos gibt die Indexposition der Karte an, wird hier nur temporär mit 0 initialisiert und später überschrieben
-			time: $.now()	
+			time: $.now(),
+			fav: "false"	
 		}
 		var template = $("#card-template").html();				// Das Template wird geladen
 		var html = Mustache.render(template, data);
@@ -103,7 +103,7 @@ $(document).ready(function(){
 		var name = "Name";
 		var desc = "The quick brown fox jumps over the lazy dog";
 		var categoryId = $( "p:contains(" +  data.id + ")").closest(".cat").find("#uuidcat").text();	// Die ID der Elternkategorie wird gelesen, um sie in der JSON-Datei einzufügen
-		saveCard(data.id,categoryId,name,desc,data.time);					// Speichert die neu erstellte Karte in einer JSON-Datei
+		saveCard(data.id,categoryId,name,desc,data.time,data.fav);					// Speichert die neu erstellte Karte in einer JSON-Datei
 		updatePosition();										// Aktualisiert die bisher mit 0 initialisierte Indexposition, wird auch direkt in der JSON-Datei aktualisiert 
 	});
 
@@ -154,7 +154,8 @@ $(document).ready(function(){
 		var editorName = $("#editorInputName").val();
 		var categoryId = $( "p:contains(" +  cardId + ")").closest(".cat").find("#uuidcat").text();
 		var time = $.now();
-		saveCard(cardId,categoryId,editorName,editorDesc,time);		// Die Änderungen werden zum Speichern in der JSON-Datei übergeben
+		var fav = $( "p:contains(" +  cardId + ")").parent().find("#fav").text();
+		saveCard(cardId,categoryId,editorName,editorDesc,time,fav);		// Die Änderungen werden zum Speichern in der JSON-Datei übergeben
 		editorState = "closed";
 		$("#noSelection").slideDown();
 		setTimeout(resetEditor, 300);							// Der verzögerte Funktionsaufruf ist nötig, um den Editor erst zu clearen, wenn die "Tür" komplett heruntergefahren ist
@@ -246,10 +247,9 @@ $(document).ready(function(){
 	});
 });
 
-// Toolbar-Buttons
+// Toolbar-Buttons & Favoritenfunktion
 // DOMContentLoaded ist notwendig, da FontAwesome 5 die Icons durch SVG ersetzt und so erst nach dem Tausch zugegriffen werden kann
 document.addEventListener('DOMContentLoaded', function () {
-	
 	// Manuell aktiviert?
 	$(document).on('click', ".enableSort", function() {
 		$(".enableSort").find('[data-fa-i2svg]').toggleClass('fa-circle').toggleClass('fa-check-circle');	// Ändert das FontAwesome Icon
@@ -319,18 +319,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// Ansicht
 	// Liste
+	// Die Listenansicht wird erreicht, indem CSS-klassen , die die Kartenansicht überschreiben, aktiviert werden
 	$(document).on('click', "#listViewButton", function() {
 		if (!listView) {
 			$("#cardViewButton").removeClass('selectedToolbarIcon');
 			$("#listViewButton").addClass('selectedToolbarIcon');
 
-			$(".cardContainer").toggleClass("cardContainer-list").toggleClass("cardContainer");
-			$(".card").toggleClass("card-list").toggleClass("card");
-			$(".cardImage").toggleClass("cardImage-list").toggleClass("cardimage");
-			$(".cardButtonsContainer").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
-			$(".cardDetails").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardContainer").toggleClass("cardContainer-list");
+			$(".card").toggleClass("card-list");
+			$(".cardImage").toggleClass("cardImage-list");
+			$(".cardButtonsContainer").toggleClass("cardButtonsContainer-list");
+			$(".cardDetails").toggleClass("cardDetails-list");
 			$(".cardName").toggleClass("cardName-list");
-			$(".cardDesc").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			$(".cardDesc").toggleClass("cardDesc-list");
 			listView = true;
 		}
 	});
@@ -340,15 +341,51 @@ document.addEventListener('DOMContentLoaded', function () {
 			$("#cardViewButton").addClass('selectedToolbarIcon');
 			$("#listViewButton").removeClass('selectedToolbarIcon');
 
-			$(".cardContainer-list").toggleClass("cardContainer-list").toggleClass("cardContainer");
-			$(".card-list").toggleClass("card-list").toggleClass("card");
-			$(".cardImage-list").toggleClass("cardImage-list").toggleClass("cardimage");
-			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
-			$(".cardDetails-list").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardContainer-list").toggleClass("cardContainer-list");
+			$(".card-list").toggleClass("card-list");
+			$(".cardImage-list").toggleClass("cardImage-list");
+			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list");
+			$(".cardDetails-list").toggleClass("cardDetails-list");
 			$(".cardName-list").toggleClass("cardName-list");
-			$(".cardDesc-list").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			$(".cardDesc-list").toggleClass("cardDesc-list");
 			listView = false;
 		}
+	});
+
+	// Favoriten
+	$(document).on('click', "#favCard", function() {
+		// Variableninitialisierung
+		var card = $(this).closest("#card");
+		var id = card.find("#uuid").text();
+		var favorited = card.find("#fav").text();
+		var cardObj = JSON.parse(cardSaveArray);
+
+		if (favorited === "false") {
+			card.find("#fav").text("true");
+			fav = true;
+			card.toggleClass("card-fav");
+			$(this).find('[data-fa-i2svg]').attr('data-prefix','fas');
+		} else {
+			card.find("#fav").text("false");
+			fav = false;
+			card.toggleClass("card-fav");
+			$(this).find('[data-fa-i2svg]').attr('data-prefix','far');
+		}
+
+		// Aktualisieren der JSON-Datei
+		var cat; var name; var desc; var time;					// Diese Variablen werden in der Each-Schleife gefüllt, um den Aufwand zum Speichern minimal zu halten
+		$.each(cardObj['cards'], function(index, element) {		// Alle gespeicherten Karten werden durchlaufen
+			if (element.id == id) {								// ID-Match
+				element.fav = fav;								// Favorisiert-Status wird aktualisiert
+				cat = element.cat;
+				name = element.name;
+				desc = element.desc;
+				time = element.time;
+			}
+		});
+		$("#editorImagePreview").attr("src",card.find("img").attr("src"));	// Muss hier gesetzt werden, weil durch unschönes Codedesign
+		cardSaveArray = JSON.stringify(cardObj,null,4);
+		saveCard(id,cat,name,desc,time,fav);
 	});
 });
 
@@ -465,7 +502,7 @@ function saveCat(id,name) {
 }
 
 // Speichern einer Karte
-function saveCard(id,cat,name,desc,time) {
+function saveCard(id,cat,name,desc,time,fav) {
 	// Hier wird zuerst die tatsächliche HTML-Karte aktualisiert
 	var savedCard = $( "p:contains(" +  id + ")").parent().parent();
 	savedCard.find("img").attr("src",$("#editorImagePreview").attr("src"));
@@ -477,7 +514,7 @@ function saveCard(id,cat,name,desc,time) {
 	// Preparation of JSON save
 	var obj = JSON.parse(cardSaveArray);						// Der JSON String wird in ein Objekt umgewandelt
 	if ( jQuery.isEmptyObject(obj['cards']) ) {					// Falls noch keine Karte vorhanden ist, wird eine neue gepusht
-		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":"todo","creationDate":time});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":fav,"creationDate":time});
 	}
 	// In der Theorie können hier mehrere Karten aktualisiert werden, da die uuids einzigartig sind, sollte Mehrfachspeicherung in der Praxis nicht vorkommen
 	var counter = 0;											// counter dient der Überprüfung, ob die Karte bereits existiert
@@ -489,13 +526,13 @@ function saveCard(id,cat,name,desc,time) {
 			element.name = name;								// Name wird aktualisiert
 			element.desc = desc;								// Beschreibung wird aktualisiert
 			element.pos = pos;									// Position wird aktualisiert
-			element.fav = "todo";								// Favorisiert-Status wird aktualisiert (TODO)
+			element.fav = fav;									// Favorisiert-Status wird aktualisiert (TODO)
 		}
 	});
 	// Wenn der Counter nach einem kompletten Durchlauf der Datei immer noch 0 ist, ist die zu speichernde Karte noch nicht vorhanden
 	// Statt einer Aktualisierung wird daher auch hier eine neue Karte gepusht, wie im Fall eines leeren Arrays
 	if (counter == 0) {
-		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":"todo","creationDate":time});
+		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":fav,"creationDate":time});
 	}
 
 	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
@@ -646,7 +683,8 @@ function loadConstructor() {
 			var data = {
 				id: element.id,
 				pos: element.pos,								// pos wird hier direkt korrekt geladen, daher wird updatePosition() nicht benötigt
-				time: element.creationDate				
+				time: element.creationDate,
+				fav: element.fav				
 			}
 			var cat = element.cat;
 			var template = $("#card-template").html();			// Das Template wird geladen
@@ -673,16 +711,18 @@ function loadConstructor() {
 			$("#cardViewButton").addClass('selectedToolbarIcon');
 			$("#listViewButton").removeClass('selectedToolbarIcon');
 
-			$(".cardContainer-list").toggleClass("cardContainer-list").toggleClass("cardContainer");
-			$(".card-list").toggleClass("card-list").toggleClass("card");
-			$(".cardImage-list").toggleClass("cardImage-list").toggleClass("cardimage");
-			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list").toggleClass("cardButtonsContainer");
-			$(".cardDetails-list").toggleClass("cardDetails-list").toggleClass("cardDetails");
+			$(".cardContainer-list").toggleClass("cardContainer-list");
+			$(".card-list").toggleClass("card-list");
+			$(".cardImage-list").toggleClass("cardImage-list");
+			$(".cardButtonsContainer-list").toggleClass("cardButtonsContainer-list");
+			$(".cardDetails-list").toggleClass("cardDetails-list");
 			$(".cardName-list").toggleClass("cardName-list");
-			$(".cardDesc-list").toggleClass("cardDesc-list").toggleClass("cardDesc");
+			$(".cardDesc-list").toggleClass("cardDesc-list");
 			listView = false;
 		}
-		
+
+		updateFavs();
+
 		// Gibt die zum Laden benötigte Zeit aus
 		var elapsedTime = Date.now() - startTime;
 		elapsedTime = (elapsedTime / 1000).toFixed(3);
@@ -769,4 +809,14 @@ function sortResults(catId,mode) {
 			break;
 	}	
     $("#categoryContainer").find("p:contains(" +  catId + ")").parent().parent().find("#cardContainer").html(numericallyOrderedDivs);			// Hierbei wird der gesamte Inhalt von #cardContainer überschrieben, daher darf diese Funktion nur beim Laden aufgerufen werden
+}
+
+function updateFavs() {
+	var cards = $(document).find("div.card");
+	$.each(cards, function(index, element) {					// Alle gespeicherten Karten werden durchlaufen
+		if ($(element).find("#fav").text() === "true") {
+			$(element).find("#favCard > svg").attr('data-prefix','fas');
+			$(element).addClass("card-fav");
+		}
+	});
 }

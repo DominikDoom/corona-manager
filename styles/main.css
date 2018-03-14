@@ -420,9 +420,9 @@ h4 {
 }
 
 .cardContainer-list {
-    display:flex;
-    flex-wrap: wrap;
-    padding-top: 10px;
+    display:flex !important;
+    flex-wrap: wrap !important;
+    padding-top: 10px !important;
 }
 
 .card {
@@ -439,19 +439,23 @@ h4 {
 }
 
 .card-list {
-    background-color: #252526;
-    position: relative;
-    height: 50px;
-    width: 90%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
+    background-color: #252526 !important;
+    position: relative !important;
+    height: 50px !important;
+    width: 90% !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
     /* Add border to create the "card" effect */
-    border: solid;
-    border-color: rgb(153,153,153);
-    border-width: 1px;
-    border-radius: 1px;
+    border: solid !important;
+    border-color: rgb(153,153,153) !important;
+    border-width: 1px !important;
+    border-radius: 1px !important;
+}
+
+.card-fav {
+    border-color: goldenrod !important;
 }
 
 /* On mouse-over, add a deeper border + shadow */
@@ -470,7 +474,7 @@ h4 {
 }
 
 .cardImage-list {
-    display: none;
+    display: none !important;
 }
 
 .cardOverlay {
@@ -492,11 +496,11 @@ h4 {
 }
 
 .cardButtonsContainer-list {
-    height: 100%;
-    font-size: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100% !important;
+    font-size: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .cardTopButtonsContainer {
@@ -537,18 +541,18 @@ h4 {
 }
 
 .cardDetails-list {
-    padding: 2px 16px;
-    display: flex;
+    padding: 2px 16px !important;
+    display: flex !important;
 }
 
 .cardName-list {
-    border-right: 1px solid whitesmoke;
-    margin-right: 5px;
-    padding-right: 5px;
-    width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    border-right: 1px solid whitesmoke !important;
+    margin-right: 5px !important;
+    padding-right: 5px !important;
+    width: 150px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 .cardDesc {
@@ -556,11 +560,11 @@ h4 {
 }
 
 .cardDesc-list {
-    width: 600px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 13px;
+    width: 600px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 13px !important;
 }
 
 /* Disable Selection in non-input areas */

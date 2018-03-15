@@ -32,10 +32,6 @@ button {
     height: 25px;
 }
 
-label { 
-    display: block 
-}
-
 .alertOverlay {
     display: none;
     z-index: 10000;
@@ -270,7 +266,7 @@ body.main-grid {
     height: 100%;
 }
 
-#editorImageSelect, #editorImageReset {
+#editorImageSelect > svg, #editorImageReset > svg {
     margin-bottom: 10px;
 }
 
@@ -392,6 +388,10 @@ body.main-grid {
     padding-top: 1px;
     padding-bottom: 10px;
     border-bottom: 1px solid #333333;
+}
+
+#removeCat {
+    float: right;
 }
 
 h4 {

@@ -11,6 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
     <script src="https://unpkg.com/tippy.js@2.3.0/dist/tippy.all.min.js"></script>
+    <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/initTooltips.js"></script>
     <script>if (window.module) module = window.module;</script>
@@ -18,14 +19,14 @@
     <script id="cat-template" type="text/template">
       <div class="cat" id="cat">
         <div class="catDetails">
-          <h4 class="catName" id="catName">Name</h4>
+          <h4 class="catName loc" id="catName" loc="?catName">?catName</h4>
           <input type="text" class="editCatName" />
-          <p class="catEditInfo">(Click to Edit)</p>
+          <p class="catEditInfo loc" loc="?editCatInfo">?editCatInfo</p>
           <p id="uuidcat" style="display: none;">{{id}}</p>
-          <label id="addCard" class="toolbarIcon" title="Karte hinzufügen">
+          <label id="addCard" class="toolbarIcon loc" loc="?addCard" title="?addCard">
             <i class="fas fa-plus fa-fw fa-2x"></i>
           </label>
-          <label id="removeCat" class="toolbarIcon" title="Kategorie löschen">
+          <label id="removeCat" class="toolbarIcon loc" loc="?deleteCat" title="?deleteCat">
             <i class="fas fa-trash-alt fa-fw fa-lg"></i>
           </label>		
         </div>
@@ -39,11 +40,15 @@
       <div class="card" id="card">
         <div class="cardOverlay">
           <div class="cardButtonsContainer">
-            <label id="openCard" title="Karte öffnen"><i class="fas fa-expand-arrows-alt hvr-grow"></i></label>
-            <label id="editCard" title="Karte bearbeiten"><i class="fas fa-pencil-alt hvr-grow"></i></label>
+            <label class="loc" id="openCard" loc="?openCard" title="?openCard">
+              <i class="fas fa-expand-arrows-alt hvr-grow"></i>
+            </label>
+            <label class="loc" id="editCard" loc="?editCard" title="?editCard">
+              <i class="fas fa-pencil-alt hvr-grow"></i>
+            </label>
             <div class="cardTopButtonsContainer">
-              <label id="upCard" title="Nach oben verschieben"><i class="fas fa-caret-up"></i></label>
-              <label id="downCard" title="Nach unten verschieben"><i class="fas fa-caret-down"></i></label>
+              <label class="loc" id="upCard" loc="?upCard" title="?upCard"><i class="fas fa-caret-up"></i></label>
+              <label class="loc" id="downCard" loc="?downCard" title="?downCard"><i class="fas fa-caret-down"></i></label>
               <label id="favCard"><i class="far fa-star " data-fa-transform="shrink-5"></i></label>
             </div>
           </div>
@@ -64,9 +69,9 @@
   <body class="main-grid">
     <div class="alertOverlay">
       <div class="dialogBox">
-        <h2>Wirklich löschen?</h2>
-        <div class="dialogBox noButton" id="dialogDeny">Nein</div>
-        <div class="dialogBox yesButton" id="dialogConfirm">Ja</div>
+        <h2 class="loc" id="dialogBoxTitle" loc="?dialogBoxTitle">?dialogBoxTitle</h2>
+        <div class="dialogBox noButton loc" id="dialogDeny" loc="?dialogNo">?dialogNo</div>
+        <div class="dialogBox yesButton loc" id="dialogConfirm" loc="?dialogYes">?dialogYes</div>
       </div>
     </div>
   	<div class="container-grid header">
@@ -97,64 +102,64 @@
     <div class="container-grid editor">
       <div id="selection">
         <div class="editorControlGroup">
-          <label id="editorSave" class="toolbarIcon">
-            <i class="far fa-save fa-fw fa-2x" title="Speichern"></i>
+          <label id="editorSave" class="toolbarIcon loc" loc="?editorSave" title="?editorSave">
+            <i class="far fa-save fa-fw fa-2x"></i>
           </label>
-          <label id="editorCancel" class="toolbarIcon">
-              <i class="far fa-window-close fa-fw fa-2x" title="Abbrechen"></i>
+          <label id="editorCancel" class="toolbarIcon loc" loc="?editorCancel" title="?editorCancel">
+              <i class="far fa-window-close fa-fw fa-2x"></i>
           </label>
         </div>
-        <p id="debugIdDisplay">Id des ausgewählten Elements: </p>
+        <p id="debugIdDisplay" class="loc" loc="?debugIdDiplay">?debugIdDiplay</p>
         <p id="idStorage" style="display: none"></p>
-        <label for="editorInputName">Name</label>
+        <label for="editorInputName" class="loc" loc="?editorInputName">?editorInputName</label>
         <input class="editorInput" id="editorInputName"/>
-        <label for="editorInputDescription">Beschreibung</label>
+        <label for="editorInputDescription" class="loc" loc="?editorInputDesc">?editorInputDesc</label>
         <textarea class="editorInput" id="editorInputDescription" rows="6" maxlength="135"></textarea>
         <p id="charNum">0/135</p>
-        <label for="editorImageSelect">Vorschaubild auswählen</label>
+        <label for="editorImageSelect" class="loc" loc="?editorImageSelectText">?editorImageSelectText</label>
         <br>
-        <label id="editorImageSelect" class="toolbarIcon" onclick="openImageDialog();">
-            <i class="fas fa-folder-open fa-fw fa-lg" title="Bild auswählen"></i>
+        <label id="editorImageSelect" class="toolbarIcon loc" loc="?editorImageSelectTTip" onclick="openImageDialog();" title="?editorImageSelectTTip">
+            <i class="fas fa-folder-open fa-fw fa-lg"></i>
         </label>
-        <label id="editorImageReset" class="toolbarIcon" onclick="resetImage()">
-            <i class="fas fa-undo-alt fa-fw fa-lg" title="Bild zurücksetzen"></i>
+        <label id="editorImageReset" class="toolbarIcon loc" loc="?editorImageReset" onclick="resetImage()" title="?editorImageReset">
+            <i class="fas fa-undo-alt fa-fw fa-lg"></i>
         </label>
         <div class="editorImageContainer">
           <img id="editorImagePreview" src="img/default.png" />
         </div>
-        <label for="removeCard">Erweitert</label>
+        <label for="removeCard" class="loc" loc="?editorAdvanced">?editorAdvanced</label>
         <br>
-        <label id="removeCard" class="toolbarIcon">
-            <i class="fas fa-trash-alt fa-fw fa-lg" title="Karte löschen"></i>
+        <label id="removeCard" class="toolbarIcon loc" loc="?removeCard" title="?removeCard">
+            <i class="fas fa-trash-alt fa-fw fa-lg"></i>
         </label>
       </div>
       <div id="noSelection"></div> 
 	  </div>
     <div class="container-grid toolbar">
-      <label id="addCat" class="toolbarIcon" title="Kategorie hinzufügen">
+      <label id="addCat" class="toolbarIcon loc" loc="?addCat" title="?addCat">
         <i class="far fa-plus-square fa-fw fa-2x"></i>
       </label>
       <div class="viewIcons" id="viewIcons">
-        <p class="viewIconsLabel">Ansicht</p>
-        <label id="cardViewButton" class="toolbarIcon selectedToolbarIcon" title="Kartenansicht">
+        <p class="viewIconsLabel loc" loc="?viewIconsLabel">?viewIconsLabel</p>
+        <label id="cardViewButton" class="toolbarIcon selectedToolbarIcon loc" loc="?cardViewButton" title="?cardViewButton">
           <i class="fas fa-table fa-fw fa-2x"></i>
         </label>
-        <label id="listViewButton" class="toolbarIcon" title="Listenansicht">
+        <label id="listViewButton" class="toolbarIcon loc" loc="?listViewButton" title="?listViewButton">
           <i class="far fa-list-alt fa-fw fa-2x"></i>
         </label>
       </div>
       <div class="sortIcons disabledToolbarIcon">
-        <p class="sortIconsLabel">Sortiermethode</p>
-        <label id="alphaSortButton" class="toolbarIcon">
-          <i class="fas fa-sort-alpha-down fa-fw fa-2x" title="Alphabetisch"></i>
+        <p class="sortIconsLabel loc" loc="?sortIconsLabel">?sortIconsLabel</p>
+        <label id="alphaSortButton" class="toolbarIcon loc" loc="?alphaSortButton" title="?alphaSortButton">
+          <i class="fas fa-sort-alpha-down fa-fw fa-2x"></i>
         </label>
-        <label class="toolbarIcon">
-          <i id="dateSortButton" class="far fa-calendar-alt fa-fw fa-2x" title="Nach Erstelldatum"></i>
+        <label id="dateSortButton" class="toolbarIcon loc" loc="?dateSortButton" title="?dateSortButton">
+          <i class="far fa-calendar-alt fa-fw fa-2x"></i>
         </label>
       </div>
       <div class="enableSort">
-        <p class="manualIconsLabel">Auto-Sortierung</p>
-        <label id="manualSortButton" class="toolbarIcon" title="Automatische Sortierung (de)aktivieren">
+        <p class="manualIconsLabel loc" loc="?autoSortLabel">?autoSortLabel</p>
+        <label id="manualSortButton" class="toolbarIcon loc" loc="?autoSortButton" title="?autoSortButton">
           <i class="far fa-circle fa-fw fa-2x"></i>
         </label>
       </div>

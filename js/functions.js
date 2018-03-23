@@ -725,6 +725,7 @@ function loadConstructor() {
 		}
 
 		setTimeout(updateFavs, 1);
+		setTimeout(switchLang(currentLang), 1);
 		setTimeout(initTooltips, 1);
 
 		// Gibt die zum Laden benötigte Zeit aus

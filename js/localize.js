@@ -25,7 +25,7 @@ var en = {
     viewIconsLabel: "View",
     cardViewButton: "Card view",
     listViewButton: "List view",
-    sortIconsLabel: "Sorting",
+    sortIconsLabel: "Sorting method",
     alphaSortButton: "Alphabetic",
     dateSortButton: "Creation date",
     autoSortLabel: "Auto-sorting",
@@ -57,21 +57,21 @@ var de = {
     viewIconsLabel: "Ansicht",
     cardViewButton: "Karten",
     listViewButton: "Liste",
-    sortIconsLabel: "Sortierung",
+    sortIconsLabel: "Sortiermethode",
     alphaSortButton: "Alphabetisch",
     dateSortButton: "Erstelldatum",
     autoSortLabel: "Auto-Sortierung",
     autoSortButton: "Auto-Sortierung an- / ausschalten"
 }
 
-
+var currentLang = "en";
 
 function switchLang(lang) {
     var localizable = $(document).find(".loc");
     switch (lang) {
         case "en":
             $.each(localizable, function(index, element) {
-                if (typeof $(element).attr("title") !== typeof undefined) {
+                if (typeof $(element).attr("title") !== typeof undefined || typeof $(element).attr("data-tippy") !== typeof undefined) {
                     var langString = $(element).attr("loc");
                     langString = langString.substr(1);
                     $(element).attr("title",en[langString]);
@@ -80,12 +80,15 @@ function switchLang(lang) {
                     langString = langString.substr(1);
                     $(element).text(en[langString]);
                 }
+                $(element).addClass("loc-en");
+                $(element).removeClass("loc-de");
             });
+            currentLang = "en";
             break;
     
         case "de":
             $.each(localizable, function(index, element) {
-                if (typeof $(element).attr("title") !== typeof undefined) {
+                if (typeof $(element).attr("title") !== typeof undefined || typeof $(element).attr("data-tippy") !== typeof undefined) {
                     var langString = $(element).attr("loc");
                     langString = langString.substr(1);
                     $(element).attr("title",de[langString]);
@@ -94,7 +97,10 @@ function switchLang(lang) {
                     langString = langString.substr(1);
                     $(element).text(de[langString]);
                 }
+                $(element).addClass("loc-de");
+                $(element).removeClass("loc-en");
             });
+            currentLang = "de";
             break;
     }
 }

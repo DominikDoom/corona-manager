@@ -4,6 +4,7 @@ function initTooltips() {
         animation: 'shift-away',
         delay: [700, 100],
         duration: 100,
-        arrow: true
+        arrow: true,
+        dynamicTitle: true
     });
 }

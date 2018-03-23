@@ -333,12 +333,27 @@ body.main-grid {
     right: 20px;
 }
 
+.viewIconsLabel.loc-en {
+    position: absolute;
+    font-size: smaller;
+    top: -33px;
+    right: 27px;
+}
+
 .manualIconsLabel {
     position: absolute;
     font-size: smaller;
     top: -33px;
     right: 10px;
     width: 83px;
+}
+
+.manualIconsLabel.loc-en {
+    position: absolute;
+    font-size: smaller;
+    top: -33px;
+    right: 18px;
+    width: 65px;
 }
 
 .container-grid.main {

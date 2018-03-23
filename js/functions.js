@@ -114,17 +114,14 @@ $(document).ready(function() {
 	$(document).on('click', "#editCard", function() {
 		cardId = $(this).parent().parent().parent().find("#uuid").text();
 		loadEditor(cardId);
-		if (editorState == "closed") {							// Klicken des Edit-Buttons nach dem Schließen des Editors / Erstmaliges Klicken
-			editorState = "open";
-			$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);	// #debugIdDisplay ist eine Anzeige im Editor, die später nur sichtbar sein wird, wenn der Debugmodus aktiviert ist
-			$("#idStorage").text(cardId);						// #idStorage enthält die selbe ID wie #debugIdDisplay, jedoch ohne zusätzlichen Text, sodass die ID direkt davon ausgelesen werden kann
+		if (editorState === "closed") {							// Klicken des Edit-Buttons nach dem Schließen des Editors / Erstmaliges Klicken
+			editorState = "open";$("#idStorage").text(cardId);	// #idStorage enthält die ID, sodass die ID direkt davon ausgelesen werden kann
 			$("#noSelection").slideUp();
 			cardOldId = cardId;
 		} else {												// Editor ist bereits offen
 			if (cardOldId !== cardId) {							// Eine andere Karte als die aktuell geladene soll bearbeitet werden
 				resetEditor();									// resetEditor() setzt den Editor auf default-Status zurück, um etwas Neues zu laden ohne mit dem Alten in Konflikt zu geraten
 				loadEditor(cardId);								// Lädt die neue Karte, der Editor bleibt dabei offen
-				$("#debugIdDisplay").text($("#debugIdDisplay").text() + cardId);
 				$("#idStorage").text(cardId);
 				cardOldId = cardId;
 			} else {											// Die schon geladene Karte wurde erneut geklickt -> toggle switch, der Editor wird wieder geschlossen
@@ -443,8 +440,7 @@ function resetImage() {
 
 // Setzt den Editor zurück
 function resetEditor() {
-	// Entfernt die ID aus debugIdDisplay und idStorage
-	$("#debugIdDisplay").text("Id des ausgewählten Elements: ");
+	// Entfernt die ID aus idStorage
 	$("#idStorage").text("");
 	// Setzt Bild und Text zurück
 	resetImage();

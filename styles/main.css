@@ -214,6 +214,14 @@ body.main-grid {
     margin-bottom: 20px;
 }
 
+#debugIdLabel {
+    margin-bottom: 0px;
+}
+
+#idStorage {
+    margin-top: 2px;
+}
+
 .editorInput {
     display: inline-block;
     -webkit-box-sizing: content-box;

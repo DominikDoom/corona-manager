@@ -1,4 +1,5 @@
 // Initialize language data
+// This will later be expandable or moved to a file, but during development de and en will be the only languages available
 var en = {
     catName: "Name",
     editCatInfo: "(Click to edit)",
@@ -64,43 +65,45 @@ var de = {
     autoSortButton: "Auto-Sortierung an- / ausschalten"
 }
 
+// Initializes currentLang with en, making it the standard language
 var currentLang = "en";
 
+// switchLang is responsible for replacing the text of each element with the "loc" class 
 function switchLang(lang) {
-    var localizable = $(document).find(".loc");
+    var localizable = $(document).find(".loc");                 // Finds all elements with the loc class
+    var langData;                                               // langData gets filled with the data of the selected language to keep the switch-case small 
+
     switch (lang) {
         case "en":
-            $.each(localizable, function(index, element) {
-                if (typeof $(element).attr("title") !== typeof undefined || typeof $(element).attr("data-tippy") !== typeof undefined) {
-                    var langString = $(element).attr("loc");
-                    langString = langString.substr(1);
-                    $(element).attr("title",en[langString]);
-                } else {
-                    var langString = $(element).attr("loc");
-                    langString = langString.substr(1);
-                    $(element).text(en[langString]);
-                }
+            langData = en;
+            currentLang = "en";
+            $.each(localizable, function(index, element) {      // Adds the class for the current language (used to adjust css) to each loc element
                 $(element).addClass("loc-en");
                 $(element).removeClass("loc-de");
             });
-            currentLang = "en";
             break;
     
         case "de":
-            $.each(localizable, function(index, element) {
-                if (typeof $(element).attr("title") !== typeof undefined || typeof $(element).attr("data-tippy") !== typeof undefined) {
-                    var langString = $(element).attr("loc");
-                    langString = langString.substr(1);
-                    $(element).attr("title",de[langString]);
-                } else {
-                    var langString = $(element).attr("loc");
-                    langString = langString.substr(1);
-                    $(element).text(de[langString]);
-                }
+            langData = de;
+            currentLang = "de";
+            $.each(localizable, function(index, element) {      // Adds the class for the current language (used to adjust css) to each loc element
                 $(element).addClass("loc-de");
                 $(element).removeClass("loc-en");
             });
-            currentLang = "de";
             break;
     }
+
+    // The real translation process
+    $.each(localizable, function(index, element) {
+        // The following if-clause tests for the title or tippy attribute to check if the targeted element is a tooltip text or plaintext
+        if (typeof $(element).attr("title") !== typeof undefined || typeof $(element).attr("data-tippy") !== typeof undefined) {    // Tooltip
+            var langString = $(element).attr("loc");
+            langString = langString.substr(1);                  // Language text have ? as a prefix to make identification in the HTML easier, this strips it
+            $(element).attr("title",langData[langString]);
+        } else {                                                // Plaintext
+            var langString = $(element).attr("loc");
+            langString = langString.substr(1);
+            $(element).text(langData[langString]);
+        }   
+    });
 }

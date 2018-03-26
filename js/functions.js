@@ -226,7 +226,7 @@ $(document).ready(function() {
 						return false;							// Da die erwünschte Kategorie gelöscht wurde, wird die each-Schleife abgebrochen
 					}
 				});
-				catSaveArray = JSON.stringify(obj,null,4);		// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+				catSaveArray = JSON.stringify(obj,null,4);		// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
 				log(catSaveArray,"d");
 				saveToFile("cat", catSaveArray);				// Der aktualisierte JSON-String wird in der Datei gespeichert
 				deleteContainedCards(catId);					// Alle in der Kategorie enthaltenen Karten werden ebenfalls gelöscht, um die Datei sauber zu halten
@@ -240,7 +240,7 @@ $(document).ready(function() {
 
 	// Löschbestätigung wird verneint
 	$(document).on('click', "#dialogDeny", function() {
-		// Da der Löschcode in der #dialogConfirm on click Funktion liegt, sind hier kene weiteren Schritte notwendig
+		// Da der Löschcode in der #dialogConfirm on click Funktion liegt, sind hier keine weiteren Schritte notwendig
 		$(".alertOverlay").css("display","none");				// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
 	});
 });
@@ -427,7 +427,7 @@ function openImageDialog() {
 	dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
 		var id = $("#idStorage").text();						// Liest #idStorage im Editor aus, um schnell an die ID der Karte zu gelangen
 		if (FileName !== undefined) {
-			var img = createThumbnail(FileName[0],id);				// createThumbnail() erstellt ein Thumbnail aus dem gewählten Bild mit der ID der Karte als Name
+			var img = createThumbnail(FileName[0],id);			// createThumbnail() erstellt ein Thumbnail aus dem gewählten Bild mit der ID der Karte als Name
 			$("#editorImagePreview").attr("src", img +"#" + new Date().getTime());	// Das Bild im Editor wird aktualisiert, DateTime wird angehängt, um den Browser zur Cacheverwerfung zu zwingen
 		}
 	});
@@ -495,7 +495,7 @@ function saveCat(id,name) {
 		obj['cats'].push({"id":id,"name":name, "fav":"todo", "creationDate":time});
 	}
 
-	catSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+	catSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
 	log(catSaveArray,"d");
 	saveToFile("cat", catSaveArray); 							// Der aktualisierte JSON-String wird in der JSON-Datei gespeichert
 }
@@ -534,7 +534,7 @@ function saveCard(id,cat,name,desc,time,fav) {
 		obj['cards'].push({"id":id,"cat":cat,"img":img,"name":name,"desc":desc,"pos":pos,"fav":fav,"creationDate":time});
 	}
 
-	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
 	log(cardSaveArray,"d");
 	saveToFile("card", cardSaveArray); 							// Der aktualisierte JSON-String wird in der JSON-Datei gespeichert
 }
@@ -551,7 +551,7 @@ function updatePosition() {
 		}
 	);
 
-	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
 	log(cardSaveArray,"d");
 	saveToFile("card", cardSaveArray); 							// Der aktualisierte JSON-String wird in der JSON-Datei gespeichert
 }
@@ -567,7 +567,7 @@ function deleteContainedCards(catid) {
 	$.each(obj['cards'], function(index, element) {				// Alle Karten werden durchlaufen
 		if (element !== undefined) {
 			if (element.cat == catid) {							// ID-Match der ID der gelöschten Kategorie mit der abgespeicherten Kategorie-ID
-				deleteThumb(element.id);						// Das zugehörige Thumbnail wird ebenfalls entferent
+				deleteThumb(element.id);						// Das zugehörige Thumbnail wird ebenfalls entfernt
 				var deletedItem = obj['cards'].splice(index,1);	// Die Karte wird aus dem JSON-Array gelöscht
 			}
 		}
@@ -581,7 +581,7 @@ function deleteContainedCards(catid) {
 		}
 	});
 
-	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+	cardSaveArray = JSON.stringify(obj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
 	log(cardSaveArray,"d");
 	saveToFile("card", cardSaveArray);							// Der aktualisierte JSON-String wird in der JSON-Datei gespeichert
 }

@@ -26,5 +26,6 @@
         "typescriptreact",
         "yml"
     ],
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "discord.enabled": true
 }

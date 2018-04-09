@@ -15,8 +15,10 @@
 *::-webkit-scrollbar-thumb:hover {
     background: #4F4F4F;
 }
-*::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(left, #22ADD4, #1E98BA);
+*::-webkit-scrollbar-corner {
+    background: #252526;
+    border-left: 1px solid #383838;
+    border-top: 1px solid #383838;
 }
 
 

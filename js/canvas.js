@@ -5,14 +5,14 @@ const LimitedTextbox = fabric.util.createClass(fabric.Textbox, {
         if (this.maxWidth) {
             const textWidthUnderCursor = this._getLineWidth(this.ctx, this.get2DCursorLocation().lineIndex);
             if (textWidthUnderCursor + this.ctx.measureText(chars).width > this.maxWidth) {
-            chars = '\n' + chars;
+                chars = '\n' + chars;
             }
         }
 
         if (this.maxLines) {
             const newLinesLength = this._wrapText(this.ctx, this.text + chars).length;
             if (newLinesLength > this.maxLines) {
-            return;
+                return;
             }
         }
 
@@ -65,6 +65,7 @@ function addTextBox() {
             fill: '#fff',
             top: 5,
             left: 5,
+            height: 300,
             width: 300,
             maxWidth: 300,
             maxLines: 6

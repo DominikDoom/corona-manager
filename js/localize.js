@@ -30,7 +30,10 @@ var en = {
     alphaSortButton: "Alphabetic",
     dateSortButton: "Creation date",
     autoSortLabel: "Auto-sorting",
-    autoSortButton: "Enable / disable automatic sorting"
+    autoSortButton: "Enable / disable automatic sorting",
+    pinboardSave: "Save project",
+    pinboardCancel: "Cancel editing",
+    toolboxTitle: "Drag object to add it to the pinboard"
 }
 var de = {
     catName: "Name",
@@ -62,7 +65,10 @@ var de = {
     alphaSortButton: "Alphabetisch",
     dateSortButton: "Erstelldatum",
     autoSortLabel: "Auto-Sortierung",
-    autoSortButton: "Auto-Sortierung an- / ausschalten"
+    autoSortButton: "Auto-Sortierung an- / ausschalten",
+    pinboardSave: "Projekt speichern",
+    pinboardCancel: "Bearbeiten abbrechen",
+    toolboxTitle: "Objekt ziehen, um es hinzuzufügen"
 }
 
 // Initializes currentLang with en, making it the standard language

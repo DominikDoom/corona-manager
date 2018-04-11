@@ -112,6 +112,8 @@ button {
     background-color: #252526;
     grid-area: pinboard-header;
     border-bottom: 2px solid #4F4F4F;
+    padding-top: 15px;
+    padding-left: 10px;
 }
 
 .pinboard-container {
@@ -122,6 +124,34 @@ button {
 .pinboard {
     width: calc(100% * 2);
     height: calc(100% * 2);
+    background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -webkit-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -webkit-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background: -moz-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+            -moz-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+            -moz-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+            -moz-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+            -moz-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+            -moz-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+            linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+            linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+            linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+            linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+            linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-size: 20px 20px;
+    background-color: #131313;
+    -pie-background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px / 20px,
+            linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px / 20px,
+            linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px / 20px,
+            linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px / 20px,
+            linear-gradient(90deg, #1b1b1b 10px, transparent 10px) 0 0 / 20px,
+            linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
+                0 0 / 20px #131313;
+    behavior: url(/pie/PIE.htc);
 }
 
 .pinboard-toolbox {
@@ -130,6 +160,20 @@ button {
     position: relative;
     overflow-y: scroll;
     border-left: 2px solid #4F4F4F;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.toolboxTitle {
+    text-align: center;
+}
+
+.toolboxObject {
+    width: 200px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body.main-grid {
@@ -215,6 +259,7 @@ body.main-grid {
 }
 
 .navicon:hover {
+    cursor: pointer;
     background-color: #252526!important;
 }
 
@@ -335,7 +380,16 @@ body.main-grid {
     display: inline-block;
 }
 
+svg, svg * {
+    pointer-events: none;
+}
+
+.svg-inline--fa:hover, .fa-layers:hover, .fa-layers-counter:hover {
+    cursor: pointer;
+}
+
 .toolbarIcon:hover {
+    cursor: pointer;
     color: rgb(185, 185, 185);
 }
 

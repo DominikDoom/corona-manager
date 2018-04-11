@@ -11,9 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
     <script src="https://unpkg.com/tippy.js@2.3.0/dist/tippy.all.min.js"></script>
+    <script src="js/dragscroll.js"></script>
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
-    
+    <script src="js/pinboard.js"></script>
     <script src="js/initTooltips.js"></script>
     <script>if (window.module) module = window.module;</script>
     <!-- Kategorie-Template -->
@@ -76,11 +77,31 @@
       </div>
     </div>
     <div class="pinboard-grid">
-      <div class="pinboard-header"></div>
-      <div class="pinboard-container">
-        <div class="pinboard" id="pinboard"></div>
+      <div class="pinboard-header">
+        <label id="pinboardSave" class="toolbarIcon loc" loc="?pinboardSave" title="?pinboardSave">
+          <i class="far fa-save fa-fw fa-2x"></i>
+        </label>
+        <label id="pinboardCancel" class="toolbarIcon loc" loc="?pinboardCancel" title="?pinboardCancel">
+            <i class="far fa-window-close fa-fw fa-2x"></i>
+        </label>
       </div>
-      <div class="pinboard-toolbox"></div>
+      <div class="pinboard-container dragscroll">
+        <div class="pinboard" id="pinboard" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+      </div>
+      <div class="pinboard-toolbox">
+        <h2 class="toolboxTitle loc" loc="?toolboxTitle">?toolboxTitle</h2>
+        <div id="toolboxTextObject" class="toolboxObject">
+          <img src="img/default.png" alt="Text" draggable="true" ondragstart="drag(event)">
+        </div>
+        <hr>
+        <div id="toolboxImageObject" class="toolboxObject">
+          <img src="img/default.png" alt="Image" draggable="true" ondragstart="drag(event)">
+        </div>
+        <hr>
+        <div id="toolboxMapObject" class="toolboxObject">
+          <img src="img/default.png" alt="Map" draggable="true" ondragstart="drag(event)">
+        </div>
+      </div>
     </div>
   	<div class="container-grid header">
       <div class="logo"></div>

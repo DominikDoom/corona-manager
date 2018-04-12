@@ -85,21 +85,21 @@
             <i class="far fa-window-close fa-fw fa-2x"></i>
         </label>
       </div>
-      <div class="pinboard-container dragscroll">
+      <div class="pinboard-container">
         <div class="pinboard" id="pinboard" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
       </div>
       <div class="pinboard-toolbox">
         <h2 class="toolboxTitle loc" loc="?toolboxTitle">?toolboxTitle</h2>
-        <div id="toolboxTextObject" class="toolboxObject">
-          <img src="img/default.png" alt="Text" draggable="true" ondragstart="drag(event)">
+        <div class="toolboxObject">
+          <img id="toolboxTextObject" src="img/toolbox/words.png" alt="Text" draggable="true" ondragstart="drag(event)">
         </div>
         <hr>
-        <div id="toolboxImageObject" class="toolboxObject">
-          <img src="img/default.png" alt="Image" draggable="true" ondragstart="drag(event)">
+        <div class="toolboxObject">
+          <img id="toolboxImageObject" src="img/toolbox/words.png" alt="Image" draggable="true" ondragstart="drag(event)">
         </div>
         <hr>
-        <div id="toolboxMapObject" class="toolboxObject">
-          <img src="img/default.png" alt="Map" draggable="true" ondragstart="drag(event)">
+        <div class="toolboxObject">
+          <img id="toolboxMapObject" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
         </div>
       </div>
     </div>

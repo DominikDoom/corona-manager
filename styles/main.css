@@ -118,6 +118,7 @@ button {
 
 .pinboard-container {
     grid-area: pinboard-main;
+    position: relative;
     overflow: scroll;
 }
 
@@ -174,6 +175,11 @@ button {
     height: 150px;
     margin-left: auto;
     margin-right: auto;
+    border: 2px solid #4F4F4F;
+}
+
+.pinboardObject {
+    position: absolute;
 }
 
 body.main-grid {

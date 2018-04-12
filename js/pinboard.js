@@ -28,7 +28,7 @@ function drop(ev) {
     var addedObject = $("#" + data).clone().appendTo(ev.target);
     addedObject.addClass("pinboardObject");
     addedObject.css({
-        left: ev.pageX - addedObject.width(),
+        left: ev.pageX - (addedObject.width() / 2),
         top: ev.pageY - addedObject.height()
     })
     addedObject.attr({

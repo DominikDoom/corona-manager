@@ -180,6 +180,7 @@ button {
 
 .pinboardObject {
     position: absolute;
+    box-sizing: border-box;
 }
 
 body.main-grid {

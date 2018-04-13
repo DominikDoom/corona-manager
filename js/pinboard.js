@@ -48,13 +48,16 @@ var dragmove = function(){
             evt = evt || window.event;
             var posX = evt.clientX,
                 posY = evt.clientY,
-            divTop = divid.style.top,
-            divLeft = divid.style.left,
-            eWi = parseInt(divid.style.width),                  // Element width
-            eHe = parseInt(divid.style.height),                 // Element height
-            cWi = parseInt(document.getElementById(container).style.width), // Container width
-            cHe = parseInt(document.getElementById(container).style.height);    // Container height
-            document.getElementById(container).style.cursor='move';
+                divTop = divid.style.top,
+                divLeft = divid.style.left,
+                eWi = parseInt(divid.style.width),              // Element width
+                eHe = parseInt(divid.style.height),             // Element height
+                container = $("#" + container);                 // JQuery selection
+                cWi = container.width(),                        // Container width
+                cHe = container.height(),                       // Container height
+                pcWi = container.parent().width(),              // Visible width
+                pcHe = container.parent().height();             // Visible height
+            container.css(cursor='move');
             divTop = divTop.replace('px','');
             divLeft = divLeft.replace('px','');
             var diffX = posX - divLeft,
@@ -65,9 +68,9 @@ var dragmove = function(){
                     posY = evt.clientY,
                     aX = posX - diffX,
                     aY = posY - diffY;
+                    // Out of bounds checking
                     if (aX < 0) aX = 0;
                     if (aY < 0) aY = 0;
-                    // Out of bounds checking
                     if (aX + eWi > cWi) aX = cWi - eWi;
                     if (aY + eHe > cHe) aY = cHe -eHe;
                 dragmove.move(divid,aX,aY);
@@ -75,7 +78,8 @@ var dragmove = function(){
         },
         stopMoving : function(container){
             var a = document.createElement('script');
-            document.getElementById(container).style.cursor='default';
+            var container = $("#" + container);
+            container.css(cursor='default');
             document.onmousemove = function(){}
         },
     }

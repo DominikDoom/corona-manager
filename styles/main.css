@@ -123,8 +123,8 @@ button {
 }
 
 .pinboard {
-    width: calc(100% * 2);
-    height: calc(100% * 2);
+    width: 5000px;
+    height: 5000px;
     background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
             -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
             -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
@@ -181,7 +181,50 @@ button {
 .pinboardObject {
     position: absolute;
     box-sizing: border-box;
+    min-width: 200px;
+    min-height: 150px;
+    background-color: #333333;
+    overflow: hidden;
+    padding: 10px;
+    box-shadow: 8px 8px 15px -4px rgba(0,0,0,1);
+  
 }
+
+.resize-handle {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    margin-top: -17px;
+    margin-left: -17px;
+    border-style: solid;
+    border-width: 0 0 16px 16px;
+    border-color: transparent transparent #AAA transparent;
+    cursor: nw-resize !important;
+}
+
+.pinboardObject-title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: whitesmoke
+}
+
+.pinboardObject-main {
+    width: 100%;
+    height: 100%;
+}
+  
+.pinboardObject-text {
+    resize: none;
+    border: 1px solid #5b5b5b;
+    border-radius: 1px;
+    color: #c4c4c4;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: #1e1e1e;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+}
+
 
 body.main-grid {
     overflow: hidden;

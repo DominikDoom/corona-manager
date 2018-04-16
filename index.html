@@ -69,6 +69,17 @@
         </div>
       </div>
     </script>
+    <!-- Pinboard-Templates -->
+    <!-- Text -->
+    <script id="pinboardObject-text-template" type="text/template">
+      <div class="pinboardObject">
+        <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <h3 class="pinboardObject-title">Titel</h2>
+        <div class=pinboardObject-main>
+          <textarea class="pinboardObject-text"></textarea>
+        </div>
+      </div>
+    </script>
   </head>
 
   <body class="main-grid">
@@ -88,21 +99,21 @@
             <i class="far fa-window-close fa-fw fa-2x"></i>
         </label>
       </div>
-      <div class="pinboard-container dragscroll">
+      <div class="pinboard-container dragscroll" nochilddrag>
         <div class="pinboard" id="pinboard" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
       </div>
       <div class="pinboard-toolbox">
         <h2 class="toolboxTitle loc" loc="?toolboxTitle">?toolboxTitle</h2>
         <div class="toolboxObject">
-          <img id="toolboxTextObject" src="img/toolbox/words.png" alt="Text" draggable="true" ondragstart="drag(event)">
+          <img id="toolboxObject-text" src="img/toolbox/words.png" alt="Text" draggable="true" ondragstart="drag(event)">
         </div>
         <hr>
         <div class="toolboxObject">
-          <img id="toolboxImageObject" src="img/toolbox/words.png" alt="Image" draggable="true" ondragstart="drag(event)">
+          <img id="toolboxObject-image" src="img/toolbox/words.png" alt="Image" draggable="true" ondragstart="drag(event)">
         </div>
         <hr>
         <div class="toolboxObject">
-          <img id="toolboxMapObject" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
+          <img id="toolboxObject-map" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
         </div>
       </div>
     </div>

@@ -181,8 +181,8 @@ button {
 .pinboardObject {
     position: absolute;
     box-sizing: border-box;
-    min-width: 200px;
-    min-height: 150px;
+    width: 200px;
+    height: 150px;
     background-color: #333333;
     overflow: hidden;
     padding: 10px;
@@ -194,10 +194,10 @@ button {
     position: absolute;
     width: 0px;
     height: 0px;
-    margin-top: -17px;
-    margin-left: -17px;
+    margin-top: -11px;
+    margin-left: -11px;
     border-style: solid;
-    border-width: 0 0 16px 16px;
+    border-width: 0 0 10px 10px;
     border-color: transparent transparent #AAA transparent;
     cursor: nw-resize !important;
 }
@@ -209,11 +209,13 @@ button {
 }
 
 .pinboardObject-main {
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 6px);
+    height: calc(100% - 38px);
 }
   
 .pinboardObject-text {
+    width: 100%;
+    height: 100%;
     resize: none;
     border: 1px solid #5b5b5b;
     border-radius: 1px;
@@ -221,8 +223,6 @@ button {
     -o-text-overflow: clip;
     text-overflow: clip;
     background: #1e1e1e;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
 }
 
 

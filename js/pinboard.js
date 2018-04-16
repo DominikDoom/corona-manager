@@ -61,7 +61,3 @@ function drop(ev) {
             break;
     }
 }
-
-function addPinboardObject(type,dropX,dropY) {
-    
-}

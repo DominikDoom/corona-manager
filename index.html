@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="js/jquery.ui.position.min.js"></script>
+    <script src="js/jquery.contextMenu.min.js"></script>
     <script src="js/dragscroll.js"></script>
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
@@ -26,7 +28,7 @@
         <div class="catDetails">
           <h4 class="catName loc" id="catName" loc="?catName">?catName</h4>
           <input type="text" class="editCatName" />
-          <p class="catEditInfo loc" loc="?editCatInfo">?editCatInfo</p>
+          <p class="editInfo loc" loc="?editInfo">?editInfo</p>
           <p id="uuidcat" style="display: none;">{{id}}</p>
           <label id="addCard" class="toolbarIcon loc" loc="?addCard" title="?addCard">
             <i class="fas fa-plus fa-fw fa-2x"></i>
@@ -74,9 +76,17 @@
     <script id="pinboardObject-text-template" type="text/template">
       <div class="pinboardObject">
         <p id="uuidpbobj" style="display: none;">{{id}}</p>
-        <h3 class="pinboardObject-title">Titel</h2>
-        <div class=pinboardObject-main>
+        <div class="pinboardObject-main">
           <textarea class="pinboardObject-text"></textarea>
+        </div>
+      </div>
+    </script>
+    <!-- Image -->
+    <script id="pinboardObject-image-template" type="text/template">
+      <div class="pinboardObject">
+        <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <div class="pinboardObject-main">
+          <div class="pinboardObject-image"></div>
         </div>
       </div>
     </script>

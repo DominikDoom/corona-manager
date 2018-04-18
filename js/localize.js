@@ -2,7 +2,7 @@
 // This will later be expandable or moved to a file, but during development de and en will be the only languages available
 var en = {
     catName: "Name",
-    editCatInfo: "(Click to edit)",
+    editInfo: "(Click to edit)",
     addCard: "Add a card",
     deleteCat: "Delete category",
     openCard: "Open card",
@@ -33,11 +33,12 @@ var en = {
     autoSortButton: "Enable / disable automatic sorting",
     pinboardSave: "Save project",
     pinboardCancel: "Cancel editing",
-    toolboxTitle: "Drag object to add it to the pinboard"
+    toolboxTitle: "Drag object to add it to the pinboard",
+    pinboardObjectTitle: "Title"
 }
 var de = {
     catName: "Name",
-    editCatInfo: "(Klicken zum Ändern)",
+    editInfo: "(Klicken zum Ändern)",
     addCard: "Karte hinzufügen",
     deleteCat: "Kategorie löschen",
     openCard: "Karte öffnen",
@@ -68,7 +69,8 @@ var de = {
     autoSortButton: "Auto-Sortierung an- / ausschalten",
     pinboardSave: "Projekt speichern",
     pinboardCancel: "Bearbeiten abbrechen",
-    toolboxTitle: "Objekt ziehen, um es hinzuzufügen"
+    toolboxTitle: "Objekt ziehen, um es hinzuzufügen",
+    pinboardObjectTitle: "Titel"
 }
 
 // Initializes currentLang with en, making it the standard language

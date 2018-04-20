@@ -96,11 +96,26 @@ function drop(ev) {
 
 function setImage(addedObject) {
     dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
-        if (FileName !== undefined) {
-            addedObject.find(".pinboardObject-image").css("background-image",'url("' + FileName + '")');
+        if (FileName[0] !== undefined) {
+            addedObject.find(".pinboardObject-image").css("background-image",'url("' + fileUrl(FileName[0]) + '")');
         }
     });
 }
+
+function fileUrl(str) {
+    if (typeof str !== 'string') {
+        throw new Error('Expected a string');
+    }
+
+    var pathName = path.resolve(str).replace(/\\/g, '/');
+
+    // Windows drive letter must be prefixed with a slash
+    if (pathName[0] !== '/') {
+        pathName = '/' + pathName;
+    }
+
+    return encodeURI('file://' + pathName);
+};
 
 // UI events
 var imageBackgroundTypes = ['cover','contain','100% 100%'];

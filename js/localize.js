@@ -1,7 +1,7 @@
 // Initialize language data
 // This will later be expandable or moved to a file, but during development de and en will be the only languages available
 var en = {
-    catName: "Name",
+    catDefaultName: "Name",
     editInfo: "(Click to edit)",
     addCard: "Add a card",
     deleteCat: "Delete category",
@@ -34,10 +34,12 @@ var en = {
     pinboardSave: "Save project",
     pinboardCancel: "Cancel editing",
     toolboxTitle: "Drag object to add it to the pinboard",
-    pinboardObjectTitle: "Title"
+    pinboardObjectTitle: "Title",
+    editPinboardObject: "Edit",
+    deletePinboardObject: "Delete"
 }
 var de = {
-    catName: "Name",
+    catDefaultName: "Name",
     editInfo: "(Klicken zum Ändern)",
     addCard: "Karte hinzufügen",
     deleteCat: "Kategorie löschen",
@@ -70,7 +72,9 @@ var de = {
     pinboardSave: "Projekt speichern",
     pinboardCancel: "Bearbeiten abbrechen",
     toolboxTitle: "Objekt ziehen, um es hinzuzufügen",
-    pinboardObjectTitle: "Titel"
+    pinboardObjectTitle: "Titel",
+    editPinboardObject: "Ändern",
+    deletePinboardObject: "Löschen"
 }
 
 // Initializes currentLang with en, making it the standard language

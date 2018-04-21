@@ -184,10 +184,8 @@ button {
     width: 200px;
     height: 150px;
     background-color: #333333;
-    overflow: hidden;
     padding: 10px;
     box-shadow: 0px 8px 15px -4px rgba(0,0,0,1);
-  
 }
 
 .resize-handle {
@@ -230,6 +228,47 @@ button {
     background-position: center;
 }
 
+.pinboardObject-dots {
+    color: rgb(185, 185, 185);
+    position: absolute;
+    right: 0;
+    padding-right: 2px;
+}
+
+.pinboardObject-dots:hover ~ .pinboardObject-dotMenu {
+    display: block;
+}
+.pinboardObject-dotMenu:hover {
+    display: block;
+}
+
+.pinboardObject-dotMenu {
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    right: -61px;
+    z-index: 999;
+    background-color: #1E1E1E;
+    border: 1px solid #5b5b5b;
+    border-left: none;
+}
+
+.pinboardObject-dotMenu ul {
+    padding-left: 0px;
+    margin: 5px 0px 5px 0px;
+}
+.pinboardObject-dotMenu li {
+    cursor: pointer;
+    list-style: none;
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px; 
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.pinboardObject-dotMenu li:hover {
+    background-color: #242424;
+}
 
 body.main-grid {
     overflow: hidden;
@@ -577,6 +616,10 @@ h4 {
     margin-bottom: 10px;
 }
 
+.catName {
+    cursor: pointer;
+}
+
 .editCatName {
     display:none;
     margin-top: 10px;
@@ -689,6 +732,7 @@ h4 {
 }
 
 #openCard, #editCard {
+    cursor: pointer;
     margin: 20px;
 }
 
@@ -697,6 +741,7 @@ h4 {
 }
 
 #upCard, #downCard, #favCard {
+    cursor: pointer;
     margin-left: 10px;
     float: left;
 }

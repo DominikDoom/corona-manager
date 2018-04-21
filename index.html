@@ -14,8 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
-    <script src="js/jquery.ui.position.min.js"></script>
-    <script src="js/jquery.contextMenu.min.js"></script>
     <script src="js/dragscroll.js"></script>
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
@@ -26,8 +24,8 @@
     <script id="cat-template" type="text/template">
       <div class="cat" id="cat">
         <div class="catDetails">
-          <h4 class="catName loc" id="catName" loc="?catName">?catName</h4>
-          <input type="text" class="editCatName" />
+          <h4 class="catName loc" id="catName" loc="?catDefaultName">?catDefaultName</h4>
+          <input type="text" class="editCatName"/>
           <p class="editInfo loc" loc="?editInfo">?editInfo</p>
           <p id="uuidcat" style="display: none;">{{id}}</p>
           <label id="addCard" class="toolbarIcon loc" loc="?addCard" title="?addCard">
@@ -76,6 +74,15 @@
     <script id="pinboardObject-text-template" type="text/template">
       <div class="pinboardObject">
         <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <label class="pinboardObject-dots">
+          <i class="fas fa-ellipsis-v"></i>
+        </label>
+        <div class="pinboardObject-dotMenu">
+          <ul>
+            <li class="loc" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" loc="?deletePinboardObject">?deletePinboardObject</li>
+          </ul>
+        </div>
         <div class="pinboardObject-main">
           <textarea class="pinboardObject-text"></textarea>
         </div>

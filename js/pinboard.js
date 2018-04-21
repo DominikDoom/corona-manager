@@ -137,27 +137,4 @@ $(document).on('click', ".pinboardObject-image", function(ev){
     }
 });
 
-// Context Menu for Pinboard Objects
-$(function() {
-    $.contextMenu({
-        selector: '.imageObj-context-menu', 
-        callback: function(key, options) {
-            var m = "clicked: " + key;
-            window.console && console.log(m) || alert(m); 
-        },
-        items: {
-            "edit": {name: "Change image", icon: "edit"},
-            "sep1": "---------",
-            "delete": {name: "Delete", icon: "delete"}
-        }
-    });
-
-    $('.imageObj-context-menu').on('click', function(e){
-        if (this == 'edit') {
-            setImage();
-        }
-    })    
-});
-
-
 // Markdown processing

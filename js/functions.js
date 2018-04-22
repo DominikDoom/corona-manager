@@ -42,8 +42,12 @@ $(document).ready(function() {
 		var template = $("#cat-template").html();				// Das Template wird geladen
 		var html = Mustache.render(template, data);
 		$("#categoryContainer").append(html);					// Der von Mustache vervollständigte HTML-Code wird in den Kategoriecontainer eingefügt
+		var elem = $( "p:contains(" +  data.id + ")").closest(".cat");
+		localizeElement(elem,currentLang);
 		log("Category "+ data.id + " added","d");
-		saveCat(data.id,"Name");								// saveCat() speichert die soeben hinzugefügte kategorie direkt in einer JSON-Datei ab
+		var catNameDef = elem.find('.catNameDefault');
+		initTooltips();
+		saveCat(data.id,catNameDef.text());								// saveCat() speichert die soeben hinzugefügte kategorie direkt in einer JSON-Datei ab
 	});
 
 	// Bearbeiten des Kategorienamens
@@ -54,6 +58,17 @@ $(document).ready(function() {
 		// Das zu der aktuellen Kategorie gehörige Input-Feld wird selektiert und an der Stelle sichtbar gemacht, wo vorher der Name stand
 		var editInput = dad.find('.editCatName');
 		editInput.val(catName.text());							// Der alte Name wird eingefügt, sodass man nicht immer alles neu tippen muss
+		editInput.show();
+		editInput.focus();										// Automatischer Fokus
+	});
+	
+	$(document).on('click', "#catNameDefault", function() {			// Klick auf den Default-Namen
+        var dad = $(this).closest(".cat");
+		var catNameDef = dad.find('.catNameDefault');
+		catNameDef.hide();											// Der Name wird unsichtbar gemacht
+		// Das zu der aktuellen Kategorie gehörige Input-Feld wird selektiert und an der Stelle sichtbar gemacht, wo vorher der Name stand
+		var editInput = dad.find('.editCatName');
+		editInput.val(catNameDef.text());							// Der alte Name wird eingefügt, sodass man nicht immer alles neu tippen muss
 		editInput.show();
 		editInput.focus();										// Automatischer Fokus
     });
@@ -233,6 +248,10 @@ $(document).ready(function() {
 		
 				$(document).find("p:contains(" + catId + ")").parent().parent().remove();	// Die eigentliche Kategorie wird aus dem HTML-DOM-Tree entfernt, dabei werden enthaltene Karten automatisch mit entfernt
 				log("Category " + catId + " removed","d");
+				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
+				break;
+			case "pinboardObject":
+				pinboardObjectToDelete.remove();
 				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
 				break;
 		}
@@ -675,6 +694,8 @@ function loadConstructor() {
 			var dad = $("#categoryContainer").find("p:contains(" +  data.id + ")").parent().parent();
 			var catName = dad.find('.catName');
 			catName.text(element.name);							// Der Kategoriename wird gesetzt
+			catName.show();
+			dad.find('.catNameDefault').hide();
 		});
 		catSaveArray = catString;								// Die Runtime-Variable wird auf den geladenen JSON-String gesetzt, um damit weiterzuarbeiten
 

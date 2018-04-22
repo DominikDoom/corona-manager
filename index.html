@@ -24,7 +24,8 @@
     <script id="cat-template" type="text/template">
       <div class="cat" id="cat">
         <div class="catDetails">
-          <h4 class="catName loc" id="catName" loc="?catDefaultName">?catDefaultName</h4>
+          <h4 class="catNameDefault loc" id="catNameDefault" loc="?catDefaultName">?catDefaultName</h4>
+          <h4 class="catName" id="catName" style="display: none;">Name</h4>
           <input type="text" class="editCatName"/>
           <p class="editInfo loc" loc="?editInfo">?editInfo</p>
           <p id="uuidcat" style="display: none;">{{id}}</p>
@@ -77,10 +78,10 @@
         <label class="pinboardObject-dots">
           <i class="fas fa-ellipsis-v"></i>
         </label>
-        <div class="pinboardObject-dotMenu">
+        <div class="pinboardObject-dotMenu loc" loc="">
           <ul>
-            <li class="loc" loc="?editPinboardObject">?editPinboardObject</li>
-            <li class="loc" loc="?deletePinboardObject">?deletePinboardObject</li>
+            <li class="loc" id="editPinboardObject" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
           </ul>
         </div>
         <div class="pinboardObject-main">
@@ -92,6 +93,15 @@
     <script id="pinboardObject-image-template" type="text/template">
       <div class="pinboardObject">
         <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <label class="pinboardObject-dots">
+          <i class="fas fa-ellipsis-v"></i>
+        </label>
+        <div class="pinboardObject-dotMenu loc" loc="">
+          <ul>
+            <li class="loc" id="editPinboardObject" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
+          </ul>
+        </div>
         <div class="pinboardObject-main">
           <div class="pinboardObject-image"></div>
         </div>

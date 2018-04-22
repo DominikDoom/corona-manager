@@ -218,8 +218,8 @@ button {
 }
 
 .pinboardObject-image {
-    width: 100%;
-    height: 100%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
     border: 1px solid #5b5b5b;
     border-radius: 1px;
     background-image: url("../img/default.png");
@@ -246,11 +246,17 @@ button {
     display: none;
     position: absolute;
     overflow: hidden;
-    right: -61px;
+    right: -164px;
     z-index: 999;
     background-color: #1E1E1E;
     border: 1px solid #5b5b5b;
     border-left: none;
+}
+.pinboardObject-dotMenu.loc-de {
+    right: -74px !important;
+}
+.pinboardObject-dotMenu.loc-en {
+    right: -61px !important;
 }
 
 .pinboardObject-dotMenu ul {

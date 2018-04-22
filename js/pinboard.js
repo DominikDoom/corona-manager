@@ -1,10 +1,4 @@
-// Cursor change on pan
-$(document).on('mousedown', ".pinboard", function() {
-    $(".pinboard").css('cursor','-webkit-grabbing');
-});
-$(document).on('mouseup', ".pinboard", function() {
-    $(".pinboard").css('cursor','default');
-});
+var pinboardObjectToDelete;
 
 // Drag & Drop
 function allowDrop(ev) {
@@ -31,6 +25,7 @@ function drop(ev) {
                 left: ev.pageX - (addedObject.width() / 2),
                 top: ev.pageY - addedObject.height()
             })
+            localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
             TweenLite.set(handle, { top: "150px", left: "201px" });
@@ -66,6 +61,7 @@ function drop(ev) {
                 left: ev.pageX - (addedObject.width() / 2),
                 top: ev.pageY - addedObject.height()
             })
+            localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
             TweenLite.set(handle, { top: "150px", left: "201px" });
@@ -135,6 +131,12 @@ $(document).on('click', ".pinboardObject-image", function(ev){
                 break;
         }   
     }
+});
+
+$(document).on('click', "#deletePinboardObject", function(ev){
+    pinboardObjectToDelete = $(this).parent().parent().parent();
+    deleteMode = "pinboardObject";								// Der deleteMode gibt der Dialogsbestätigungsfunktion an, welcher Löschvorgang ausgeführt werden soll
+	$(".alertOverlay").css("display","block");				    // Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden sichtbar gemacht
 });
 
 // Markdown processing

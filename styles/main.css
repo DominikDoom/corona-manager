@@ -217,6 +217,16 @@ button {
     background: #1e1e1e;
 }
 
+.pinboardObject-mdPreview {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background: #1e1e1e;
+    border: 1px solid #5b5b5b;
+}
+
 .pinboardObject-image {
     width: calc(100% + 4px);
     height: calc(100% + 4px);
@@ -807,3 +817,7 @@ h4 {
 input, button, textarea, :focus {
     outline: none;
 }
+
+.emoji {
+    height: 1.2em;
+  }

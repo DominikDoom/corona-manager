@@ -14,6 +14,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.1/markdown-it.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it-emoji/1.4.0/markdown-it-emoji.min.js"></script>
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/pinboard.js"></script>
@@ -72,7 +75,7 @@
     <!-- Pinboard-Templates -->
     <!-- Text -->
     <script id="pinboardObject-text-template" type="text/template">
-      <div class="pinboardObject">
+      <div class="pinboardObject" pbType="text">
         <p id="uuidpbobj" style="display: none;">{{id}}</p>
         <label class="pinboardObject-dots">
           <i class="fas fa-ellipsis-v"></i>
@@ -83,14 +86,19 @@
             <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
           </ul>
         </div>
+        
         <div class="pinboardObject-main">
           <textarea class="pinboardObject-text"></textarea>
+        </div>
+        <div class="pinboardObject-mdPreview">
+          <h5>Live Preview</h5>
+          <div class="pinboardObject-markdown"></div>  
         </div>
       </div>
     </script>
     <!-- Image -->
     <script id="pinboardObject-image-template" type="text/template">
-      <div class="pinboardObject">
+      <div class="pinboardObject" pbType="image">
         <p id="uuidpbobj" style="display: none;">{{id}}</p>
         <label class="pinboardObject-dots">
           <i class="fas fa-ellipsis-v"></i>

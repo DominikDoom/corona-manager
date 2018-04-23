@@ -33,6 +33,9 @@ var catSaveArray = '{"cats":[]}';
 ##################################
 */
 $(document).ready(function() {
+	// Erstlokalisierung
+	switchLang(currentLang);
+
 	// Hinzufügen einer Kategorie (verwendet Mustache)
 	$(document).on('click', "#addCat", function(){
 		// Die data Variable wird initialisiert, da Mustache diese Daten dann in entsprechend formatierte Objekte direkt im HTML-Template einsetzt

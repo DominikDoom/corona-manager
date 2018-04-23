@@ -3,25 +3,44 @@
   <head>
     <meta charset="UTF-8">
     <title>Corona Project Manager</title>
+    <!-- Own styles -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/hover.min.css">
+    <!-- Fonts -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <!-- Electron compatibility -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Template rendering  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
+    <!-- Tooltips -->
     <script src="https://unpkg.com/tippy.js@2.3.0/dist/tippy.all.min.js"></script>
+    <!-- GSAP Draggable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
-    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.6"></script>
+    <!-- Markdown-it & Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.1/markdown-it.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it-emoji/1.4.0/markdown-it-emoji.min.js"></script>
+    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.6"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js"></script>
+    <script src="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.js"></script>
+    <link rel="stylesheet" href="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.css">
+    <script src="js/md-plugins/markdown-it-emoji.min.js"></script>
+    <script src="js/md-plugins/markdown-it-sub.min.js"></script>
+    <script src="js/md-plugins/markdown-it-sup.min.js"></script>
+    <script src="js/md-plugins/markdown-it-checkbox.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <link rel="stylesheet" href="styles/highlighters/atom-one-dark.css">
+    <!-- Own Functions -->
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/pinboard.js"></script>
     <script src="js/initTooltips.js"></script>
     <script>if (window.module) module = window.module;</script>
+
     <!-- Kategorie-Template -->
     <script id="cat-template" type="text/template">
       <div class="cat" id="cat">
@@ -91,7 +110,7 @@
           <textarea class="pinboardObject-text"></textarea>
         </div>
         <div class="pinboardObject-mdPreview">
-          <h5>Live Preview</h5>
+          <h5 class="mdPreviewTitle loc" loc="?mdPreviewTitle">?mdPreviewTitle</h5>
           <div class="pinboardObject-markdown"></div>  
         </div>
       </div>

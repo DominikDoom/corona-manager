@@ -36,7 +36,8 @@ var en = {
     toolboxTitle: "Drag object to add it to the pinboard",
     pinboardObjectTitle: "Title",
     editPinboardObject: "Edit",
-    deletePinboardObject: "Delete"
+    deletePinboardObject: "Delete",
+    mdPreviewTitle: "Preview"
 }
 var de = {
     catDefaultName: "Name",
@@ -74,7 +75,8 @@ var de = {
     toolboxTitle: "Objekt ziehen, um es hinzuzufügen",
     pinboardObjectTitle: "Titel",
     editPinboardObject: "Ändern",
-    deletePinboardObject: "Löschen"
+    deletePinboardObject: "Löschen",
+    mdPreviewTitle: "Vorschau"
 }
 
 // Initializes currentLang with en, making it the standard language

@@ -2,7 +2,7 @@
 *::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-    background-color: #1E1E1E;
+    background-color: #1e1e1e;
 }
 *::-webkit-scrollbar-thumb {
   background-color: #424242;
@@ -29,6 +29,10 @@ html, body {
     font-family: 'Roboto Condensed', sans-serif;
     color: whitesmoke;
     position: relative;
+}
+
+a {
+    color: whitesmoke;
 }
 
 button {
@@ -214,7 +218,15 @@ button {
     color: #c4c4c4;
     -o-text-overflow: clip;
     text-overflow: clip;
-    background: #1e1e1e;
+    background-color: #1e1e1e;
+}
+
+.mdPreviewTitle {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 5px;
+    background-color: #242424;
+    border-bottom: 1px solid #5b5b5b;
 }
 
 .pinboardObject-mdPreview {
@@ -222,9 +234,33 @@ button {
     top: calc(100% + 2px);
     left: 0;
     width: 100%;
-    padding: 5px;
-    background: #1e1e1e;
+    box-sizing: border-box;
+    background-color: #333333;
     border: 1px solid #5b5b5b;
+}
+
+.pinboardObject-markdown {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #5b5b5b;
+    background-color: #1e1e1e;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.pinboardObject-markdown h1, .pinboardObject-markdown h2, .pinboardObject-markdown h3, .pinboardObject-markdown h4, .pinboardObject-markdown h5, .pinboardObject-markdown h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.pinboardObject-markdown p {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.pinboardObject-markdown input[type="checkbox"] {
+    margin: 0px;
+    transform: translateY(2px)
 }
 
 .pinboardObject-image {
@@ -258,7 +294,7 @@ button {
     overflow: hidden;
     right: -164px;
     z-index: 999;
-    background-color: #1E1E1E;
+    background-color: #1e1e1e;
     border: 1px solid #5b5b5b;
     border-left: none;
 }
@@ -818,6 +854,99 @@ input, button, textarea, :focus {
     outline: none;
 }
 
+/* Twemoji Size  */
 .emoji {
-    height: 1.2em;
-  }
+    height: 0.9em;
+}
+/* LaTeX frac Divider Adjustment */
+.stretchy {
+    height: 0.3em !important;
+}
+/* Codeblock overwrite */
+.hljs {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #252525;
+    border-radius: 3px;
+    border: 1px solid #353535;
+}
+.hljs * {
+    -webkit-user-select: auto;
+    user-select: auto;
+    cursor: text;
+}
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left: -9999px;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 1.95em;
+}
+
+.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label,
+.pinboardObject-markdown li [type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 4px;
+}
+
+.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label:before,
+.pinboardObject-markdown li [type="checkbox"]:checked + label:before {
+    transform: scale(0.7) translate(-33px,-3px);
+}
+.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label:after,
+.pinboardObject-markdown li [type="checkbox"]:checked + label:after {
+    transform: scale(0.7) translate(-33px,-3px);
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 1.25em; height: 1.25em;
+    transform: scale(0.7) translateY(-3px);
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    content: '✔';
+    position: absolute;
+    top: .15em; left: .15em;
+    font-size: 1.4em;
+    line-height: 0.8;
+    color: #09ad7e;
+    transition: all .2s;
+    font-family: Helvetica, Arial, sans-serif;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0) translateY(-3px);
+}
+[type="checkbox"]:checked + label:after {
+    opacity: 1;
+    transform: scale(0.7) translateY(-3px);
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+    box-shadow: none;
+    border-color: #bbb;
+    background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + label:after {
+    color: #999;
+}
+[type="checkbox"]:disabled + label {
+    color: #aaa;
+}

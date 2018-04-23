@@ -1,11 +1,27 @@
 var shell = require('electron').shell;
 
 var pinboardObjectToDelete;
+const tm = texmath.use(katex);
 var md = window.markdownit({
     html: true,
     linkify: true,
-    typographer: true
-}).use(window.markdownitEmoji);
+    typographer: true,
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+        try {
+            return '<pre class="hljs"><code>' +
+                hljs.highlight(lang, str, true).value +
+                '</code></pre>';
+        } catch (__) {}
+        }
+    
+        return '<pre class="hljs cbOverwrite"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+    }
+}).use(window.markdownitEmoji)
+  .use(window.markdownitSup)
+  .use(window.markdownitSub)
+  .use(window.markdownitCheckbox)
+  .use(tm);
 md.renderer.rules.emoji = function(token, idx) {
     return twemoji.parse(token[idx].content);
 };
@@ -161,6 +177,14 @@ $(document).on('click', "#editPinboardObject", function(ev){
     var type = object.attr("pbType");
     switch (type) {
         case "text":
+            var dragObj = Draggable.get($(this).parent().parent().parent());
+            if (dragObj.enabled()) {
+                dragObj.disable();
+                // TODO: Change menu item text from Edit to Save    
+            } else {
+                dragObj.enable();
+                // TODO: Change menu item text from Save to Edit
+            }
             break;
         case "image":
             setImage(object);

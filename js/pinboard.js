@@ -8,13 +8,13 @@ var md = window.markdownit({
     typographer: true,
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
-        try {
-            return '<pre class="hljs"><code>' +
-                hljs.highlight(lang, str, true).value +
-                '</code></pre>';
-        } catch (__) {}
+            try {
+                return '<pre class="hljs"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            } catch (__) { }
         }
-    
+
         return '<pre class="hljs cbOverwrite"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
     }
 }).use(window.markdownitEmoji)

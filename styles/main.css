@@ -259,9 +259,17 @@ button {
     margin-bottom: -17px;
 }
 
+.contains-task-list:not(:first-child), .pinboardObject-markdown ul {
+    margin-bottom: -34px;
+}
+
+.contains-task-list:first-child {
+    margin-bottom: -6px;
+}
+
 .pinboardObject-markdown input[type="checkbox"] {
     margin: 0px;
-    transform: translateY(2px)
+    transform: translateY(1px)
 }
 
 .pinboardObject-image {
@@ -858,6 +866,7 @@ input, button, textarea, :focus {
 /* Twemoji Size  */
 .emoji {
     height: 0.9em;
+    transform: translateY(1px);
 }
 /* LaTeX frac Divider Adjustment */
 .stretchy {
@@ -877,77 +886,21 @@ input, button, textarea, :focus {
     cursor: text;
 }
 
-/* Base for label styling */
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-    position: absolute;
-    left: -9999px;
-}
-[type="checkbox"]:not(:checked) + label,
-[type="checkbox"]:checked + label {
-    position: relative;
-    padding-left: 1.95em;
+input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"], input[type="radio"]:focus, input[type="checkbox"]:hover:active, input[type="radio"]:hover:active, input[type="checkbox"]:disabled, input[type="checkbox"]:hover:disabled, input[type="checkbox"]:hover:active:disabled {
+    -webkit-appearance: none !important;
+    background-color: #181818 !important;
+    border: 1px solid #484848 !important;
+    color: #eee !important;
+    height: 1em !important;
+    width: 1em !important;
 }
 
-.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label,
-.pinboardObject-markdown li [type="checkbox"]:checked + label {
-    position: relative;
-    padding-left: 4px;
+input[type="checkbox"]:checked {
+    background: url("../img/checkmark.svg") !important;
+    background-size: cover !important;
 }
 
-.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label:before,
-.pinboardObject-markdown li [type="checkbox"]:checked + label:before {
-    transform: scale(0.7) translate(-33px,-3px);
-}
-.pinboardObject-markdown li [type="checkbox"]:not(:checked) + label:after,
-.pinboardObject-markdown li [type="checkbox"]:checked + label:after {
-    transform: scale(0.7) translate(-33px,-3px);
-}
-
-/* checkbox aspect */
-[type="checkbox"]:not(:checked) + label:before,
-[type="checkbox"]:checked + label:before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0;
-    width: 1.25em; height: 1.25em;
-    transform: scale(0.7) translateY(-3px);
-    border: 1px solid #ccc;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
-}
-/* checked mark aspect */
-[type="checkbox"]:not(:checked) + label:after,
-[type="checkbox"]:checked + label:after {
-    content: '✔';
-    position: absolute;
-    top: .15em; left: .15em;
-    font-size: 1.4em;
-    line-height: 0.8;
-    color: #09ad7e;
-    transition: all .2s;
-    font-family: Helvetica, Arial, sans-serif;
-}
-/* checked mark aspect changes */
-[type="checkbox"]:not(:checked) + label:after {
-    opacity: 0;
-    transform: scale(0) translateY(-3px);
-}
-[type="checkbox"]:checked + label:after {
-    opacity: 1;
-    transform: scale(0.7) translateY(-3px);
-}
-/* disabled checkbox */
-[type="checkbox"]:disabled:not(:checked) + label:before,
-[type="checkbox"]:disabled:checked + label:before {
-    box-shadow: none;
-    border-color: #bbb;
-    background-color: #ddd;
-}
-[type="checkbox"]:disabled:checked + label:after {
-    color: #999;
-}
-[type="checkbox"]:disabled + label {
-    color: #aaa;
+.pinboardObject-markdown li input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"], input[type="radio"]:focus, input[type="checkbox"]:hover:active, input[type="radio"]:hover:active, input[type="checkbox"]:disabled, input[type="checkbox"]:hover:disabled, input[type="checkbox"]:hover:active:disabled {
+    margin: 0 0.3em 0.25em -1.5em;
+    vertical-align: middle;
 }

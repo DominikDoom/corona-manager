@@ -20,7 +20,7 @@ var md = window.markdownit({
 }).use(window.markdownitEmoji)
   .use(window.markdownitSup)
   .use(window.markdownitSub)
-  .use(window.markdownitCheckbox)
+  .use(window.markdownitTaskLists, {enabled: true})
   .use(tm);
 md.renderer.rules.emoji = function(token, idx) {
     return twemoji.parse(token[idx].content);

@@ -245,6 +245,7 @@ button {
     border: 1px solid #5b5b5b;
     background-color: #1e1e1e;
     word-wrap: break-word;
+    white-space: pre-wrap;
     font-size: 14px;
 }
 
@@ -255,7 +256,7 @@ button {
 }
 .pinboardObject-markdown p {
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: -17px;
 }
 
 .pinboardObject-markdown input[type="checkbox"] {

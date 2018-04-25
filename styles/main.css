@@ -29,10 +29,17 @@ html, body {
     font-family: 'Roboto Condensed', sans-serif;
     color: whitesmoke;
     position: relative;
+    tab-size: 4;
 }
 
 a {
     color: whitesmoke;
+}
+
+ul, ol {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 button {
@@ -256,20 +263,17 @@ button {
 }
 .pinboardObject-markdown p {
     margin-top: 0px;
-    margin-bottom: -17px;
+    margin-bottom: -12px;
 }
-
-.contains-task-list:not(:first-child), .pinboardObject-markdown ul {
-    margin-bottom: -34px;
+.pinboardObject-markdown ul {
+    margin-bottom: 8px;
+    margin-left: 20px;
+    white-space: normal;
 }
-
-.contains-task-list:first-child {
-    margin-bottom: -6px;
-}
-
-.pinboardObject-markdown input[type="checkbox"] {
-    margin: 0px;
-    transform: translateY(1px)
+.pinboardObject-markdown p code {
+    background-color: #333333;
+    border-radius: 2px;
+    padding-left: 3px;
 }
 
 .pinboardObject-image {
@@ -868,6 +872,13 @@ input, button, textarea, :focus {
     height: 0.9em;
     transform: translateY(1px);
 }
+.emoji:first-child {
+    padding-left: 1px;
+}
+.emoji:last-child {
+   padding-right: 1px; 
+}
+
 /* LaTeX frac Divider Adjustment */
 .stretchy {
     height: 0.3em !important;
@@ -901,6 +912,6 @@ input[type="checkbox"]:checked {
 }
 
 .pinboardObject-markdown li input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"], input[type="radio"]:focus, input[type="checkbox"]:hover:active, input[type="radio"]:hover:active, input[type="checkbox"]:disabled, input[type="checkbox"]:hover:disabled, input[type="checkbox"]:hover:active:disabled {
-    margin: 0 0.3em 0.25em -1.5em;
+    margin: 0 0.2em 0.25em -1.5em;
     vertical-align: middle;
 }

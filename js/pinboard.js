@@ -33,6 +33,30 @@ $(document).on('click', 'a[href^="http"]', function(event) {
     shell.openExternal(this.href);
 });
 
+// Tabstop handling in textboxes
+$(document).on('keydown', ".pinboardObject-text", function (e) {
+    var keyCode = e.keyCode || e.which;
+
+    if (keyCode == 9) {
+        e.preventDefault();
+        var start = this.selectionStart;
+        var end = this.selectionEnd;
+
+        // set textarea value to: text before caret + tab + text after caret
+        $(this).val($(this).val().substring(0, start)
+            + "\t"
+            + $(this).val().substring(end));
+
+        // put caret at right position again
+        this.selectionStart =
+        this.selectionEnd = start + 1;
+        // update the markdown
+        var result = md.render($(this).val());
+        $(this).parent().parent().find(".pinboardObject-markdown").html(result);
+    }
+});
+
+
 // Drag & Drop
 function allowDrop(ev) {
     ev.preventDefault();

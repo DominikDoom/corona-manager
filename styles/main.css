@@ -275,6 +275,9 @@ button {
     border-radius: 2px;
     padding-left: 3px;
 }
+.pinboardObject-markdown section {
+    overflow-x: auto;
+}
 
 .pinboardObject-image {
     width: calc(100% + 4px);

@@ -21,7 +21,6 @@
     border-top: 1px solid #383838;
 }
 
-
 html, body {
     margin: 0;
     min-width: 700px;
@@ -33,13 +32,28 @@ html, body {
 }
 
 a {
-    color: whitesmoke;
+    color: #428bca;
+    text-decoration: none;
+}
+a:hover, a:focus {
+    color: #2a6496;
+    text-decoration: underline;
+}
+a:active, a:hover {
+    outline: 0;
 }
 
 ul, ol {
     padding-left: 0;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #5b5b5b;
 }
 
 button {
@@ -255,7 +269,11 @@ button {
     white-space: pre-wrap;
     font-size: 14px;
 }
-
+/*
+###############################
+# Markdown Object Adjustments #
+###############################
+*/
 .pinboardObject-markdown h1, .pinboardObject-markdown h2, .pinboardObject-markdown h3, .pinboardObject-markdown h4, .pinboardObject-markdown h5, .pinboardObject-markdown h6 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -270,6 +288,13 @@ button {
     margin-left: 20px;
     white-space: normal;
 }
+.pinboardObject-markdown ol {
+    margin-bottom: 8px;
+    margin-left: 20px;
+}
+.pinboardObject-markdown ol li {
+    line-height: 0px;
+}
 .pinboardObject-markdown p code {
     background-color: #333333;
     border-radius: 2px;
@@ -277,6 +302,40 @@ button {
 }
 .pinboardObject-markdown section {
     overflow-x: auto;
+}
+
+.pinboardObject-markdown blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 17.5px;
+    border-left: 5px solid #5b5b5b;
+}
+.pinboardObject-markdown table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    background: #252525;
+    border-collapse: collapse;
+    text-align: left;
+    margin-bottom: 20px;
+}
+.pinboardObject-markdown table tr {
+    border-bottom: 1px solid #5b5b5b;
+}
+.pinboardObject-markdown table td {
+    color: whitesmoke;
+    padding: 9px 8px 0;
+}
+.pinboardObject-markdown table th {
+    font-size: 14px;
+    font-weight: normal;
+    color: whitesmoke;
+    border-bottom: 2px solid whitesmoke;
+    padding: 10px 8px;
+}
+.pinboardObject-markdown img {
+    max-width: 35%;
+    vertical-align: middle;
+    border: 0;
 }
 
 .pinboardObject-image {
@@ -917,4 +976,8 @@ input[type="checkbox"]:checked {
 .pinboardObject-markdown li input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"], input[type="radio"]:focus, input[type="checkbox"]:hover:active, input[type="radio"]:hover:active, input[type="checkbox"]:disabled, input[type="checkbox"]:hover:disabled, input[type="checkbox"]:hover:active:disabled {
     margin: 0 0.2em 0.25em -1.5em;
     vertical-align: middle;
+}
+
+.katex {
+    font: normal 15px KaTeX_Main,Times New Roman,serif;
 }

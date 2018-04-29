@@ -36,6 +36,7 @@ var en = {
     toolboxTitle: "Drag object to add it to the pinboard",
     pinboardObjectTitle: "Title",
     editPinboardObject: "Edit",
+    savePinboardObject: "Save",
     deletePinboardObject: "Delete",
     mdPreviewTitle: "Preview"
 }
@@ -75,6 +76,7 @@ var de = {
     toolboxTitle: "Objekt ziehen, um es hinzuzufügen",
     pinboardObjectTitle: "Titel",
     editPinboardObject: "Ändern",
+    savePinboardObject: "Speichern",
     deletePinboardObject: "Löschen",
     mdPreviewTitle: "Vorschau"
 }

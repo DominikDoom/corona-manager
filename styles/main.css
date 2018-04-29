@@ -940,7 +940,7 @@ input, button, textarea, :focus {
 /* Twemoji Size  */
 .emoji {
     height: 0.9em;
-    vertical-align: inherit;
+    vertical-align: inherit !important;
     transform: translateY(1px);
 }
 .emoji:first-child {

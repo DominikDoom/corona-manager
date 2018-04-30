@@ -375,18 +375,19 @@ button {
     display: none;
     position: absolute;
     overflow: hidden;
-    right: -164px;
+    right: -101px;
+    width: 100px;
     z-index: 999;
     background-color: #1e1e1e;
     border: 1px solid #5b5b5b;
     border-left: none;
 }
-.pinboardObject-dotMenu.loc-de {
-    right: -74px !important;
+/* .pinboardObject-dotMenu.loc-de {
+    right: -89px !important;
 }
 .pinboardObject-dotMenu.loc-en {
     right: -61px !important;
-}
+} */
 
 .pinboardObject-dotMenu ul {
     padding-left: 0px;

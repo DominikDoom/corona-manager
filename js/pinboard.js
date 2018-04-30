@@ -234,7 +234,10 @@ function toggleEdit(obj) {
 
         $(obj).find(".pinboardObject-mdPreview").css("display","none");
         var result = $(obj).find(".pinboardObject-markdown").html();
+        var mdHe = $(obj).find(".pinboardObject-mdPreview").height();
         fin.html(result);
+        fin.parent().parent().css("height",mdHe + 12 + "px");    
+        TweenLite.set($(obj).find(".resize-handle"), { top: mdHe + 12 + "px"});
         fin.css("display","block");
         txt.css("display", "none");
         localizeElement(obj,currentLang);

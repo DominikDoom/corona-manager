@@ -204,6 +204,8 @@ button {
 .pinboardObject {
     position: absolute;
     box-sizing: border-box;
+    min-width: 200px;
+    min-height: 150px;
     width: 200px;
     height: 150px;
     background-color: #333333;
@@ -255,6 +257,8 @@ button {
     top: calc(100% + 2px);
     left: 0;
     width: 100%;
+    min-width: 188px;
+    min-height: 138px;
     box-sizing: border-box;
     background-color: #333333;
     border: 1px solid #5b5b5b;
@@ -271,6 +275,7 @@ button {
 .pinboardObject-markdown {
     margin: 10px;
     padding: 5px;
+    min-height: 118px;
     border: 1px solid #5b5b5b;
     background-color: #1e1e1e;
     word-wrap: break-word;
@@ -351,7 +356,7 @@ button {
     height: calc(100% + 4px);
     border: 1px solid #5b5b5b;
     border-radius: 1px;
-    background-image: url("../img/default.png");
+    background-image: url("../img/fallback.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

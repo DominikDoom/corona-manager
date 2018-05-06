@@ -357,6 +357,10 @@ button {
     background-position: center;
 }
 
+.pinboardObject-map {
+    height: 100%;
+}
+
 .pinboardObject-dots {
     color: rgb(185, 185, 185);
     position: absolute;

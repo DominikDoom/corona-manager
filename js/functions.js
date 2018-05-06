@@ -254,6 +254,9 @@ $(document).ready(function() {
 				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
 				break;
 			case "pinboardObject":
+				if (pinboardObjectToDelete.attr("pbType") == "map") {
+					// TODO
+				}
 				pinboardObjectToDelete.remove();
 				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
 				break;

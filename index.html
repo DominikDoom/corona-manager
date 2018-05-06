@@ -17,6 +17,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
     <!-- Tooltips -->
     <script src="https://unpkg.com/tippy.js@2.3.0/dist/tippy.all.min.js"></script>
+    <!-- Alerts -->
+    <script src="js/iziToast.min.js"></script>
+    <link rel="stylesheet" href="styles/iziToast.min.css">
+    <!-- Mapbox API -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet'/>
     <!-- GSAP Draggable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
@@ -38,6 +44,7 @@
     <script src="js/localize.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/pinboard.js"></script>
+    <script src="js/map.js"></script>
     <script src="js/initTooltips.js"></script>
     <script>if (window.module) module = window.module;</script>
 
@@ -131,6 +138,24 @@
         </div>
         <div class="pinboardObject-main">
           <div class="pinboardObject-image"></div>
+        </div>
+      </div>
+    </script>
+    <!-- Map -->
+    <script id="pinboardObject-map-template" type="text/template">
+      <div class="pinboardObject" pbType="map">
+        <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <label class="pinboardObject-dots">
+          <i class="fas fa-ellipsis-v"></i>
+        </label>
+        <div class="pinboardObject-dotMenu loc" loc="">
+          <ul>
+            <li class="loc" id="editPinboardObject" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
+          </ul>
+        </div>
+        <div class="pinboardObject-main">
+          <div id="map" class="pinboardObject-map"></div>
         </div>
       </div>
     </script>

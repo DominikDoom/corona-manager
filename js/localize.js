@@ -75,7 +75,7 @@ var de = {
     pinboardCancel: "Bearbeiten abbrechen",
     toolboxTitle: "Objekt ziehen, um es hinzuzufügen",
     pinboardObjectTitle: "Titel",
-    editPinboardObject: "Ändern",
+    editPinboardObject: "Bearbeiten",
     savePinboardObject: "Speichern",
     deletePinboardObject: "Löschen",
     mdPreviewTitle: "Vorschau"

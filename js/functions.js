@@ -255,7 +255,16 @@ $(document).ready(function() {
 				break;
 			case "pinboardObject":
 				if (pinboardObjectToDelete.attr("pbType") == "map") {
-					// TODO
+					var mapId = pinboardObjectToDelete.attr("mapId");
+					$.each(maps, function(index, element) {
+						if (index <= mapId) {
+							return true;
+						} else {
+							$(".pinboard").find("[mapId='" + index + "']").attr("mapId",index - 1);
+						}
+					});
+					maps[mapId].remove();
+					maps.splice(mapId, 1);
 				}
 				pinboardObjectToDelete.remove();
 				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet

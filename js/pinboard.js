@@ -257,6 +257,15 @@ $(document).on('click', "#editPinboardObject", function(ev){
    }
 });
 
+$(document).on({
+    mouseenter: function () {
+        Draggable.get($(this).parent().parent()).disable();
+    },
+    mouseleave: function () {
+        Draggable.get($(this).parent().parent()).enable();
+    }
+}, ".pinboardObject-map");
+
 // Edit mode switching
 function toggleEdit(obj) {
     if ($(obj).find("#editPinboardObject").attr("loc") == "?savePinboardObject") {

@@ -1005,11 +1005,84 @@ input[type="checkbox"]:checked {
     font: normal 15px KaTeX_Main,Times New Roman,serif;
 }
 
-/* Cheaty hax */
+/* Map stuff */
 .mapboxgl-ctrl-logo {
     display: none !important;
 }
 
 .mapboxgl-ctrl-attrib {
     display: none !important;
+}
+
+.mapboxgl-ctrl-geocoder .geocoder-icon-search {
+    top: 5px !important;
+    left: 5px !important;
+}
+
+.mapboxgl-ctrl-geocoder input[type='text'] {
+    font-size: 12px !important;
+    background-color: transparent !important;
+    height: 30px !important;
+    color: whitesmoke !important;
+    padding: 10px 10px 10px 30px !important;
+}
+
+.mapboxgl-ctrl-geocoder {
+    font: 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+    background-color: #252525 !important;
+    width: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50px !important;
+    transition: all 0.5s;
+}
+
+.mapboxgl-ctrl-geocoder:hover {
+    font: 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+    width: 33.333333% !important;
+    min-width: 200px !important;
+    max-width: 360px !important;
+    border-radius: 3px !important;
+}
+.geocodingFocused {
+    font: 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+    width: 33.333333% !important;
+    min-width: 200px !important;
+    max-width: 360px !important;
+    border-radius: 3px !important;
+}
+
+.mapboxgl-ctrl-geocoder .geocoder-pin-right * {
+    background-color: #252525 !important;
+    right: 5px !important;
+    top: 5px !important;
+}
+
+.geocoder-icon-search {
+    background-image: url("../img/geocoder-search.svg") !important;
+}
+.geocoder-icon-close {
+    background-image: url("../img/geocoder-close.svg") !important;
+}
+.geocoder-icon-loading {
+    background-image: url("../img/geocoder-load.svg") !important;
+}
+
+.mapboxgl-ctrl-geocoder ul {
+    background-color: #404040 !important;
+    border-radius: 0 0 3px 3px !important;
+    width: 100% !important;
+    top: 100% !important;
+    z-index: 1000 !important;
+}
+.mapboxgl-ctrl-geocoder ul > li.active > a {
+    color: #e3e3e3 !important;
+    background-color: #202020 !important;
+}
+.mapboxgl-ctrl-geocoder ul > li > a {
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    color: #dddddd !important;
+}
+.mapboxgl-ctrl-geocoder ul > li > a:hover {
+    color: #e3e3e3 !important;
+    background-color: #202020 !important;
 }

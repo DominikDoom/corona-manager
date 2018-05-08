@@ -8,6 +8,11 @@ function addMap(addedObject) {
         style: 'mapbox://styles/mapbox/dark-v9'
     });
 
+    // Geocoding (with autocomplete automatically integrated)
+    map.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+    }));
+
     //3D Buildings
     map.on('load', function() {
         // Insert the layer beneath any symbol layer.
@@ -100,3 +105,11 @@ function resizeMap() {
         element.resize();
     });
 }
+
+// UI Logic
+$(document).on("focus", ".mapboxgl-ctrl-geocoder input[type='text']",function() {
+    $(this).parent().addClass("geocodingFocused");
+});
+$(document).on("blur", ".mapboxgl-ctrl-geocoder input[type='text']",function() {
+    $(this).parent().removeClass("geocodingFocused");
+});

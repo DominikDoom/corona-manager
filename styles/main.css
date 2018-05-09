@@ -1029,7 +1029,7 @@ input[type="checkbox"]:checked {
 
 .mapboxgl-ctrl-geocoder {
     font: 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
-    background-color: #252525 !important;
+    background-color: #333333 !important;
     width: 30px !important;
     min-width: 30px !important;
     border-radius: 50px !important;
@@ -1052,7 +1052,7 @@ input[type="checkbox"]:checked {
 }
 
 .mapboxgl-ctrl-geocoder .geocoder-pin-right * {
-    background-color: #252525 !important;
+    background-color: #333333 !important;
     right: 5px !important;
     top: 5px !important;
 }
@@ -1085,4 +1085,19 @@ input[type="checkbox"]:checked {
 .mapboxgl-ctrl-geocoder ul > li > a:hover {
     color: #e3e3e3 !important;
     background-color: #202020 !important;
+}
+
+.mapboxgl-ctrl-group {
+    border-radius: 50px !important;
+    background: #333333 !important;
+}
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-fullscreen {
+    background-image: url("../img/fullscreen-open.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-shrink {
+    background-image: url("../img/fullscreen-close.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
 }

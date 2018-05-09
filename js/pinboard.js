@@ -173,12 +173,16 @@ function drop(ev) {
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
             TweenLite.set(handle, { top: "150px", left: "201px" });
 
-            Draggable.create(addedObject, {
+            var dragInstance = Draggable.create(addedObject, {
                 bounds: pinboard,
                 autoScroll: 2,
                 edgeResistance: 1,
                 type: "top,left"
             });
+            dragInstance[0].addEventListener("dragstart", disableMapDrag);
+            dragInstance[0].addEventListener("dragend", enableMapDrag);
+
+
 
             Draggable.create(handle, {
                 type:"top,left",
@@ -259,7 +263,9 @@ $(document).on('click', "#editPinboardObject", function(ev){
 
 $(document).on({
     mouseenter: function () {
-        Draggable.get($(this).parent().parent()).disable();
+        if (mapDraggable) {
+            Draggable.get($(this).parent().parent()).disable();
+        }
     },
     mouseleave: function () {
         Draggable.get($(this).parent().parent()).enable();

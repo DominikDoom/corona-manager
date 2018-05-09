@@ -1,5 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZG9taW5pa2Rvb20iLCJhIjoiY2pndWtvZnlqMG9kcjJxbXI5aGx1anl0ayJ9.SkYvJH5GddIdGHgiTjPP1A';
 var maps = [];
+var mapDraggable = true;
+
 function addMap(addedObject) {
     var c = $(addedObject).find("#map").get(0);
     // First Init
@@ -12,8 +14,9 @@ function addMap(addedObject) {
     map.addControl(new MapboxGeocoder({
         accessToken: mapboxgl.accessToken
     }));
+    // Fullscreen
+    map.addControl(new mapboxgl.FullscreenControl());
 
-    //3D Buildings
     map.on('load', function() {
         // Insert the layer beneath any symbol layer.
         var layers = map.getStyle().layers;
@@ -25,7 +28,8 @@ function addMap(addedObject) {
                 break;
             }
         }
-    
+
+        // 3D Extrusion
         map.addLayer({
             'id': '3d-buildings',
             'source': 'composite',
@@ -95,6 +99,16 @@ function addMap(addedObject) {
         markerLon = e.lngLat.lng.toFixed(5);
         markerLat = e.lngLat.lat.toFixed(5);
     });
+    map.on('click', 'marker', function (e) {
+        map.setZoom(5);
+        map.flyTo({center: e.features[0].geometry.coordinates});
+    });
+    map.on('mouseenter', 'marker', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'marker', function () {
+        map.getCanvas().style.cursor = '';
+    });
 
     maps.push(map);
     addedObject.attr("mapId",maps.length - 1)
@@ -113,3 +127,11 @@ $(document).on("focus", ".mapboxgl-ctrl-geocoder input[type='text']",function() 
 $(document).on("blur", ".mapboxgl-ctrl-geocoder input[type='text']",function() {
     $(this).parent().removeClass("geocodingFocused");
 });
+
+// Deactivates the mouseover function that disables dragging when a drag is in process
+function disableMapDrag() {
+    mapDraggable = false;
+}
+function enableMapDrag() {
+    mapDraggable = true;
+}

@@ -92,17 +92,27 @@ function addMap(addedObject) {
             }
         });
     });
+
+    var markerClicked = false;
+    map.on('click', 'marker', function (e) {
+        map.flyTo({center: e.features[0].geometry.coordinates, zoom: 5});
+        markerClicked = true;
+        // TODO: Find a less hacky method
+        setTimeout(function(){ 
+            markerClicked = false; 
+        }, 5);
+    });
+
     // Add Marker
     map.on('click', function (e) {
-        pointFeature.features[0].geometry.coordinates = [e.lngLat.lng, e.lngLat.lat];
-        map.getSource('marker').setData(pointFeature);
-        markerLon = e.lngLat.lng.toFixed(5);
-        markerLat = e.lngLat.lat.toFixed(5);
+        if (!markerClicked) {
+            pointFeature.features[0].geometry.coordinates = [e.lngLat.lng, e.lngLat.lat];
+            map.getSource('marker').setData(pointFeature);
+            markerLon = e.lngLat.lng.toFixed(5);
+            markerLat = e.lngLat.lat.toFixed(5);
+        }
     });
-    map.on('click', 'marker', function (e) {
-        map.setZoom(5);
-        map.flyTo({center: e.features[0].geometry.coordinates});
-    });
+
     map.on('mouseenter', 'marker', function () {
         map.getCanvas().style.cursor = 'pointer';
     });
@@ -115,6 +125,7 @@ function addMap(addedObject) {
 }
 
 function resizeMap() {
+    // TODO: resize only the needed element
     maps.forEach(element => {
         element.resize();
     });

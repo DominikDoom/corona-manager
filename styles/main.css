@@ -370,6 +370,39 @@ button {
     border-radius: 1px;
 }
 
+.pbFl {
+    width: 261px;
+    height: 150px;
+}
+.pbFl .pinboardObject-main {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.pinboardObject-fl-icon {
+    height: 115px;
+    width: 125px;
+    background-image: url("../img/fileicons/link.svg");
+    background-size: contain;
+    background-position: left;
+    background-repeat: no-repeat;
+}
+.pinboardObject-fl-name {
+    width: 100px !important;
+    text-overflow: clip;
+    overflow: auto;
+}
+.fileLinkOpen {
+    font-size: xx-large;
+}
+.pinboardObject-fl-detail {
+    
+}
+.flTable-name {
+    text-align: left;
+    vertical-align: top;
+}
+
 .pinboardObject-dots {
     color: rgb(185, 185, 185);
     position: absolute;

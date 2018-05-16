@@ -160,6 +160,40 @@
         </div>
       </div>
     </script>
+    <!-- FileLink -->
+    <script id="pinboardObject-fl-template" type="text/template">
+      <div class="pinboardObject pbFl" pbType="fl">
+        <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <p id="filelink" style="display: none;"></p>
+        <label class="pinboardObject-dots">
+          <i class="fas fa-ellipsis-v"></i>
+        </label>
+        <div class="pinboardObject-dotMenu loc" loc="">
+          <ul>
+            <li class="loc" id="editPinboardObject" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
+          </ul>
+        </div>
+        <div class="pinboardObject-main">
+          <table>
+              <tr>
+                <th class="flTable-icon">
+                  <div class="pinboardObject-fl-icon"></div>
+                </th>
+                <th class="flTable-name">
+                  <h4 class="pinboardObject-fl-name"></h4>
+                  <label class="fileLinkOpen toolbarIcon loc" loc="?fileLinkOpenTTip" title="?fileLinkOpenTTip">
+                      <i class="fas fa-folder-open fa-fw"></i>
+                  </label>
+                </th>
+              </tr>
+          </table>
+          <div class="pinboardObject-fl-detail">
+
+          </div>
+        </div>
+      </div>
+    </script>
   </head>
 
   <body class="main-grid">
@@ -194,6 +228,10 @@
         <hr>
         <div class="toolboxObject">
           <img id="toolboxObject-map" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
+        </div>
+        <hr>
+        <div class="toolboxObject">
+          <img id="toolboxObject-fl" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
         </div>
       </div>
     </div>

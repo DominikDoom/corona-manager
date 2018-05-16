@@ -196,6 +196,42 @@ function drop(ev) {
                 }
             });
             break;
+        case "toolboxObject-fl":
+            var data = {
+                id: uuidv4()
+            }
+            var template = $("#pinboardObject-fl-template").html();
+            var html = Mustache.render(template, data);
+            $("#pinboard").append(html);
+            var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
+            setFile(addedObject);
+            addedObject.css({
+                left: ev.pageX - (addedObject.width() / 2),
+                top: ev.pageY - addedObject.height()
+            })
+            localizeElement(addedObject,currentLang);
+        
+            var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
+            TweenLite.set(handle, { top: "150px", left: "261px" });
+
+            Draggable.create(addedObject, {
+                bounds: pinboard,
+                autoScroll: 2,
+                edgeResistance: 1,
+                type: "top,left"
+            });
+
+            Draggable.create(handle, {
+                type:"top,left",
+                bounds:{minX:261,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                onPress: function(e) {
+                    e.stopPropagation(); // cancel drag
+                },
+                onDrag: function(e) {
+                    TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                }
+            });
+            break;
     }
 }
 
@@ -203,6 +239,14 @@ function setImage(addedObject) {
     dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
         if (FileName !== undefined) {
             addedObject.find(".pinboardObject-image").css("background-image",'url("' + fileUrl(FileName[0]) + '")');
+        }
+    });
+}
+function setFile(addedObject) {
+    dialog.showOpenDialog({filters: [{name: 'All Files', extensions: ['*']}],buttonLabel: "Select"}, function (FileName) {
+        if (FileName !== undefined) {
+            addedObject.find("#filelink").text(FileName[0]);
+            addedObject.find(".pinboardObject-fl-name").text(path.basename(FileName[0]));
         }
     });
 }

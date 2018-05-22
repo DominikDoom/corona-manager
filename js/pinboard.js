@@ -229,28 +229,80 @@ function drop(ev) {
                 },
                 onDrag: function(e) {
                     TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                    var tableObj = $(this.target).closest(".pbFl").find(".flTable-name");
+                    var obj = $(this.target).closest(".pbFl").find(".pinboardObject-fl-name");
+                    var tableWidth = tableObj.width();
+                    TweenLite.set(obj, { width: this.x - 162}); //Why -162? I don't know. But with this value, the scaling works fine, so f*ck it
                 }
             });
             break;
     }
 }
 
+// Set the image of an image object
 function setImage(addedObject) {
-    dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {	// Diese Funktion wird beim öffnen einer Bilddatei aufgerufen
+    dialog.showOpenDialog({filters: [{name: 'Images', extensions: ['jpg', 'png']}]}, function (FileName) {
         if (FileName !== undefined) {
             addedObject.find(".pinboardObject-image").css("background-image",'url("' + fileUrl(FileName[0]) + '")');
         }
     });
 }
+// Set the file of a FileLink
 function setFile(addedObject) {
     dialog.showOpenDialog({filters: [{name: 'All Files', extensions: ['*']}],buttonLabel: "Select"}, function (FileName) {
         if (FileName !== undefined) {
-            addedObject.find("#filelink").text(FileName[0]);
+            addedObject.find("#filepath").text(FileName[0]);
             addedObject.find(".pinboardObject-fl-name").text(path.basename(FileName[0]));
+            var ext = path.extname(FileName[0]);
+            setFLImage(ext, addedObject);
         }
     });
 }
+// Set the thumbnail of the file
+// This is an absolute catastrophe and, just like localization, will have to be transferred to an external file
+function setFLImage(ext, obj) {
+    var imgCt = obj.find(".pinboardObject-fl-icon")
+    switch (ext) {
+        case ".jpg":
+        case ".png":
+        case ".bmp":
+        case ".gif":
+        case ".svg":
+        case ".psd":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/image.svg") + '")');
+            break;
+        case ".txt":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/text.svg") + '")');
+            break;
+        case ".doc":
+        case ".docx":
+        case ".rtf":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/word.svg") + '")');
+            break;
+        case ".mp3":
+        case ".ogg":
+        case ".wav":
+        case ".pcm":
+        case ".aiff":
+        case ".aac":
+        case ".wma":
+        case ".flac":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/audio.svg") + '")');
+            break;
+        case ".exe":
+        case ".dll":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/exe.svg") + '")');
+            break;
+        case ".zip":
+        case ".7z":
+        case ".rar":
+        case ".gz":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/archive.svg") + '")');
+            break;
+    }
+}
 
+// Fixes File paths output by a Node.js function for the usage in CSS url("") parameters
 function fileUrl(str) {
     if (typeof str !== 'string') {
         throw new Error('Expected a string');
@@ -286,6 +338,14 @@ $(document).on('click', ".pinboardObject-image", function(ev){
     }
 });
 
+$(document).on('click', "#fileLinkOpen", function(ev) {
+    var filepath = $(this).parent().parent().parent().parent().parent().parent().find("#filepath").text();
+    log(filepath,"d");
+    filepath = path.normalize(filepath);
+    log(filepath,"d");
+    shell.showItemInFolder(filepath);
+});
+
 $(document).on('click', "#deletePinboardObject", function(ev){
     pinboardObjectToDelete = $(this).parent().parent().parent();
     deleteMode = "pinboardObject";								// Der deleteMode gibt der Dialogsbestätigungsfunktion an, welcher Löschvorgang ausgeführt werden soll
@@ -305,6 +365,7 @@ $(document).on('click', "#editPinboardObject", function(ev){
    }
 });
 
+// Prevents Draggable conflicting with map pan
 $(document).on({
     mouseenter: function () {
         if (mapDraggable) {

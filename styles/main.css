@@ -388,12 +388,14 @@ button {
     background-repeat: no-repeat;
 }
 .pinboardObject-fl-name {
-    width: 100px !important;
+    width: 100px;
     text-overflow: clip;
     overflow: auto;
 }
 .fileLinkOpen {
     font-size: xx-large;
+    position: absolute;
+    top: 95px;
 }
 .pinboardObject-fl-detail {
     
@@ -401,6 +403,7 @@ button {
 .flTable-name {
     text-align: left;
     vertical-align: top;
+    width: 100%;
 }
 
 .pinboardObject-dots {

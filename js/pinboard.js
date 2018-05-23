@@ -254,10 +254,67 @@ function setFile(addedObject) {
             addedObject.find("#filepath").text(FileName[0]);
             addedObject.find(".pinboardObject-fl-name").text(path.basename(FileName[0]));
             var ext = path.extname(FileName[0]);
+            setFileDetails(FileName[0], addedObject);
             setFLImage(ext, addedObject);
         }
     });
 }
+
+var totalSize;
+// Set the detail description of the file metadata
+function setFileDetails(filepath, obj) {
+    var fp = filepath;
+    var typeC = obj.find(".flDetailTable-type-right");
+    var pathC = obj.find(".flDetailTable-path-right");
+    var sizeC = obj.find(".flDetailTable-size-right");
+
+    stats = fs.statSync(fp);
+
+    if (stats.isDirectory()) {
+        typeC.text("Directory");
+        totalSize = 0;
+        var fileList = walkSync(fp);
+
+        sizeC.text(autoFormatFilesize(totalSize));
+    }
+    if (stats.isFile()) {
+        typeC.text(path.extname(fp));
+        sizeC.text(autoFormatFilesize(stats.size))
+    }
+    pathC.text(fp);
+}
+// List all files in a directory in Node.js recursively in a synchronous fashion
+function walkSync(dir,filelist) {
+    files = fs.readdirSync(dir);
+    filelist = filelist || [];
+    files.forEach(function (file) {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            filelist = walkSync(path.join(dir, file), filelist);
+        }
+        else {
+            filelist.push(path.join(dir, file));
+        }
+        var stats = fs.statSync(path.join(dir, file));
+        totalSize = totalSize + stats.size;
+    });
+    return filelist;
+};
+
+function autoFormatFilesize(fileSize) {
+    if (fileSize > 1000000000) {
+        return (fileSize / 1000000000.0)
+            .toPrecision(3) + " GB";
+    } else if (fileSize > 1000000) {
+        return (fileSize / 1000000.0)
+            .toPrecision(3) + " MB";
+    } else if (fileSize > 1000) {
+        return (fileSize / 1000.0)
+            .toPrecision(3) + " KB";
+    } else {
+        return fileSize + " B"
+    }
+}
+
 // Set the thumbnail of the file
 // This is an absolute catastrophe and, just like localization, will have to be transferred to an external file
 function setFLImage(ext, obj) {
@@ -291,6 +348,7 @@ function setFLImage(ext, obj) {
             break;
         case ".exe":
         case ".dll":
+        case ".bat":
             imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/exe.svg") + '")');
             break;
         case ".zip":
@@ -298,6 +356,13 @@ function setFLImage(ext, obj) {
         case ".rar":
         case ".gz":
             imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/archive.svg") + '")');
+            break;
+        case ".php":
+        case ".py":
+        case ".js":
+        case ".html":
+        case ".css":
+            imgCt.css("background-image", 'url("' + fileUrl("img/fileicons/code.svg") + '")');
             break;
     }
 }

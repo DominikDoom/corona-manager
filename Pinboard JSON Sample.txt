@@ -1,0 +1,25 @@
+{"pinboards":
+  [
+    {
+      "id": "sample", 
+      "objects":[
+        {
+        "id": "sample2",
+        "type": "map",
+        "top": 244,
+        "left": 67,
+        "width": 279,
+        "height": 160
+        },
+        {
+        "id": "sample3",
+        "type": "text",
+        "top": 24,
+        "left": 67,
+        "width": 400,
+        "height": 300
+        }
+      ]
+    }
+  ]
+}

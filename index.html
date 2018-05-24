@@ -208,6 +208,54 @@
         </div>
       </div>
     </script>
+    <!-- FolderLink -->
+    <script id="pinboardObject-fol-template" type="text/template">
+      <div class="pinboardObject pbFl" pbType="fol">
+        <p id="uuidpbobj" style="display: none;">{{id}}</p>
+        <p id="filepath" style="display: none;"></p>
+        <label class="pinboardObject-dots">
+          <i class="fas fa-ellipsis-v"></i>
+        </label>
+        <div class="pinboardObject-dotMenu loc" loc="">
+          <ul>
+            <li class="loc" id="editPinboardObject" loc="?editPinboardObject">?editPinboardObject</li>
+            <li class="loc" id="deletePinboardObject" loc="?deletePinboardObject">?deletePinboardObject</li>
+          </ul>
+        </div>
+        <div class="pinboardObject-main">
+          <table>
+              <tr>
+                <th class="flTable-icon">
+                  <div class="pinboardObject-fl-icon"></div>
+                </th>
+                <th class="flTable-name">
+                  <h4 class="pinboardObject-fl-name"></h4>
+                  <label id="fileLinkOpen" class="fileLinkOpen toolbarIcon loc" loc="?folderLinkOpenTTip" title="?fileLinkOpenTTip">
+                      <i class="fas fa-folder-open fa-fw"></i>
+                  </label>
+                </th>
+              </tr>
+          </table>
+          <hr>
+          <div class="pinboardObject-fl-detail">
+            <table class="flDetailTable">
+              <tr>
+                <th class="flDetailTable-type-left">File Type</th>
+                <td class="flDetailTable-type-right"></td>
+              </tr>
+              <tr>
+                <th class="flDetailTable-path-left">Path</th>
+                <td class="flDetailTable-path-right"></td>
+              </tr>
+              <tr>
+                <th class="flDetailTable-size-left">Size</th>
+                <td class="flDetailTable-size-right"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </script>
   </head>
 
   <body class="main-grid">
@@ -228,7 +276,7 @@
         </label>
       </div>
       <div class="pinboard-container">
-        <div class="pinboard" id="pinboard" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="pinboard" id="pinboard" ondrop="drop(event)" ondragover="allowDrop(event)" pbID="sample"></div>
       </div>
       <div class="pinboard-toolbox">
         <h2 class="toolboxTitle loc" loc="?toolboxTitle">?toolboxTitle</h2>
@@ -245,8 +293,12 @@
         </div>
         <hr>
         <div class="toolboxObject">
-          <img id="toolboxObject-fl" src="img/toolbox/words.png" alt="Map" draggable="true" ondragstart="drag(event)">
+          <img id="toolboxObject-fl" src="img/toolbox/words.png" alt="FileLink" draggable="true" ondragstart="drag(event)">
         </div>
+        <div class="toolboxObject">
+          <img id="toolboxObject-fol" src="img/toolbox/words.png" alt="FolderLink" draggable="true" ondragstart="drag(event)">
+        </div>
+        <hr>
       </div>
     </div>
   	<div class="container-grid header">

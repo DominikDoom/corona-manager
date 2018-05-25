@@ -1,25 +1,63 @@
-{"pinboards":
-  [
-    {
-      "id": "sample", 
-      "objects":[
+{
+    "objects": [
         {
-        "id": "sample2",
-        "type": "map",
-        "top": 244,
-        "left": 67,
-        "width": 279,
-        "height": 160
+            "id": "37a55450-c346-4a2f-8578-6363803384e0",
+            "pbId": "sample",
+            "type": "map",
+            "top": "76px",
+            "left": "51px",
+            "width": "492px",
+            "height": "277px",
+            "center": {
+                "lng": 1.40625,
+                "lat": 25.482951175355282
+            },
+            "marker": [
+                1.406250000003837,
+                25.482951175356305
+            ],
+            "zoom": 5
         },
         {
-        "id": "sample3",
-        "type": "text",
-        "top": 24,
-        "left": 67,
-        "width": 400,
-        "height": 300
+            "id": "f884b900-e6c0-4ac9-9c3c-960c031c06d9",
+            "pbId": "sample",
+            "type": "text",
+            "top": "290px",
+            "left": "680px",
+            "width": "200px",
+            "height": "151px",
+            "text": "**markdown text**"
+        },
+        {
+            "id": "2a7f35ef-518b-4056-8b2b-5a5b8148c075",
+            "pbId": "sample",
+            "type": "image",
+            "top": "467px",
+            "left": "227px",
+            "width": "548px",
+            "height": "424px",
+            "imgPath": "url(\"file:///G:/Benutzer01/Pictures/Design/saen___reference_sheet_by_luxdani-d7arjdl.jpg\")",
+            "imgMode": "cover"
+        },
+        {
+            "id": "de5e07c8-28c5-4e79-bee7-9a5c876f8513",
+            "pbId": "sample",
+            "type": "fl",
+            "top": "128px",
+            "left": "363.5px",
+            "width": "261px",
+            "height": "150px",
+            "path": "G:\\Benutzer01\\Pictures\\Design\\saen___reference_sheet_by_luxdani-d7arjdl.jpg"
+        },
+        {
+            "id": "adb05d90-15cd-4f3e-bdaa-cbdb9bce4241",
+            "pbId": "sample",
+            "type": "fol",
+            "top": "316px",
+            "left": "371.5px",
+            "width": "261px",
+            "height": "150px",
+            "path": "G:\\Benutzer01\\Pictures\\Design\\Patterns"
         }
-      ]
-    }
-  ]
+    ]
 }

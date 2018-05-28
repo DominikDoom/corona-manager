@@ -124,6 +124,29 @@ function addMap(addedObject) {
     addedObject.attr("mapId",maps.length - 1)
 }
 
+function setMapToJSON(mapId, center, marker, zoom) {
+    var m = maps[mapId];
+    m.setCenter(center);
+    m.setZoom(zoom)
+
+    pointFeature = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": []
+                }
+            }
+        ]
+    }
+
+    pointFeature.features[0].geometry.coordinates = [marker.lng, marker.lat];
+    m.getSource('marker').setData(pointFeature);
+}
+
 function resizeMap() {
     // TODO: resize only the needed element
     maps.forEach(element => {

@@ -115,7 +115,7 @@ button {
 }
 
 .pinboard-grid {
-    display: grid;
+    display: none;
     grid-template-areas: 'pinboard-header pinboard-header' 
                          'pinboard-main pinboard-toolbox';
     grid-template-columns: 1fr 250px;

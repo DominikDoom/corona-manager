@@ -150,6 +150,15 @@ $(document).ready(function() {
 		}
 	});
 
+	$(document).on('click', "#openCard", function() {
+		var id = $(this).parent().parent().parent().find("#uuid").text();
+		$("#pinboard").attr("pbID",id);
+		if (fs.existsSync(path.join(app.getPath('documents'),'Corona',"pbObjects.json"))) {
+			loadConstructorPB(id);
+		}
+		$(".pinboard-grid").css("display","grid");
+	});
+
 	// Der Hoch-Pfeil einer Karte wurde gedrückt
 	$(document).on('click', "#upCard", function(e) {
 		var wrapper = $(this).closest('#card')
@@ -655,6 +664,22 @@ function saveToFile(mode,data) {
 				log("File save failed: categories.json","e");
 			}
 			break;
+		case "pb":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'pbObjects.json'); // Für die Kategorie wird in User/Dokumente/Corona/categories.json gespeichert
+			
+			// Falls nicht vorhanden, wird der Ordnerpfad erstellt 
+			if (!fs.existsSync(dirPath)){
+				fs.mkdirSync(dirPath);
+			}
+			// Datei wird geschrieben
+			try {
+				fs.writeFileSync(filePath, data);
+				log("File saved: pbObjects.json","s");
+			} catch (error) {
+				log("File save failed: pbObjects.json","e");
+			}
+			break;
 	}
 }
 
@@ -686,7 +711,19 @@ function loadFromFile(mode) {
 				log("File open failed: categories.json","e");
 			}
 			break;
-	}
+		case "pb":
+			var dirPath = path.join(app.getPath('documents'),'Corona');
+			var filePath = path.join(dirPath, 'pbObjects.json');
+			// Datei wird gelesen
+			try {
+				var loadString = fs.readFileSync(filePath, 'utf8');
+				log("File opened: pbObjects.json","s");
+				return loadString;								// Rückgabe des Inhalts
+			} catch (error) {
+				log("File open failed: pbObjects.json","e");
+			}
+			break;
+		}
 }
 
 // Baut aus den gespeicherten Dateien den benötigten HTML-DOM-Tree (verwendet Mustache)

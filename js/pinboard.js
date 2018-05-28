@@ -445,6 +445,18 @@ function fileUrl(str) {
 };
 
 // UI events
+
+$(document).on('click', "#pinboardSave", function(ev) {
+    savePinboard();
+});
+
+$(document).on('click', "#pinboardCancel", function(ev) {
+    // Hide pinboard, delete content
+    var pb = $("#pinboard");
+    $(".pinboard-grid").css("display","none");
+    pb.html("");
+});
+
 var imageBackgroundTypes = ['cover','contain','100% 100%'];
 var imagebackgroundState = 0;
 $(document).on('click', ".pinboardObject-image", function(ev){
@@ -742,5 +754,156 @@ function savePinboard() {
 
     pbSaveArray = JSON.stringify(pbJsonObj,null,4);					// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettified
     log(pbSaveArray,"d");
-    //saveToFile("pb", pbSaveArray); 	
+    saveToFile("pb", pbSaveArray); 	
+}
+
+function loadConstructorPB(transferID) {
+    var startTime = Date.now();
+    var pb = $("#pinboard");
+
+    var pbString = loadFromFile("pb");
+    pbSaveArray = pbString;
+    var pbObj = JSON.parse(pbSaveArray);
+
+    $.each(pbObj['objects'], function (index, element) {
+        if (element.pbId == transferID) {
+            var data = {
+                id: element.id
+            }
+            switch (element.type) {
+                case "text":
+                    var template = $("#pinboardObject-text-template").html();
+                    var html = Mustache.render(template, data);
+                    $("#pinboard").append(html);
+                    var obj = pb.find("p:contains(" + element.id + ")").closest(".pinboardObject");
+
+                    obj.css({
+                        "top": element.top,
+                        "left": element.left,
+                        "width": element.width,
+                        "height": element.height
+                    });
+                    var textbox = obj.find(".pinboardObject-text");
+                    textbox.val(element.text);
+                    var result = md.render(textbox.val());
+                    textbox.parent().parent().find(".pinboardObject-markdown").html(result);
+
+                    localizeElement(obj,currentLang);
+        
+                    var handle = $("<div class='resize-handle'></div>").appendTo(obj);
+                    TweenLite.set(handle, { top: element.height, left: element.width });
+
+                    Draggable.create(obj, {
+                        bounds: pinboard,
+                        autoScroll: 2,
+                        edgeResistance: 1,
+                        type: "top,left"
+                    });
+
+                    Draggable.create(handle, {
+                        type:"top,left",
+                        bounds:{minX:200,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                        onPress: function(e) {
+                            e.stopPropagation(); // cancel drag
+                        },
+                        onDrag: function(e) {
+                            TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                        }
+                    });
+                    break;
+                case "image":
+                    var template = $("#pinboardObject-image-template").html();
+                    var html = Mustache.render(template, data);
+                    $("#pinboard").append(html);
+                    var obj = pb.find("p:contains(" + element.id + ")").closest(".pinboardObject");
+
+                    obj.css({
+                        "top": element.top,
+                        "left": element.left,
+                        "width": element.width,
+                        "height": element.height
+                    });
+                    obj.find(".pinboardObject-image").css({
+                        "background-image": element.imgPath,
+                        "background-size": element.imgMode
+                    });
+                    localizeElement(obj,currentLang);
+        
+                    var handle = $("<div class='resize-handle'></div>").appendTo(obj);
+                    TweenLite.set(handle, { top: element.height, left: element.width });
+
+                    Draggable.create(obj, {
+                        bounds: pinboard,
+                        autoScroll: 2,
+                        edgeResistance: 1,
+                        type: "top,left"
+                    });
+
+                    Draggable.create(handle, {
+                        type:"top,left",
+                        bounds:{minX:200,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                        onPress: function(e) {
+                            e.stopPropagation(); // cancel drag
+                        },
+                        onDrag: function(e) {
+                            TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                        }
+                    });
+                    break;
+                case "map":
+                    var template = $("#pinboardObject-map-template").html();
+                    var html = Mustache.render(template, data);
+                    $("#pinboard").append(html);
+                    var obj = pb.find("p:contains(" + element.id + ")").closest(".pinboardObject");
+
+                    obj.css({
+                        "top": element.top,
+                        "left": element.left,
+                        "width": element.width,
+                        "height": element.height
+                    });
+
+                    addMap(obj);
+                    setMapToJSON(obj.attr("mapId"), element.center, element.marker, element.zoom);
+
+                    localizeElement(obj,currentLang);
+        
+                    var handle = $("<div class='resize-handle'></div>").appendTo(obj);
+                    TweenLite.set(handle, { top: element.height, left: element.width });
+
+                    Draggable.create(obj, {
+                        bounds: pinboard,
+                        autoScroll: 2,
+                        edgeResistance: 1,
+                        type: "top,left"
+                    });
+
+                    Draggable.create(handle, {
+                        type:"top,left",
+                        bounds:{minX:200,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                        onPress: function(e) {
+                            e.stopPropagation(); // cancel drag
+                        },
+                        onDrag: function(e) {
+                            TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                        }
+                    });
+                    break;
+                case "fl":
+                case "fol":
+
+                    break;
+            }
+
+        }
+    });
+
+
+    setTimeout(switchLang(currentLang), 1);
+    setTimeout(initTooltips, 1);
+
+    // Gibt die zum Laden benötigte Zeit aus
+    var elapsedTime = Date.now() - startTime;
+    elapsedTime = (elapsedTime / 1000).toFixed(3);
+    log("Loading Done after " + elapsedTime + "s", "s");
 }

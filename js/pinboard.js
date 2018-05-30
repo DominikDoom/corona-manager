@@ -684,7 +684,9 @@ function savePinboard() {
                     height: $(element).css("height"),
                     center: mapObject.getCenter(),
                     marker: mapObject.getSource("marker")._data.features[0].geometry.coordinates,
-                    zoom: mapObject.getZoom()
+                    zoom: mapObject.getZoom(),
+                    bearing: mapObject.getBearing(),
+                    pitch: mapObject.getPitch()
                 }
 
                 // Falls noch kein Objekt vorhanden ist, wird eine neue gepusht
@@ -703,6 +705,8 @@ function savePinboard() {
                         element.center = pbObj.center;
                         element.marker = pbObj.marker;
                         element.zoom = pbObj.zoom;
+                        element.bearing = pbObj.bearing;
+                        element.pitch = pbObj.pitch;
                     }
                 });
                 // Wenn der Counter nach einem kompletten Durchlauf der Datei immer noch 0 ist, ist das zu speichernde Objekt noch nicht vorhanden
@@ -864,7 +868,7 @@ function loadConstructorPB(transferID) {
                     });
 
                     addMap(obj);
-                    setMapToJSON(obj.attr("mapId"), element.center, element.marker, element.zoom);
+                    setMapToJSON(obj.attr("mapId"), element.center, element.marker, element.zoom, element.bearing, element.pitch);
 
                     localizeElement(obj,currentLang);
         
@@ -890,8 +894,80 @@ function loadConstructorPB(transferID) {
                     });
                     break;
                 case "fl":
-                case "fol":
+                    var template = $("#pinboardObject-fl-template").html();
+                    var html = Mustache.render(template, data);
+                    $("#pinboard").append(html);
+                    var obj = pb.find("p:contains(" + element.id + ")").closest(".pinboardObject");
 
+                    obj.css({
+                        "top": element.top,
+                        "left": element.left,
+                        "width": element.width,
+                        "height": element.height
+                    });
+
+                    setFileDetails(element.path, obj);
+                    setFLImage(path.extname(element.path), obj);
+                    localizeElement(obj,currentLang);
+        
+                    var handle = $("<div class='resize-handle'></div>").appendTo(obj);
+                    TweenLite.set(handle, { top: element.height, left: element.width });
+
+                    Draggable.create(obj, {
+                        bounds: pinboard,
+                        autoScroll: 2,
+                        edgeResistance: 1,
+                        type: "top,left"
+                    });
+
+                    Draggable.create(handle, {
+                        type:"top,left",
+                        bounds:{minX:200,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                        onPress: function(e) {
+                            e.stopPropagation(); // cancel drag
+                        },
+                        onDrag: function(e) {
+                            TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                        }
+                    });
+                    break;
+                case "fol":
+                    var template = $("#pinboardObject-fol-template").html();
+                    var html = Mustache.render(template, data);
+                    $("#pinboard").append(html);
+                    var obj = pb.find("p:contains(" + element.id + ")").closest(".pinboardObject");
+
+                    obj.css({
+                        "top": element.top,
+                        "left": element.left,
+                        "width": element.width,
+                        "height": element.height
+                    });
+
+                    setFileDetails(element.path, obj);
+                    setFLImage("folder", obj);
+                    localizeElement(obj,currentLang);
+        
+                    var handle = $("<div class='resize-handle'></div>").appendTo(obj);
+                    TweenLite.set(handle, { top: element.height, left: element.width });
+
+                    Draggable.create(obj, {
+                        bounds: pinboard,
+                        autoScroll: 2,
+                        edgeResistance: 1,
+                        type: "top,left"
+                    });
+
+                    Draggable.create(handle, {
+                        type:"top,left",
+                        bounds:{minX:200,minY:150,maxX:Number.MAX_VALUE,maxY:Number.MAX_VALUE},
+                        onPress: function(e) {
+                            e.stopPropagation(); // cancel drag
+                        },
+                        onDrag: function(e) {
+                            TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+                        }
+                    });
                     break;
             }
 

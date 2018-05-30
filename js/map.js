@@ -124,12 +124,16 @@ function addMap(addedObject) {
     addedObject.attr("mapId",maps.length - 1)
 }
 
-function setMapToJSON(mapId, center, marker, zoom) {
+function setMapToJSON(mapId, center, marker, zoom, bearing, pitch) {
+    console.log(mapId, center, marker, zoom, bearing, pitch);
+    
     var m = maps[mapId];
     m.setCenter(center);
-    m.setZoom(zoom)
+    m.setZoom(zoom);
+    m.setBearing(bearing);
+    m.setPitch(pitch);
 
-    pointFeature = {
+    var tempPointFeature = {
         "type": "FeatureCollection",
         "features": [
             {
@@ -143,8 +147,10 @@ function setMapToJSON(mapId, center, marker, zoom) {
         ]
     }
 
-    pointFeature.features[0].geometry.coordinates = [marker.lng, marker.lat];
-    m.getSource('marker').setData(pointFeature);
+    m.on('load', function() {
+        tempPointFeature.features[0].geometry.coordinates = [marker[0], marker[1]];
+        m.getSource("marker").setData(tempPointFeature);
+    });
 }
 
 function resizeMap() {

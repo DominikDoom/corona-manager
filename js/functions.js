@@ -14,6 +14,7 @@ const path = require('path');
 const nativeImage = require('electron').nativeImage;
 
 // Initialisierung von Variablen, die als Speicher für UI-Zustände oder IDs dienen
+var currentTheme = "main";
 var editorState = "closed";
 var deleteMode;
 var catToDelete;
@@ -893,4 +894,14 @@ function updateFavs() {
 			$(element).addClass("card-fav");
 		}
 	});
+}
+
+function switchTheme(theme) {
+	$("#theme").attr("href","styles/"+ theme + ".css");
+	currentTheme = theme;
+	if (currentTheme == "light") {
+		$("#highlighter").attr("href","styles/highlighters/atom-one-light.css");
+	} else {
+		$("#highlighter").attr("href","styles/highlighters/atom-one-dark.css");
+	}
 }

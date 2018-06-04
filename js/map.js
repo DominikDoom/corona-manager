@@ -5,10 +5,17 @@ var mapDraggable = true;
 function addMap(addedObject) {
     var c = $(addedObject).find("#map").get(0);
     // First Init
-    var map = new mapboxgl.Map({
-        container: c,
-        style: 'mapbox://styles/mapbox/dark-v9'
-    });
+    if (currentTheme == "light") {
+        var map = new mapboxgl.Map({
+            container: c,
+            style: 'mapbox://styles/mapbox/streets-v9'
+        });
+    } else {
+        var map = new mapboxgl.Map({
+            container: c,
+            style: 'mapbox://styles/mapbox/dark-v9'
+        });    
+    }
 
     // Geocoding (with autocomplete automatically integrated)
     map.addControl(new MapboxGeocoder({
@@ -29,32 +36,62 @@ function addMap(addedObject) {
             }
         }
 
-        // 3D Extrusion
-        map.addLayer({
-            'id': '3d-buildings',
-            'source': 'composite',
-            'source-layer': 'building',
-            'filter': ['==', 'extrude', 'true'],
-            'type': 'fill-extrusion',
-            'minzoom': 12,
-            'paint': {
-                'fill-extrusion-color': '#333333',
-    
-                // use an 'interpolate' expression to add a smooth transition effect to the
-                // buildings as the user zooms in
-                'fill-extrusion-height': [
-                    "interpolate", ["linear"], ["zoom"],
-                    12, 0,
-                    12.05, ["get", "height"]
-                ],
-                'fill-extrusion-base': [
-                    "interpolate", ["linear"], ["zoom"],
-                    12, 0,
-                    12.05, ["get", "min_height"]
-                ],
-                'fill-extrusion-opacity': .6
-            }
-        }, labelLayerId);
+        if (currentTheme == "light") {
+            // 3D Extrusion
+            map.addLayer({
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 12,
+                'paint': {
+                    'fill-extrusion-color': '#f1f1f1',
+        
+                    // use an 'interpolate' expression to add a smooth transition effect to the
+                    // buildings as the user zooms in
+                    'fill-extrusion-height': [
+                        "interpolate", ["linear"], ["zoom"],
+                        12, 0,
+                        12.05, ["get", "height"]
+                    ],
+                    'fill-extrusion-base': [
+                        "interpolate", ["linear"], ["zoom"],
+                        12, 0,
+                        12.05, ["get", "min_height"]
+                    ],
+                    'fill-extrusion-opacity': .6
+                }
+            }, labelLayerId);
+        } else {
+            // 3D Extrusion
+            map.addLayer({
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 12,
+                'paint': {
+                    'fill-extrusion-color': '#333333',
+        
+                    // use an 'interpolate' expression to add a smooth transition effect to the
+                    // buildings as the user zooms in
+                    'fill-extrusion-height': [
+                        "interpolate", ["linear"], ["zoom"],
+                        12, 0,
+                        12.05, ["get", "height"]
+                    ],
+                    'fill-extrusion-base': [
+                        "interpolate", ["linear"], ["zoom"],
+                        12, 0,
+                        12.05, ["get", "min_height"]
+                    ],
+                    'fill-extrusion-opacity': .6
+                }
+            }, labelLayerId);    
+        }
+        
     });
 
     pointFeature = {

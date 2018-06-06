@@ -35,6 +35,24 @@ $(document).on('click', 'a[href^="http"]', function(event) {
     shell.openExternal(this.href);
 });
 
+// Zoom
+$(document).ready(function () {
+    var $panzoom = $('#pinboard').panzoom();
+    $panzoom.parent().on('mousewheel.focal', function (e) {
+        e.preventDefault();
+        var delta = e.delta || e.originalEvent.wheelDelta;
+        var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+        $panzoom.panzoom('zoom', zoomOut, {
+            animate: false,
+            minScale: 0.1,
+            maxScale: 1,
+            focal: e,
+            rangeStep: 1,
+            contain: true
+        });
+    });
+});
+
 // Tabstop handling in textboxes
 $(document).on('keydown', ".pinboardObject-text", function (e) {
     var keyCode = e.keyCode || e.which;
@@ -81,8 +99,8 @@ function drop(ev) {
             $("#pinboard").append(html);
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
             addedObject.css({
-                left: ev.pageX - (addedObject.width() / 2),
-                top: ev.pageY - addedObject.height()
+                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
             });
             localizeElement(addedObject,currentLang);
         
@@ -119,9 +137,9 @@ function drop(ev) {
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
             setImage(addedObject);
             addedObject.css({
-                left: ev.pageX - (addedObject.width() / 2),
-                top: ev.pageY - addedObject.height()
-            })
+                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
+            });
             localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
@@ -164,9 +182,9 @@ function drop(ev) {
             $("#pinboard").append(html);
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
             addedObject.css({
-                left: ev.pageX - (addedObject.width() / 2),
-                top: ev.pageY - addedObject.height()
-            })
+                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
+            });
 
             addMap(addedObject);
 
@@ -208,9 +226,9 @@ function drop(ev) {
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
             setFile(addedObject);
             addedObject.css({
-                left: ev.pageX - (addedObject.width() / 2),
-                top: ev.pageY - addedObject.height()
-            })
+                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
+            });
             localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
@@ -248,9 +266,9 @@ function drop(ev) {
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
             setFolder(addedObject);
             addedObject.css({
-                left: ev.pageX - (addedObject.width() / 2),
-                top: ev.pageY - addedObject.height()
-            })
+                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
+            });
             localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);

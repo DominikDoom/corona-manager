@@ -144,12 +144,13 @@ button {
     grid-area: pinboard-main;
     position: relative;
     overflow: scroll;
+    background: url("../img/lightgrid.png") repeat;
 }
 
 .pinboard {
     width: 5000px;
     height: 5000px;
-    background: url("../img/lightgrid.png") repeat;
+    
 }
 
 .pinboard-toolbox {

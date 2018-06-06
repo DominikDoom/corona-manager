@@ -144,11 +144,6 @@ button {
     grid-area: pinboard-main;
     position: relative;
     overflow: scroll;
-}
-
-.pinboard {
-    width: 5000px;
-    height: 5000px;
     background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
             -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
             -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
@@ -177,6 +172,11 @@ button {
             linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
                 0 0 / 20px #131313;
     behavior: url(/pie/PIE.htc);
+}
+
+.pinboard {
+    width: 5000px;
+    height: 5000px;
 }
 
 .pinboard-toolbox {

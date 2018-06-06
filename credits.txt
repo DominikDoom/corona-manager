@@ -8,3 +8,4 @@ mustache.js
 fontawesome
 https://github.com/paomedia/small-n-flat
 jsPlumb
+https://github.com/timmywil/jquery.panzoom

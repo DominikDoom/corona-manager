@@ -47,9 +47,16 @@ $(document).ready(function () {
             minScale: 0.1,
             maxScale: 1,
             focal: e,
-            rangeStep: 1,
-            contain: true
+            rangeStep: 1
         });
+    });
+
+    $(document).on("mouseenter", ".pinboardObject", function (e) {
+        $("#pinboard").panzoom("disable");
+    });
+
+    $(document).on("mouseleave", ".pinboardObject", function (e) {
+        $("#pinboard").panzoom("enable");
     });
 });
 
@@ -98,8 +105,12 @@ function drop(ev) {
             var html = Mustache.render(template, data);
             $("#pinboard").append(html);
             var addedObject = $( "p:contains(" +  data.id + ")").closest(".pinboardObject");
+
+            // TODO
+            panMatrix = $("#pinboard").panzoom("getMatrix");
+            // => [1, 0, 0, 1, 0, 0]
             addedObject.css({
-                left: $(".pinboard-container").scrollLeft() + ev.pageX - (addedObject.width() / 2),
+                left: $(".pinboard-container").scrollLeft() + ev.pageX  - (addedObject.width() / 2),
                 top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
             });
             localizeElement(addedObject,currentLang);
@@ -201,8 +212,6 @@ function drop(ev) {
             });
             dragInstance[0].addEventListener("dragstart", disableMapDrag);
             dragInstance[0].addEventListener("dragend", enableMapDrag);
-
-
 
             Draggable.create(handle, {
                 type:"top,left",

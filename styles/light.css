@@ -143,7 +143,7 @@ button {
 .pinboard-container {
     grid-area: pinboard-main;
     position: relative;
-    overflow: scroll;
+    overflow: hidden;
     background: url("../img/lightgrid.png") repeat;
 }
 

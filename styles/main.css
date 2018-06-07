@@ -143,7 +143,7 @@ button {
 .pinboard-container {
     grid-area: pinboard-main;
     position: relative;
-    overflow: scroll;
+    overflow: hidden;
     background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
             -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
             -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
@@ -177,6 +177,7 @@ button {
 .pinboard {
     width: 5000px;
     height: 5000px;
+    background: teal;
 }
 
 .pinboard-toolbox {

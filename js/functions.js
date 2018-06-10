@@ -14,7 +14,7 @@ const path = require('path');
 const nativeImage = require('electron').nativeImage;
 
 // Initialisierung von Variablen, die als Speicher für UI-Zustände oder IDs dienen
-var currentTheme = "main";
+var currentTheme = "dark";
 var editorState = "closed";
 var deleteMode;
 var catToDelete;

@@ -114,6 +114,32 @@ button {
     background-color: #b84444;
 }
 
+.optionsOverlay {
+    display: none;
+    z-index: 99999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.optionsBox {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    padding: 15px;
+    width: 60%;
+    max-width: 700px;
+    height: 90%;
+    background-color: #dadada;
+    border: solid;
+    border-color: #b3b3b3;
+    border-width: 2px;
+    text-align: center;
+}
+
 .pinboard-grid {
     display: none;
     grid-template-areas: 'pinboard-header pinboard-header' 
@@ -140,6 +166,16 @@ button {
     padding-left: 10px;
 }
 
+#pinboardSave, #pinboardCancel, #pinboardReset {
+    float: left;
+}
+
+#pinboardReset {
+    margin-left: 5px;
+    padding-left: 5px;
+    border-left: solid 2px #4f4f4f;
+}
+
 .pinboard-container {
     grid-area: pinboard-main;
     position: relative;
@@ -150,7 +186,7 @@ button {
 .pinboard {
     width: 5000px;
     height: 5000px;
-    
+    border: dashed 2px #b4b4b4;
 }
 
 .pinboard-toolbox {
@@ -662,6 +698,11 @@ svg, svg * {
 
 .svg-inline--fa:hover, .fa-layers:hover, .fa-layers-counter:hover {
     cursor: pointer;
+}
+
+.toolbarIcon {
+    width: 40px;
+    height: 32px;
 }
 
 .toolbarIcon:hover {

@@ -37,7 +37,39 @@ $(document).on('click', 'a[href^="http"]', function(event) {
 
 // Zoom
 $(document).ready(function () {
-    var $panzoom = $('#pinboard').panzoom();
+    var $panzoom = $('#pinboard').panzoom({
+        onZoom: function () {
+            var panMatrix = $panzoom.panzoom("getMatrix");
+            var zoom = panMatrix[0];
+            if (zoom !== "1") {
+                $(".pinboard-toolbox").css({
+                    "pointer-events": "none",
+                    "opacity": "0.4"
+                });
+                $("#pinboard").css({
+                    "background-color": "rgba(40,40,40,0.3)"
+                });
+            } else {
+                $(".pinboard-toolbox").css({
+                    "pointer-events": "inherit",
+                    "opacity": "1"
+                });
+                $("#pinboard").css({
+                    "background-color": "transparent"
+                });
+            }
+        },
+        onReset: function () {
+            $(".pinboard-toolbox").css({
+                "pointer-events": "inherit",
+                "opacity": "1"
+            });
+            $("#pinboard").css({
+                "background-color": "transparent"
+            });
+        },
+        $reset: $("#pinboardReset")
+    });
     $panzoom.parent().on('mousewheel.focal', function (e) {
         e.preventDefault();
         var delta = e.delta || e.originalEvent.wheelDelta;
@@ -109,10 +141,17 @@ function drop(ev) {
             // TODO
             panMatrix = $("#pinboard").panzoom("getMatrix");
             // => [1, 0, 0, 1, 0, 0]
-            addedObject.css({
-                left: $(".pinboard-container").scrollLeft() + ev.pageX  - (addedObject.width() / 2),
-                top: $(".pinboard-container").scrollTop() + ev.pageY - addedObject.height()
-            });
+            if (parseInt(panMatrix[5]) > 0) {
+                addedObject.css({
+                    left: ev.pageX + Math.abs(panMatrix[4]) - (addedObject.width() / 2),
+                    top:  ev.pageY - panMatrix[5] - addedObject.height()
+                });
+            } else {
+                addedObject.css({
+                    left: ev.pageX + Math.abs(panMatrix[4]) - (addedObject.width() / 2),
+                    top:  ev.pageY + Math.abs(panMatrix[5]) - addedObject.height()
+                });
+            }
             localizeElement(addedObject,currentLang);
         
             var handle = $("<div class='resize-handle'></div>").appendTo(addedObject);
@@ -971,6 +1010,7 @@ function loadConstructorPB(transferID) {
                         "height": element.height
                     });
 
+                    obj.find("#filepath").text(element.path);
                     setFileDetails(element.path, obj);
                     setFLImage("folder", obj);
                     localizeElement(obj,currentLang);

@@ -1084,6 +1084,7 @@ input, button, textarea, :focus {
 }
 
 input[type="checkbox"], input[type="checkbox"]:focus, input[type="radio"], input[type="radio"]:focus, input[type="checkbox"]:hover:active, input[type="radio"]:hover:active, input[type="checkbox"]:disabled, input[type="checkbox"]:hover:disabled, input[type="checkbox"]:hover:active:disabled {
+    appearance: none !important;
     -webkit-appearance: none !important;
     background-color: #181818 !important;
     border: 1px solid #484848 !important;

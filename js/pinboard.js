@@ -956,6 +956,7 @@ function loadConstructorPB(transferID) {
                         },
                         onDrag: function(e) {
                             TweenLite.set(this.target.parentNode, { width: this.x, height: this.y });
+							resizeMap();
                         }
                     });
                     break;

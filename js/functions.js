@@ -79,7 +79,7 @@ $(document).ready(function() {
 	
 	// Wenn aus dem Inputfeld zum Bearbeiten des Kategorienamens geklickt wird, wird die Bearbeitung beendet
     $(document).on('focusout',".editCatName", function(event) {
-        var dad = $(this).closest(".cat");
+		var dad = $(this).parent().parent();
 		var catName = dad.find('.catName');
 		catName.text($(this).val());							// Der Inhalt des Input-Felds wird dem Namenslabel übergeben
         $(this).hide();											// Das Inputfeld wird wieder versteckt
@@ -92,7 +92,7 @@ $(document).ready(function() {
 		// Enter was pressed
 		if (e.keyCode == 13)
 		{
-			$(".editCatName").blur();
+			$(this).blur();
 		}
 	});
 	
@@ -264,6 +264,21 @@ $(document).ready(function() {
 				$(".alertOverlay").css("display","none");		// Das Bestätigungsoverlay und der darin liegende Ja-Nein-Dialog werden wieder ausgeblendet
 				break;
 			case "pinboardObject":
+				var pbObjId = $(pinboardObjectToDelete).find("#uuidpbobj").text();
+				// Preparation of JSON save
+				var obj = JSON.parse(pbSaveArray);			// Der JSON String wird in ein Objekt umgewandelt
+				$.each(obj['objects'], function(index, element) {	// Alle gespeicherten Karten werden durchlaufen
+					if (element.id == pbObjId) {					// ID-Match
+						var deletedItem = obj['objects'].splice(index,1);	// Die Karten sind als Arrayelemente im JSON gespeichert, daher kann man nicht mit .remove arbeiten, dies führt zu null-Values im JSON
+						return false;							// Da die erwünschte Karte gelöscht wurde, wird die each-Schleife abgebrochen
+					}
+				});
+				pbSaveArray = JSON.stringify(obj,null,4);		// Das JSON-Objekt wird wieder in Text umgewandelt und automatisch prettiefied
+				log(pbSaveArray,"d");
+				saveToFile("pb", pbSaveArray); 				// Der aktualisierte JSON-String wird in der Datei gespeichert
+
+				log("Pinboard Object "+ pbObjId + " removed","d");
+
 				if (pinboardObjectToDelete.attr("pbType") == "map") {
 					var mapId = pinboardObjectToDelete.attr("mapId");
 					$.each(maps, function(index, element) {

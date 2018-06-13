@@ -520,6 +520,11 @@ $(document).on('click', "#pinboardCancel", function(ev) {
     // Hide pinboard, delete content
     var pb = $("#pinboard");
     $(".pinboard-grid").css("display","none");
+    maps.forEach(element => {
+        element.remove();
+
+    });
+    maps = [];
     pb.html("");
 });
 
@@ -973,6 +978,7 @@ function loadConstructorPB(transferID) {
                         "height": element.height
                     });
 
+                    obj.find("#filepath").text(element.path);
                     setFileDetails(element.path, obj);
                     setFLImage(path.extname(element.path), obj);
                     localizeElement(obj,currentLang);

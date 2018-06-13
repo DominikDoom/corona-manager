@@ -29,8 +29,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
-    <!-- SmartZoom -->
+    <!-- PanZoom -->
     <script src="js/jquery.panzoom.min.js"></script>
+    <!-- jsPlumb -->
+    <script src="js/jsplumb.min.js"></script>
     <!-- Markdown-it & Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.1/markdown-it.min.js"></script>
     <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.6"></script>
@@ -270,7 +272,28 @@
     </div>
     <div class="optionsOverlay">
       <div class="optionsBox">
-        
+        <h2>Settings</h2>
+        <table class="optionsTable">
+          <tr class="optionsTable-labels">
+            <td>Test Option 1</td>
+            <td>
+              <!-- Rounded switch -->
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <tr class="optionsTable-switches">
+            <td>Test Option 2<td>
+              <!-- Rounded switch -->
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+        </table>          
       </div>
     </div>
     <div class="pinboard-grid">

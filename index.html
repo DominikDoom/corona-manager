@@ -51,6 +51,7 @@
     <script src="js/functions.js"></script>
     <script src="js/pinboard.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/options.js"></script>
     <script src="js/initTooltips.js"></script>
     <script>if (window.module) module = window.module;</script>
 
@@ -272,11 +273,19 @@
     </div>
     <div class="optionsOverlay">
       <div class="optionsBox">
+          <label id="optionsClose" class="toolbarIcon loc" loc="?optionsClose" title="?optionsClose">
+              <i class="far fa-times-circle fa-2x"></i>
+          </label>
         <h2>Settings</h2>
-        <table class="optionsTable">
-          <tr class="optionsTable-labels">
-            <td>Test Option 1</td>
-            <td>
+        <div class="optionsTabBar">
+          <div class="optionsTab optionsTab-active" tabId="acc">Account</div>
+          <div class="optionsTab" tabId="ui">UI</div>
+        </div>
+        <!-- Account Settings Start-->
+        <table class="optionsTable animationOpac" contentId="acc">
+          <tr>
+            <td class="optionsTable-labels">User Option 1</td>
+            <td class="optionsTable-switches">
               <!-- Rounded switch -->
               <label class="switch">
                 <input type="checkbox">
@@ -284,8 +293,9 @@
               </label>
             </td>
           </tr>
-          <tr class="optionsTable-switches">
-            <td>Test Option 2<td>
+          <tr>
+            <td class="optionsTable-labels">User Option 2</td>
+            <td class="optionsTable-switches">
               <!-- Rounded switch -->
               <label class="switch">
                 <input type="checkbox">
@@ -293,7 +303,32 @@
               </label>
             </td>
           </tr>
-        </table>          
+        </table>  
+        <!-- Account Settings End -->  
+        <!-- UI Settings Start-->
+        <table class="optionsTable animationOpac" style="display: none" contentId="ui">
+            <tr>
+              <td class="optionsTable-labels">UI Option 1</td>
+              <td class="optionsTable-switches">
+                <!-- Rounded switch -->
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td class="optionsTable-labels">UI Option 2</td>
+              <td class="optionsTable-switches">
+                <!-- Rounded switch -->
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+            </tr>
+          </table>  
+          <!-- UI Settings End -->      
       </div>
     </div>
     <div class="pinboard-grid">
@@ -351,7 +386,7 @@
         <i class="far fa-chart-bar fa-fw"></i>
       </label>
       <div class="naviconBottom">
-        <label class="navicon">
+        <label class="navicon" id="navOptionsButton">
           <i class="fas fa-cog fa-fw"></i>
         </label>
         <label class="navicon">

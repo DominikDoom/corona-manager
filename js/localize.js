@@ -39,7 +39,8 @@ var en = {
     editPinboardObject: "Edit",
     savePinboardObject: "Save",
     deletePinboardObject: "Delete",
-    mdPreviewTitle: "Preview"
+    mdPreviewTitle: "Preview",
+    optionsClose: "Close"
 }
 var de = {
     catDefaultName: "Name",
@@ -80,7 +81,8 @@ var de = {
     editPinboardObject: "Bearbeiten",
     savePinboardObject: "Speichern",
     deletePinboardObject: "Löschen",
-    mdPreviewTitle: "Vorschau"
+    mdPreviewTitle: "Vorschau",
+    optionsClose: "Schließen"
 }
 
 // Initializes currentLang with en, making it the standard language

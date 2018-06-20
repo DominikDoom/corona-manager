@@ -140,6 +140,63 @@ button {
     text-align: center;
 }
 
+.optionsBox h2 {
+    margin-top: 0px;
+}
+
+#optionsClose {
+    position: absolute;
+    top: 14px;
+    right: 17px;
+}
+
+.optionsTabBar {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    overflow: hidden;
+    background-color: #c2c2c2;
+}
+
+.optionsTab {
+    cursor: pointer;
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: solid 2px;
+    border-bottom-color: #AAA;
+    display: block;
+    outline: 0;
+}
+
+.optionsTab:hover {
+    background-color: #AAA;
+}
+
+.optionsTab-active {
+    border-bottom-color: #2a6496;
+}
+
+.optionsTable {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.optionsTable-labels {
+    text-align: left;
+}
+
+.optionsTable-switches {
+    text-align: right;
+}
+
+.animationOpac {
+    animation: opac 0.5s;
+}
+@keyframes opac{from{opacity:0} to{opacity:1}}
+
 .pinboard-grid {
     display: none;
     grid-template-areas: 'pinboard-header pinboard-header' 
@@ -1130,6 +1187,7 @@ input, button, textarea, :focus {
 
 .switch {
     position: relative;
+    cursor: pointer;
     display: inline-block;
     width: 40px;
     height: 25px;
@@ -1152,6 +1210,7 @@ input, button, textarea, :focus {
   
 .slider:before {
     position: absolute;
+    cursor: pointer;
     content: "";
     height: 17px;
     width: 17px;
